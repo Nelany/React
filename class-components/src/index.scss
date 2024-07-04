@@ -1,4 +1,4 @@
-@import '/src/common/utils/variables.scss';
+@import '/src/utils/variables.scss';
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -26,14 +26,13 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  justify-content: center;
   min-width: 320px;
   min-height: 100vh;
-
-
 }
 
 h1 {
-  background-image: linear-gradient(25deg, $orange, $orange, $blue, $blue);
+  background-image: linear-gradient(25deg, $orange, $orange, $violet, $violet);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -43,12 +42,15 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  border: 1px solid $shadow;
+  padding: 0.2em 1.2em 0.4em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #f9f9f9;
+  background-color: #3800a1c8;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
+  box-shadow: 0px 2px 5px $shadow;
   cursor: pointer;
   outline: none;
 }
@@ -68,4 +70,44 @@ button {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.main{
+  width: 90vw;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.section{
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px $shadow;
+}
+
+.search-section{
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .search-input{
+    border-radius: 8px;
+  border: 1px solid $shadow;
+  padding: 0.3em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  outline: none;
+  }
+}
+
+.results-section{
+  flex-grow: 1;
 }
