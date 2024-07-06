@@ -22,9 +22,8 @@ export class SearchSection extends Component<Props, SearchSectionState> {
     const lastQuery = localStorage.getItem('searchQuery');
     if (lastQuery) {
       this.setState({ query: lastQuery }, this.handleSearch);
-    } else {
-      this.handleSearch();
     }
+    this.handleSearch();
   }
 
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,10 +33,10 @@ export class SearchSection extends Component<Props, SearchSectionState> {
   handleSearch = async () => {
     const { query } = this.state;
     const trimmedQuery = query.trim();
-    localStorage.setItem('searchQuery', trimmedQuery);
     const charactersResponse = await getCharacters(trimmedQuery);
+
+    localStorage.setItem('searchQuery', trimmedQuery);
     this.props.setCharactersFromResponse(charactersResponse);
-    console.log('Response:', charactersResponse);
   };
 
   handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

@@ -14,7 +14,7 @@ export class ResultsItem extends Component<Props> {
   render() {
     return (
       <div className="results-item">
-        <img src={this.props.character.image} alt="img" />
+        <img className='result-img' src={this.props.character.image} alt="img" />
         <div>
           <h2>{this.props.name}</h2>
           <h4>{`Status: ${this.props.character.status};`}</h4>

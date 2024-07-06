@@ -1,11 +1,13 @@
 export type CharacterResponse = {
-  info: {
+  info?: {
     count: number;
     pages: number;
     next: string | null;
     prev: string | null;
   };
-  results: Character[];
+  results?: Character[];
+  error?: string;
+
 };
 export type Character = {
   id: number;

@@ -23,7 +23,6 @@ a:hover {
 }
 
 body {
-  min-width: 320px;
   min-height: 100vh;
   margin: 0;
   display: flex;
@@ -35,7 +34,7 @@ h1 {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: 3.2em;
+  font-size: 50px;
   line-height: 1.1;
 }
 
@@ -81,6 +80,7 @@ button:hover {
 .main {
   width: 96vw;
   min-height: 90vh;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,7 +90,24 @@ button:hover {
 
 
   .main__tittle {
+    height: 60px;
     margin: 50px 0 0 0;
+  }
+
+  .error-button {
+    width: 100%;
+    margin-top: -20px;
+    padding: 0.1em 1.2em 0.3em 1.2em;
+
+    background-color: $yellowTransparent;
+    color: $darkBrown;
+    font-weight: 700;
+    text-shadow: none;
+  }
+
+  .error-button:hover {
+    background-color: $orangeTransparent;
+    transform: scale(1);
   }
 }
 
@@ -110,6 +127,7 @@ button:hover {
   background-color: $darkBrown;
 
   .search-input {
+    max-width: 100%;
     border-radius: $radius;
     border: 1px solid $shadow;
     padding: 0.3em 1.2em;
@@ -129,8 +147,101 @@ button:hover {
   .results-item {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 50px;
     margin-bottom: 30px;
+  }
+}
+
+.error-content {
+  height: 50vh;
+  display: inline-block;
+  margin: 50px;
+
+}
+
+@keyframes moveLeft {
+
+  0%,
+  100% {
+    left: 10px;
+  }
+
+  50% {
+    left: 20px;
+  }
+}
+
+
+@keyframes moveRight {
+
+  0%,
+  100% {
+    right: 10px;
+  }
+
+  50% {
+    right: 20px;
+  }
+}
+
+.rick-morty-img {
+  max-height: 130px;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  transform: scaleX(-1);
+  animation: moveRight 2s infinite;
+}
+
+.rick-morty-img-reverse {
+  transform: none;
+  right: 0;
+  left: 10px;
+  animation: moveLeft 2s infinite;
+}
+
+@media (max-width: 1000px) {
+  h1 {
+    font-size: 30px;
+  }
+
+  .main .main__tittle{
+    height: 35px;
+
+  }
+
+  .rick-morty-img {
+    max-height: 90px;
+    position: absolute;
+    top: 70px;
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .main .main__tittle{
+    height: 25px;
+
+  }
+
+  .result-img {
+    max-width: 60vw;
+  }
+
+  .rick-morty-img {
+    max-height: 70px;
+
+    transform: scaleX(-1) rotate(90deg);
+    top: 10px;
+  }
+
+  .rick-morty-img-reverse {
+    transform: scaleX(1) rotate(90deg);
+
   }
 }
