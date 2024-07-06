@@ -4,6 +4,7 @@ import { CharacterResponse } from '../types/types';
 
 interface Props {
   setCharactersFromResponse: (response: CharacterResponse) => void;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 interface SearchSectionState {
@@ -31,12 +32,16 @@ export class SearchSection extends Component<Props, SearchSectionState> {
   };
 
   handleSearch = async () => {
+    this.props.setIsLoading(true);
     const { query } = this.state;
     const trimmedQuery = query.trim();
-    const charactersResponse = await getCharacters(trimmedQuery);
+    setTimeout(async () => {
+      const charactersResponse = await getCharacters(trimmedQuery);
 
-    localStorage.setItem('searchQuery', trimmedQuery);
-    this.props.setCharactersFromResponse(charactersResponse);
+      localStorage.setItem('searchQuery', trimmedQuery);
+      this.props.setCharactersFromResponse(charactersResponse);
+      this.props.setIsLoading(false);
+    }, 1000);
   };
 
   handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

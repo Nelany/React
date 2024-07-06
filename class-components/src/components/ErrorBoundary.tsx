@@ -20,12 +20,11 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Uncaught error:', error, errorInfo);
-
   }
 
   render() {
     if (this.state.hasError) {
-      return <h1 className='error-content'>Something went wrong!</h1>;
+      return <h1 className="error-content">Something went wrong!</h1>;
     }
 
     return this.props.children;
