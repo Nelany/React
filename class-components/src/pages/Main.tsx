@@ -15,7 +15,7 @@ export default class Main extends Component {
   render() {
     return (
       <div className="main ">
-        <h1 className="main__tittle">Main</h1>
+        <h1 className="main__tittle">Rick and Morty</h1>
         <SearchSection
           setCharactersFromResponse={this.setCharactersFromResponse.bind(this)}
         />

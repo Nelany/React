@@ -18,6 +18,10 @@ export class SearchSection extends Component<Props, SearchSectionState> {
     };
   }
 
+  componentDidMount() {
+    this.handleSearch();
+  }
+
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ query: event.target.value });
   };

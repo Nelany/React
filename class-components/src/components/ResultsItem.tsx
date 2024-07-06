@@ -13,14 +13,14 @@ export class ResultsItem extends Component<Props> {
 
   render() {
     return (
-      <div className='results-item'>
+      <div className="results-item">
         <img src={this.props.character.image} alt="img" />
         <div>
           <h2>{this.props.name}</h2>
-          <h4>{`Status: ${this.props.character.status};
-          Species: ${this.props.character.species};
-          ${this.props.character.type && `Type: ${this.props.character.type};`}
-          Gender: ${this.props.character.gender};`}</h4>
+          <h4>{`Status: ${this.props.character.status};`}</h4>
+          <h4>{`Species: ${this.props.character.species};`}</h4>
+          <h4>{`${this.props.character.type && `Type: ${this.props.character.type};`}`}</h4>
+          <h4>{`Last known location: ${this.props.character.location.name};`}</h4>
         </div>
       </div>
     );
