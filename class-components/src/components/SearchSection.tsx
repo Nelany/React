@@ -33,9 +33,11 @@ export class SearchSection extends Component<Props, SearchSectionState> {
 
   handleSearch = async () => {
     const { query } = this.state;
-    localStorage.setItem('searchQuery', query);
-    const charactersResponse = await getCharacters(query);
+    const trimmedQuery = query.trim();
+    localStorage.setItem('searchQuery', trimmedQuery);
+    const charactersResponse = await getCharacters(trimmedQuery);
     this.props.setCharactersFromResponse(charactersResponse);
+    console.log('Response:', charactersResponse);
   };
 
   handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
