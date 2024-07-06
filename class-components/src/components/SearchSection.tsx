@@ -1,14 +1,17 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, Component, KeyboardEvent} from 'react';
+import { getCharacters } from '../api/api';
+import { CharacterResponse } from '../types/types';
+
+interface Props {
+  setCharactersFromResponse: (response: CharacterResponse) => void;
+}
 
 interface SearchSectionState {
   query: string;
 }
 
-export class SearchSection extends Component<
-  Record<string, unknown>,
-  SearchSectionState
-> {
-  constructor(props: Record<string, unknown>) {
+export class SearchSection extends Component<Props, SearchSectionState> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       query: '',
@@ -19,9 +22,17 @@ export class SearchSection extends Component<
     this.setState({ query: event.target.value });
   };
 
-  handleSearch = () => {
+  handleSearch = async () => {
     const { query } = this.state;
-    console.log('Searching for:', query);
+    const charactersResponse = await getCharacters(query);
+    this.props.setCharactersFromResponse(charactersResponse);
+    console.log('Response:', charactersResponse);
+  };
+
+  handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      this.handleSearch();
+    }
   };
 
   render() {
@@ -32,6 +43,7 @@ export class SearchSection extends Component<
           type="text"
           value={this.state.query}
           onChange={this.handleInputChange}
+          onKeyDown={this.handleKeyDown}
           placeholder="Enter text..."
         />
         <button onClick={this.handleSearch}>Search!</button>

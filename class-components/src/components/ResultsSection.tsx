@@ -1,58 +1,32 @@
 import { Component } from 'react';
 import { ResultsItem } from './ResultsItem';
+import { CharacterResponse } from '../types/types';
 
-export class ResultsSection extends Component {
+interface Props {
+  characterResponse: CharacterResponse | null;
+}
+
+export class ResultsSection extends Component<Props> {
   state = {};
+
+  constructor(props: Props) {
+    super(props);
+  }
 
   render() {
     return (
       <div className="section results-section">
         <h3>Results:</h3>
-        <ResultsItem
-          name={'Mewtwo'}
-          description={`Есть минуты, когда не тревожит
-Роковая нас жизни гроза.
-Кто-то на плечи руки положит,
-Кто-то ясно заглянет в глаза…
-И мгновенно житейское канет,
-Словно в темную пропасть без дна.
-И над пропастью медленно встанет
-Семицветной дугой тишина…
-И напев заглушенный и юный
-В затаенной затронет тиши
-Усыпленные жизнию струны
-Напряженной, как арфа, души…`}
-        />
-        <ResultsItem
-          name={'Mewtwo'}
-          description={`Есть минуты, когда не тревожит
-Роковая нас жизни гроза.
-Кто-то на плечи руки положит,
-Кто-то ясно заглянет в глаза…
-И мгновенно житейское канет,
-Словно в темную пропасть без дна.
-И над пропастью медленно встанет
-Семицветной дугой тишина…
-И напев заглушенный и юный
-В затаенной затронет тиши
-Усыпленные жизнию струны
-Напряженной, как арфа, души…`}
-        />
-        <ResultsItem
-          name={'Mewtwo'}
-          description={`Есть минуты, когда не тревожит
-Роковая нас жизни гроза.
-Кто-то на плечи руки положит,
-Кто-то ясно заглянет в глаза…
-И мгновенно житейское канет,
-Словно в темную пропасть без дна.
-И над пропастью медленно встанет
-Семицветной дугой тишина…
-И напев заглушенный и юный
-В затаенной затронет тиши
-Усыпленные жизнию струны
-Напряженной, как арфа, души…`}
-        />
+        {this.props.characterResponse &&
+          this.props.characterResponse.results.map((character) => {
+            return (
+              <ResultsItem
+                key={character.id}
+                name={character.name}
+                character={character}
+              />
+            );
+          })}
       </div>
     );
   }
