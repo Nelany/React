@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, KeyboardEvent} from 'react';
+import { ChangeEvent, Component, KeyboardEvent } from 'react';
 import { getCharacters } from '../api/api';
 import { CharacterResponse } from '../types/types';
 
@@ -19,7 +19,12 @@ export class SearchSection extends Component<Props, SearchSectionState> {
   }
 
   componentDidMount() {
-    this.handleSearch();
+    const lastQuery = localStorage.getItem('searchQuery');
+    if (lastQuery) {
+      this.setState({ query: lastQuery }, this.handleSearch);
+    } else {
+      this.handleSearch();
+    }
   }
 
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +33,9 @@ export class SearchSection extends Component<Props, SearchSectionState> {
 
   handleSearch = async () => {
     const { query } = this.state;
+    localStorage.setItem('searchQuery', query);
     const charactersResponse = await getCharacters(query);
     this.props.setCharactersFromResponse(charactersResponse);
-    console.log('Response:', charactersResponse);
   };
 
   handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
