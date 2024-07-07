@@ -22,6 +22,12 @@ module.exports = {
   plugins: ['react-refresh', '@typescript-eslint', 'import', 'react-compiler'],
 
   rules: {
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: '*', next: 'return' },
+      { blankLine: 'always', prev: 'block-like', next: '*' },
+      { blankLine: 'always', prev: '*', next: 'block-like' },
+    ],
     'react-compiler/react-compiler': 'error',
     'react-refresh/only-export-components': [
       'warn',

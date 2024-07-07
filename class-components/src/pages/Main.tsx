@@ -32,13 +32,14 @@ export default class Main extends Component {
     if (this.state.isError) {
       throw new Error('I crashed!');
     }
+
     return (
       <div className="main ">
         <img className="rick-morty-img" src="./rickmorty.png" alt="" />
         <img
           className="rick-morty-img rick-morty-img-reverse"
           src="./rickmorty.png"
-          alt=""
+          alt="Rick and Morty"
         />
 
         <h1 className="main__tittle">Rick and Morty</h1>

@@ -25,9 +25,9 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className='error-content-container'>
+        <div className="error-content-container">
           <h1 className="error-content">Something went wrong!</h1>
-          <img className='error-img' src="./cat.png" alt="" />
+          <img className="error-img" src="./cat.png" alt="Cat" />
         </div>
       );
     }

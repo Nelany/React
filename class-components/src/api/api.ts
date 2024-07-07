@@ -6,6 +6,7 @@ export const getCharacters = async (searchString?: string) => {
   if (searchString) {
     url.searchParams.set('name', searchString);
   }
+
   const characters = await fetch(url).then((response) => {
     return response.json();
   });

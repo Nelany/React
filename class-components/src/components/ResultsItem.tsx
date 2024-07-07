@@ -12,19 +12,17 @@ export class ResultsItem extends Component<Props> {
   }
 
   render() {
+    const { character } = this.props;
+
     return (
       <div className="results-item">
-        <img
-          className="result-img"
-          src={this.props.character.image}
-          alt="img"
-        />
+        <img className="result-img" src={character.image} alt="img" />
         <div>
           <h2>{this.props.name}</h2>
-          <h4>{`Status: ${this.props.character.status};`}</h4>
-          <h4>{`Species: ${this.props.character.species};`}</h4>
-          <h4>{`${this.props.character.type && `Type: ${this.props.character.type};`}`}</h4>
-          <h4>{`Last known location: ${this.props.character.location.name};`}</h4>
+          <h4>{`Status: ${character.status};`}</h4>
+          <h4>{`Species: ${character.species};`}</h4>
+          <h4>{`${character.type && `Type: ${character.type};`}`}</h4>
+          <h4>{`Last known location: ${character.location.name};`}</h4>
         </div>
       </div>
     );
