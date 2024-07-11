@@ -1,10 +1,14 @@
 const BASE_URL = 'https://rickandmortyapi.com/api/character/';
 
-export const getCharacters = async (searchString?: string) => {
+type Props = {searchString?: string, id?: string}
+
+export const getCharacters = async (props: Props) => {
   const url = new URL(BASE_URL);
 
-  if (searchString) {
-    url.searchParams.set('name', searchString);
+  if (props.searchString) {
+    url.searchParams.set('name', props.searchString);
+  } else if (props.id) {
+    url.pathname += `${props.id}`;
   }
 
   const characters = await fetch(url).then((response) => {

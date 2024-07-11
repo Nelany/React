@@ -1,29 +1,59 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './Details.scss';
+import { useEffect, useState } from 'react';
+import { getCharacters } from '../../api/api';
+import { Loader } from '../Loader/Loader';
+import { Character } from '../../types/types';
 
 export const Details = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [character, setCharacter] = useState<Character | null>(null);
 
   const handleClose = () => {
     navigate('/');
   };
+
+  const getDetails = async () => {
+    setIsLoading(true);
+
+    setTimeout(async () => {
+      const detailsResponse = await getCharacters({ id: id });
+      setCharacter(detailsResponse);
+      setIsLoading(false);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    if (id) {
+      getDetails();
+    }
+  }, [id]);
 
   return (
     <div className="details">
       <button className="details__close-button" onClick={handleClose}>
         X
       </button>
-      <img
-        className="details__img"
-        src="https://rickandmortyapi.com/api/character/avatar/31.jpeg"
-        alt="img"
-      />
-      <h2 className="h2-details">Baby Wizard</h2>
-      <h4 className="h4-details">Status: Alive</h4>
-      <h4 className="h4-details">Species: Alien</h4>
-      <h4 className="h4-details">
-        Last known location: Earth (Replacement Dimension)
-      </h4>
+
+      <Loader isLoading={isLoading} response={character || {}} />
+
+      {!isLoading && character && (
+        <>
+          <img className="details__img" src={character.image} alt="img" />
+          <h2 className="h2-details">{character.name}</h2>
+          <h4 className="h4-details">{`Status: ${character.status}`}</h4>
+          <h4 className="h4-details">{`Species: ${character.species}`}</h4>
+          {character.type && (
+            <h4 className="h4-details">{`Type: ${character.type}`}</h4>
+          )}
+          <h4 className="h4-details">{`Last known location: ${character.location.name}`}</h4>
+          <h4 className="h4-details">{`Gender: ${character.gender}`}</h4>
+          <h4 className="h4-details">{`Origin: ${character.origin.name}`}</h4>
+          <h4 className="h4-details">{`Created: ${new Date(character.created).toLocaleString()}`}</h4>
+        </>
+      )}
     </div>
   );
 };

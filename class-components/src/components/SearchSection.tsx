@@ -15,7 +15,12 @@ export const SearchSection = ({
   const [query, setQuery] = useLocalStorage('searchQuery', '');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
     setQuery(event.target.value);
+  };
+
+  const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    event.stopPropagation();
   };
 
   const handleSearch = async (searchQuery?: string) => {
@@ -25,16 +30,23 @@ export const SearchSection = ({
     const trimmedQuery = queryToSearch.trim();
 
     setTimeout(async () => {
-      const charactersResponse = await getCharacters(trimmedQuery);
+      const charactersResponse = await getCharacters({
+        searchString: trimmedQuery,
+      });
       localStorage.setItem('searchQuery', trimmedQuery);
       setCharactersFromResponse(charactersResponse);
       setIsLoading(false);
     }, 1000);
   };
 
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    handleSearch(query);
+  };
+
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      handleSearch();
+      handleSearch(query);
     }
   };
 
@@ -51,11 +63,12 @@ export const SearchSection = ({
         className="search-input"
         type="text"
         value={query}
+        onClick={handleInputClick}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder="Enter text..."
       />
-      <button onClick={() => handleSearch(query)}>Search!</button>
+      <button onClick={handleButtonClick}>Search!</button>
     </div>
   );
 };

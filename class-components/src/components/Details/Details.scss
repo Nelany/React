@@ -50,7 +50,7 @@
 .details__close-button {
   align-self: end;
   margin-bottom: 10px;
-  padding: 0.2em 0.6em 0.3em 0.5em;
+  padding: 0.5em 0.9em 0.6em 0.8em;
   background-color: $lightTransparent;
   border: 1px solid $lightTransparent;
   font-weight: 300;
@@ -59,5 +59,9 @@
 @media (max-width: 600px) {
   .details {
     padding: 10px;
+  }
+
+  .details__close-button {
+    padding: 0.2em 0.6em 0.3em 0.5em;
   }
 }

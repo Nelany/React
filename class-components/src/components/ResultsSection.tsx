@@ -1,5 +1,6 @@
 import { ResultsItem } from './ResultsItem/ResultsItem';
 import { CharacterResponse } from '../types/types';
+import { Loader } from './Loader/Loader';
 
 interface Props {
   characterResponse: CharacterResponse | null;
@@ -10,14 +11,8 @@ export const ResultsSection = ({ characterResponse, isLoading }: Props) => {
   return (
     <div className="section results-section">
       <h3>Results:</h3>
-      {isLoading && (
-        <div className="spinner-container">
-          <img className="spinner" src="/spinner.png" alt="Loading..." />
-        </div>
-      )}
-      {!isLoading && characterResponse?.error && (
-        <h4>{`${characterResponse.error}!`}</h4>
-      )}
+      <Loader isLoading={isLoading} response={characterResponse || {}} />
+
       {!isLoading &&
         characterResponse?.results &&
         characterResponse.results.map((character) => (

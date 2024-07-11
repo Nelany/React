@@ -16,15 +16,10 @@ export const ResultsItem = ({ name, character }: Props) => {
   };
 
   return (
-    <div
-      onClick={openCheckedId}
-      datatype={`${character.id}`}
-      className="results-item"
-    >
+    <div onClick={openCheckedId} className="results-item">
       <img className="result-img" src={character.image} alt="img" />
       <div>
         <h2>{name}</h2>
-        <h2>{character.id}</h2>
 
         <h4>{`Status: ${character.status}`}</h4>
         <h4>{`Species: ${character.species}`}</h4>
