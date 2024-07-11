@@ -11,7 +11,9 @@ export const Loader = ({ isLoading, response }: Props) => {
           <img className="spinner" src="/spinner.png" alt="Loading..." />
         </div>
       )}
-      {!isLoading && response?.error && <h4>{`${response.error}!`}</h4>}
+      {!isLoading && response?.error && (
+        <h4 className="error-message">Character not found!</h4>
+      )}
     </>
   );
 };

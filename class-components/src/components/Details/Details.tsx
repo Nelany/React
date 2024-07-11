@@ -20,6 +20,7 @@ export const Details = () => {
 
     setTimeout(async () => {
       const detailsResponse = await getCharacters({ id: id });
+
       setCharacter(detailsResponse);
       setIsLoading(false);
     }, 1000);
@@ -39,7 +40,7 @@ export const Details = () => {
 
       <Loader isLoading={isLoading} response={character || {}} />
 
-      {!isLoading && character && (
+      {!isLoading && character && !character?.error && (
         <>
           <img className="details__img" src={character.image} alt="img" />
           <h2 className="h2-details">{character.name}</h2>

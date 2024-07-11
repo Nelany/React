@@ -1,9 +1,9 @@
-import { SearchSection } from '../components/SearchSection';
-import { ResultsSection } from '../components/ResultsSection';
-import { CharacterResponse } from '../types/types';
 import './Main.scss';
 import { useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { CharacterResponse } from '../../types/types';
+import { SearchSection } from '../../components/SearchSection';
+import { ResultsSection } from '../../components/ResultsSection';
 
 export const Main = () => {
   const navigate = useNavigate();

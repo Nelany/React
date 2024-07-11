@@ -27,7 +27,7 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="error-content-container">
           <h1 className="error-content">Something went wrong!</h1>
-          <img className="error-img" src="./cat.png" alt="Cat" />
+          <img className="error-img" src="/cat.png" alt="Cat" />
         </div>
       );
     }

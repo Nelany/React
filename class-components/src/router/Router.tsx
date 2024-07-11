@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Main } from '../pages/Main';
 import { Details } from '../components/Details/Details';
+import { NotFound } from '../pages/NotFound/NotFound';
+import { Main } from '../pages/Main/Main';
 
 export const router = createBrowserRouter([
   {
@@ -8,5 +9,5 @@ export const router = createBrowserRouter([
     element: <Main />,
     children: [{ path: 'details/:id', element: <Details /> }],
   },
-  { path: '*', element: <div>Not Found</div> },
+  { path: '*', element: <NotFound /> },
 ]);
