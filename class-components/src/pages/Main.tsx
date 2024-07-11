@@ -38,12 +38,16 @@ export const Main = () => {
         Create an error!
       </button>
 
-      <ResultsSection
-        isLoading={isLoading}
-        characterResponse={characterResponse}
-      />
+      <div className="main__results-container">
+        <ResultsSection
+          isLoading={isLoading}
+          characterResponse={characterResponse}
+        />
 
-      <Outlet />
+        <div className="main__outlet main__outlet-hidden">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 };
