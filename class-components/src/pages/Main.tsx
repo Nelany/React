@@ -1,62 +1,46 @@
-import { Component } from 'react';
 import { SearchSection } from '../components/SearchSection';
 import { ResultsSection } from '../components/ResultsSection';
 import { CharacterResponse } from '../types/types';
+import './Main.scss';
+import { useState } from 'react';
 
-interface MainState {
-  characterResponse: CharacterResponse | null;
-  isError: boolean;
-  isLoading: boolean;
-}
+export const Main = () => {
+  const [characterResponse, setCharacterResponse] =
+    useState<CharacterResponse | null>(null);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-export default class Main extends Component {
-  state: MainState = {
-    characterResponse: null,
-    isError: false,
-    isLoading: false,
+  const handleErrorClick = () => {
+    setIsError(true);
   };
 
-  setCharactersFromResponse(characterResponse: CharacterResponse) {
-    this.setState({ characterResponse });
+  if (isError) {
+    throw new Error('I crashed!');
   }
 
-  setIsLoading(isLoading: boolean) {
-    this.setState({ isLoading });
-  }
+  return (
+    <div className="main">
+      <img className="rick-morty-img" src="./rickmorty.png" alt="" />
+      <img
+        className="rick-morty-img rick-morty-img-reverse"
+        src="./rickmorty.png"
+        alt="Rick and Morty"
+      />
 
-  handleErrorClick = () => {
-    this.setState({ isError: true });
-  };
+      <h1 className="main__tittle">Rick and Morty</h1>
+      <SearchSection
+        setCharactersFromResponse={setCharacterResponse}
+        setIsLoading={setIsLoading}
+      />
 
-  render() {
-    if (this.state.isError) {
-      throw new Error('I crashed!');
-    }
+      <button className="error-button" onClick={handleErrorClick}>
+        Create an error!
+      </button>
 
-    return (
-      <div className="main ">
-        <img className="rick-morty-img" src="./rickmorty.png" alt="" />
-        <img
-          className="rick-morty-img rick-morty-img-reverse"
-          src="./rickmorty.png"
-          alt="Rick and Morty"
-        />
-
-        <h1 className="main__tittle">Rick and Morty</h1>
-        <SearchSection
-          setCharactersFromResponse={this.setCharactersFromResponse.bind(this)}
-          setIsLoading={this.setIsLoading.bind(this)}
-        />
-
-        <button className="error-button" onClick={this.handleErrorClick}>
-          Create an error!
-        </button>
-
-        <ResultsSection
-          isLoading={this.state.isLoading}
-          characterResponse={this.state.characterResponse}
-        />
-      </div>
-    );
-  }
-}
+      <ResultsSection
+        isLoading={isLoading}
+        characterResponse={characterResponse}
+      />
+    </div>
+  );
+};
