@@ -3,6 +3,7 @@ import { ResultsSection } from '../components/ResultsSection';
 import { CharacterResponse } from '../types/types';
 import './Main.scss';
 import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 export const Main = () => {
   const [characterResponse, setCharacterResponse] =
@@ -41,6 +42,8 @@ export const Main = () => {
         isLoading={isLoading}
         characterResponse={characterResponse}
       />
+
+      <Outlet />
     </div>
   );
 };
