@@ -1,8 +1,18 @@
+import { useNavigate } from 'react-router-dom';
 import './Details.scss';
 
 export const Details = () => {
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    navigate('/');
+  };
+
   return (
     <div className="details">
+      <button className="details__close-button" onClick={handleClose}>
+        X
+      </button>
       <img
         className="details__img"
         src="https://rickandmortyapi.com/api/character/avatar/31.jpeg"

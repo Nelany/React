@@ -6,7 +6,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <Main />,
-    children: [{ path: 'details', element: <Details /> }],
+    children: [{ path: 'details/:id', element: <Details /> }],
   },
   { path: '*', element: <div>Not Found</div> },
 ]);

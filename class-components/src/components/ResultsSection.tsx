@@ -1,4 +1,4 @@
-import { ResultsItem } from './ResultsItem';
+import { ResultsItem } from './ResultsItem/ResultsItem';
 import { CharacterResponse } from '../types/types';
 
 interface Props {
@@ -12,7 +12,7 @@ export const ResultsSection = ({ characterResponse, isLoading }: Props) => {
       <h3>Results:</h3>
       {isLoading && (
         <div className="spinner-container">
-          <img className="spinner" src="./spinner.png" alt="Loading..." />
+          <img className="spinner" src="/spinner.png" alt="Loading..." />
         </div>
       )}
       {!isLoading && characterResponse?.error && (
