@@ -1,0 +1,39 @@
+@import '../../utils/variables.scss';
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: 900;
+  justify-self: center;
+  gap: 10px;
+
+  .pagination__element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: $radius;
+  }
+
+  .pagination__button {
+    width: 40px;
+    height: 40px;
+    background-color: $transparent;
+    padding-bottom: 5px;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
+
+  .pagination__button:hover {
+    background-color: $shadow;
+    color: $light;
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px $black;
+  }
+
+  @media(max-width: 600px){
+    font-size: 20px;
+  }
+}
