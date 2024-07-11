@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Character } from '../../types/types';
 import './ResultsItem.scss';
 
@@ -9,10 +9,14 @@ interface Props {
 
 export const ResultsItem = ({ name, character }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const page = searchParams.get('page') || '1';
 
   const openCheckedId = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate(`/details/${character.id}`);
+    searchParams.set('page', String(page));
+    navigate(`/details/${character.id}/?${searchParams.toString()}`);
   };
 
   return (

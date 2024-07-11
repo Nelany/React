@@ -6,6 +6,7 @@ import { Main } from '../pages/Main/Main';
 export const router = createBrowserRouter([
   {
     path: '/',
+    // path: '/:page?',
     element: <Main />,
     children: [{ path: 'details/:id', element: <Details /> }],
   },

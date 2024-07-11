@@ -1,6 +1,6 @@
 import './Main.scss';
 import { useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CharacterResponse } from '../../types/types';
 import { SearchSection } from '../../components/SearchSection';
 import { ResultsSection } from '../../components/ResultsSection';
@@ -8,6 +8,9 @@ import { ResultsSection } from '../../components/ResultsSection';
 export const Main = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const page = searchParams.get('page') || '1';
 
   const [characterResponse, setCharacterResponse] =
     useState<CharacterResponse | null>(null);
@@ -23,7 +26,8 @@ export const Main = () => {
   }
 
   const closeDetails = () => {
-    navigate(`/`);
+    searchParams.set('page', String(page));
+    navigate(`/?${searchParams.toString()}`);
   };
 
   const onClick = (e: React.MouseEvent) => {

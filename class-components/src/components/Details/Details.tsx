@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './Details.scss';
 import { useEffect, useState } from 'react';
 import { getCharacters } from '../../api/api';
@@ -10,9 +10,13 @@ export const Details = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [character, setCharacter] = useState<Character | null>(null);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const page = searchParams.get('page') || '1';
 
   const handleClose = () => {
-    navigate('/');
+    searchParams.set('page', String(page));
+    navigate(`/?${searchParams.toString()}`);
   };
 
   const getDetails = async () => {
