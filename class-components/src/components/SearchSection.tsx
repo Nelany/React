@@ -1,30 +1,34 @@
-import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
+import { useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { getCharacters } from '../api/api';
 import { CharacterResponse } from '../types/types';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 interface Props {
   setCharactersFromResponse: (response: CharacterResponse) => void;
   setIsLoading: (isLoading: boolean) => void;
 }
 
-export const SearchSection = (props: Props) => {
-  const [query, setQuery] = useState<string>('');
+export const SearchSection = ({
+  setIsLoading,
+  setCharactersFromResponse,
+}: Props) => {
+  const [query, setQuery] = useLocalStorage('searchQuery', '');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   };
 
   const handleSearch = async (searchQuery?: string) => {
-    props.setIsLoading(true);
+    setIsLoading(true);
 
-    const queryToSearch = searchQuery !== undefined ? searchQuery : query;
+    const queryToSearch = searchQuery !== undefined ? searchQuery : '';
     const trimmedQuery = queryToSearch.trim();
 
     setTimeout(async () => {
       const charactersResponse = await getCharacters(trimmedQuery);
       localStorage.setItem('searchQuery', trimmedQuery);
-      props.setCharactersFromResponse(charactersResponse);
-      props.setIsLoading(false);
+      setCharactersFromResponse(charactersResponse);
+      setIsLoading(false);
     }, 1000);
   };
 
@@ -35,12 +39,9 @@ export const SearchSection = (props: Props) => {
   };
 
   useEffect(() => {
-    const lastQuery = localStorage.getItem('searchQuery');
-
-    if (lastQuery) {
-      setQuery(lastQuery);
-
-      handleSearch(lastQuery);
+    if (query) {
+      setQuery(query);
+      handleSearch(query);
     } else handleSearch();
   }, []);
 
@@ -54,7 +55,7 @@ export const SearchSection = (props: Props) => {
         onKeyDown={handleKeyDown}
         placeholder="Enter text..."
       />
-      <button onClick={() => handleSearch()}>Search!</button>
+      <button onClick={() => handleSearch(query)}>Search!</button>
     </div>
   );
 };
