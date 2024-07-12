@@ -12,6 +12,8 @@ export const Main = () => {
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
   const [ifNextPage, setIfNextPage] = useState<boolean>(false);
+  const [ifReturnToRickNMorty, setIfReturnToRickNMorty] =
+    useState<boolean>(false);
 
   const [characterResponse, setCharacterResponse] =
     useState<CharacterResponse | null>(null);
@@ -46,9 +48,11 @@ export const Main = () => {
 
       <h1 className="main__tittle">Rick and Morty</h1>
       <SearchSection
+        key={String(ifReturnToRickNMorty)}
         setCharactersFromResponse={setCharacterResponse}
         setIsLoading={setIsLoading}
         setIfNextPage={setIfNextPage}
+        ifReturnToRickNMorty={ifReturnToRickNMorty}
       />
 
       <button className="error-button" onClick={handleErrorClick}>
@@ -60,6 +64,7 @@ export const Main = () => {
           isLoading={isLoading}
           characterResponse={characterResponse}
           ifNextPage={ifNextPage}
+          setIfReturnToRickNMorty={setIfReturnToRickNMorty}
         />
 
         <div

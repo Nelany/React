@@ -15,8 +15,7 @@ export const Details = () => {
   const page = searchParams.get('page') || '1';
 
   const handleClose = () => {
-    searchParams.set('page', String(page));
-    navigate(`/?${searchParams.toString()}`);
+    navigate(`/?${page}`);
   };
 
   const getDetails = async () => {

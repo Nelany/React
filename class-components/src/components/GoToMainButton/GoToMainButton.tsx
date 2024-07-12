@@ -1,13 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import './GoToMainButton.scss';
+import { Dispatch, SetStateAction } from 'react';
 
-export const GoToMainButton = () => {
+type Props = {
+  setIfReturnToRickNMorty?: Dispatch<SetStateAction<boolean>>;
+};
+
+export const GoToMainButton = ({ setIfReturnToRickNMorty }: Props) => {
   const navigate = useNavigate();
 
-  const navigateToMain = () => {
+  const navigateToMain = (e: React.MouseEvent) => {
+    e.stopPropagation();
     localStorage.setItem('searchQuery', '');
-    navigate('/');
-    window.location.reload();
+    navigate('/', { replace: true });
+
+    if (setIfReturnToRickNMorty) {
+      setIfReturnToRickNMorty((prev: boolean) => !prev);
+    }
+    // window.location.reload();
   };
 
   return (

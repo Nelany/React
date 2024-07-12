@@ -8,12 +8,14 @@ interface Props {
   setCharactersFromResponse: (response: CharacterResponse) => void;
   setIsLoading: (isLoading: boolean) => void;
   setIfNextPage: (ifNextPage: boolean) => void;
+  ifReturnToRickNMorty: boolean;
 }
 
 export const SearchSection = ({
   setIsLoading,
   setCharactersFromResponse,
   setIfNextPage,
+  ifReturnToRickNMorty,
 }: Props) => {
   const [query, setQuery] = useLocalStorage('searchQuery', '');
   const location = useLocation();
@@ -66,7 +68,7 @@ export const SearchSection = ({
 
   useEffect(() => {
     if (query) {
-      setQuery(query);
+      console.log(ifReturnToRickNMorty);
       handleSearch(query);
     } else handleSearch();
   }, [page]);
