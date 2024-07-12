@@ -1,4 +1,4 @@
-import { useEffect, ChangeEvent, KeyboardEvent } from 'react';
+import { useEffect, ChangeEvent, KeyboardEvent, useState } from 'react';
 import { getCharacters } from '../api/api';
 import { CharacterResponse } from '../types/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -8,16 +8,15 @@ interface Props {
   setCharactersFromResponse: (response: CharacterResponse) => void;
   setIsLoading: (isLoading: boolean) => void;
   setIfNextPage: (ifNextPage: boolean) => void;
-  ifReturnToRickNMorty: boolean;
 }
 
 export const SearchSection = ({
   setIsLoading,
   setCharactersFromResponse,
   setIfNextPage,
-  ifReturnToRickNMorty,
 }: Props) => {
   const [query, setQuery] = useLocalStorage('searchQuery', '');
+  const [inputValue, setInputValue] = useState<string>(query);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
@@ -25,7 +24,7 @@ export const SearchSection = ({
   const { id } = useParams();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
+    setInputValue(event.target.value);
   };
 
   const handleSearch = async (searchQuery?: string) => {
@@ -53,22 +52,25 @@ export const SearchSection = ({
     }, 1000);
   };
 
+  const prepareSearch = () => {
+    setQuery(inputValue);
+    searchParams.set('page', '1');
+    handleSearch(inputValue);
+  };
+
   const handleSearchButton = (e: React.MouseEvent) => {
     e.stopPropagation();
-    searchParams.set('page', String(1));
-    handleSearch(query);
+    prepareSearch();
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      searchParams.set('page', String(1));
-      handleSearch(query);
+      prepareSearch();
     }
   };
 
   useEffect(() => {
     if (query) {
-      console.log(ifReturnToRickNMorty);
       handleSearch(query);
     } else handleSearch();
   }, [page]);
@@ -78,7 +80,7 @@ export const SearchSection = ({
       <input
         className="search-input"
         type="text"
-        value={query}
+        value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder="Enter text..."

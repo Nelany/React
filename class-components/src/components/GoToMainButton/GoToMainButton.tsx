@@ -17,7 +17,6 @@ export const GoToMainButton = ({ setIfReturnToRickNMorty }: Props) => {
     if (setIfReturnToRickNMorty) {
       setIfReturnToRickNMorty((prev: boolean) => !prev);
     }
-    // window.location.reload();
   };
 
   return (

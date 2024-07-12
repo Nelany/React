@@ -32,12 +32,3 @@ export const router = createBrowserRouter([
     ),
   },
 ]);
-// export const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <Main />,
-//     errorElement: <ErrorBoundary />,
-//     children: [{ path: 'details/:id', element: <Details /> }],
-//   },
-//   { path: '*', element: <NotFound /> },
-// ]);

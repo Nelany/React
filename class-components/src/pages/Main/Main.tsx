@@ -52,7 +52,6 @@ export const Main = () => {
         setCharactersFromResponse={setCharacterResponse}
         setIsLoading={setIsLoading}
         setIfNextPage={setIfNextPage}
-        ifReturnToRickNMorty={ifReturnToRickNMorty}
       />
 
       <button className="error-button" onClick={handleErrorClick}>
