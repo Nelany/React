@@ -1,7 +1,7 @@
-import { ResultsItem } from './ResultsItem/ResultsItem';
-import { CharacterResponse } from '../types/types';
-import { Loader } from './Loader/Loader';
-import { Pagination } from './Pagination/Pagination';
+import { ResultsItem } from '../ResultsItem/ResultsItem';
+import { CharacterResponse } from '../../types/types';
+import { Loader } from '../Loader/Loader';
+import { Pagination } from '../Pagination/Pagination';
 import { Dispatch, SetStateAction } from 'react';
 
 interface Props {

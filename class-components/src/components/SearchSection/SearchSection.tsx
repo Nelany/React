@@ -1,7 +1,7 @@
 import { useEffect, ChangeEvent, KeyboardEvent, useState } from 'react';
-import { getCharacters } from '../api/api';
-import { CharacterResponse } from '../types/types';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { getCharacters } from '../../api/api';
+import { CharacterResponse } from '../../types/types';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 interface Props {

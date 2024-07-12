@@ -2,8 +2,8 @@ import './Main.scss';
 import { useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CharacterResponse } from '../../types/types';
-import { SearchSection } from '../../components/SearchSection';
-import { ResultsSection } from '../../components/ResultsSection';
+import { SearchSection } from '../../components/SearchSection/SearchSection';
+import { ResultsSection } from '../../components/ResultSection/ResultsSection';
 
 export const Main = () => {
   const navigate = useNavigate();
