@@ -23,7 +23,6 @@ export const SearchSection = ({
   const { id } = useParams();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log('ddd');
     setQuery(event.target.value);
   };
 

@@ -2,13 +2,42 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Details } from '../components/Details/Details';
 import { NotFound } from '../pages/NotFound/NotFound';
 import { Main } from '../pages/Main/Main';
+import { ErrorBoundaryWrapper } from '../components/ErrorBoundary/ErrorBoundaryWrapper';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    // path: '/:page?',
-    element: <Main />,
-    children: [{ path: 'details/:id', element: <Details /> }],
+    element: (
+      <ErrorBoundaryWrapper>
+        <Main />
+      </ErrorBoundaryWrapper>
+    ),
+    children: [
+      {
+        path: 'details/:id',
+        element: (
+          <ErrorBoundaryWrapper>
+            <Details />
+          </ErrorBoundaryWrapper>
+        ),
+      },
+    ],
   },
-  { path: '*', element: <NotFound /> },
+  {
+    path: '*',
+    element: (
+      <ErrorBoundaryWrapper>
+        <NotFound />
+      </ErrorBoundaryWrapper>
+    ),
+  },
 ]);
+// export const router = createBrowserRouter([
+//   {
+//     path: '/',
+//     element: <Main />,
+//     errorElement: <ErrorBoundary />,
+//     children: [{ path: 'details/:id', element: <Details /> }],
+//   },
+//   { path: '*', element: <NotFound /> },
+// ]);

@@ -14,8 +14,6 @@ export const ResultsSection = ({
   isLoading,
   ifNextPage,
 }: Props) => {
-  console.log(characterResponse);
-
   return (
     <div className="section results-section">
       <h3>Results:</h3>
