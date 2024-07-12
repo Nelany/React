@@ -2,23 +2,38 @@ import { useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { getCharacters } from '../api/api';
 import { CharacterResponse } from '../types/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 interface Props {
   setCharactersFromResponse: (response: CharacterResponse) => void;
   setIsLoading: (isLoading: boolean) => void;
+  setIfNextPage: (ifNextPage: boolean) => void;
 }
 
 export const SearchSection = ({
   setIsLoading,
   setCharactersFromResponse,
+  setIfNextPage,
 }: Props) => {
   const [query, setQuery] = useLocalStorage('searchQuery', '');
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const page = searchParams.get('page') || '1';
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log('ddd');
     setQuery(event.target.value);
   };
 
   const handleSearch = async (searchQuery?: string) => {
+    if (id) {
+      navigate(`/details/${id}/?${searchParams.toString()}`);
+    } else {
+      navigate(`/?${searchParams.toString()}`);
+    }
+
     setIsLoading(true);
 
     const queryToSearch = searchQuery !== undefined ? searchQuery : '';
@@ -27,15 +42,25 @@ export const SearchSection = ({
     setTimeout(async () => {
       const charactersResponse = await getCharacters({
         searchString: trimmedQuery,
+        page: page,
       });
+
       localStorage.setItem('searchQuery', trimmedQuery);
       setCharactersFromResponse(charactersResponse);
+      setIfNextPage(Boolean(charactersResponse?.info?.next));
       setIsLoading(false);
     }, 1000);
   };
 
+  const handleSearchButton = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    searchParams.set('page', String(1));
+    handleSearch(query);
+  };
+
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
+      searchParams.set('page', String(1));
       handleSearch(query);
     }
   };
@@ -45,7 +70,7 @@ export const SearchSection = ({
       setQuery(query);
       handleSearch(query);
     } else handleSearch();
-  }, []);
+  }, [page]);
 
   return (
     <div className="section search-section">
@@ -57,7 +82,7 @@ export const SearchSection = ({
         onKeyDown={handleKeyDown}
         placeholder="Enter text..."
       />
-      <button onClick={() => handleSearch(query)}>Search!</button>
+      <button onClick={handleSearchButton}>Search!</button>
     </div>
   );
 };

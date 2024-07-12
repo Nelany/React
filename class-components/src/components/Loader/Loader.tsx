@@ -1,4 +1,5 @@
 import { Character, CharacterResponse } from '../../types/types';
+import { GoToMainButton } from '../GoToMainButton/GoToMainButton';
 import './Loader.scss';
 
 type Props = { isLoading: boolean; response: CharacterResponse | Character };
@@ -12,7 +13,10 @@ export const Loader = ({ isLoading, response }: Props) => {
         </div>
       )}
       {!isLoading && response?.error && (
-        <h4 className="error-message">Character not found!</h4>
+        <>
+          <h4 className="error-message">There is nothing here!</h4>
+          <GoToMainButton />
+        </>
       )}
     </>
   );

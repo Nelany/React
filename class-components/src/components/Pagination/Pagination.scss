@@ -33,6 +33,11 @@
     box-shadow: 0 3px 8px $black;
   }
 
+  .pagination__button-disabled{
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
   @media(max-width: 600px){
     font-size: 20px;
   }

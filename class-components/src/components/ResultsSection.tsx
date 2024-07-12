@@ -6,9 +6,16 @@ import { Pagination } from './Pagination/Pagination';
 interface Props {
   characterResponse: CharacterResponse | null;
   isLoading: boolean;
+  ifNextPage: boolean;
 }
 
-export const ResultsSection = ({ characterResponse, isLoading }: Props) => {
+export const ResultsSection = ({
+  characterResponse,
+  isLoading,
+  ifNextPage,
+}: Props) => {
+  console.log(characterResponse);
+
   return (
     <div className="section results-section">
       <h3>Results:</h3>
@@ -23,7 +30,7 @@ export const ResultsSection = ({ characterResponse, isLoading }: Props) => {
               character={character}
             />
           ))}
-          <Pagination />
+          <Pagination ifNextPage={ifNextPage} />
         </>
       )}
     </div>

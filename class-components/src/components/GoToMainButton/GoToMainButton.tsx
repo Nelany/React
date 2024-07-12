@@ -5,7 +5,9 @@ export const GoToMainButton = () => {
   const navigate = useNavigate();
 
   const navigateToMain = () => {
+    localStorage.setItem('searchQuery', '');
     navigate('/');
+    window.location.reload();
   };
 
   return (

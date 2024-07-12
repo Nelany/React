@@ -11,6 +11,7 @@ export const Main = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
+  const [ifNextPage, setIfNextPage] = useState<boolean>(false);
 
   const [characterResponse, setCharacterResponse] =
     useState<CharacterResponse | null>(null);
@@ -47,6 +48,7 @@ export const Main = () => {
       <SearchSection
         setCharactersFromResponse={setCharacterResponse}
         setIsLoading={setIsLoading}
+        setIfNextPage={setIfNextPage}
       />
 
       <button className="error-button" onClick={handleErrorClick}>
@@ -57,6 +59,7 @@ export const Main = () => {
         <ResultsSection
           isLoading={isLoading}
           characterResponse={characterResponse}
+          ifNextPage={ifNextPage}
         />
 
         <div
