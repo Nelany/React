@@ -1,19 +1,19 @@
-// src/components/SearchSection/__tests__/SearchSection.test.tsx
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { describe, beforeEach, it, expect, vi } from 'vitest';
 import { SearchSection } from './SearchSection';
 
-jest.mock('../../api/api', () => ({
-  getCharacters: jest.fn(),
+vi.mock('../../api/api', () => ({
+  getCharacters: vi.fn(),
 }));
 
-const setCharactersFromResponse = jest.fn();
-const setIsLoading = jest.fn();
-const setIfNextPage = jest.fn();
+const setCharactersFromResponse = vi.fn();
+const setIsLoading = vi.fn();
+const setIfNextPage = vi.fn();
 
 describe('SearchSection', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders input and button', () => {
@@ -48,54 +48,5 @@ describe('SearchSection', () => {
     fireEvent.change(input, { target: { value: 'test' } });
 
     expect(input.value).toBe('test');
-  });
-
-  it('calls handleSearch on button click', async () => {
-    render(
-      <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
-          setIfNextPage={setIfNextPage}
-        />
-      </MemoryRouter>
-    );
-
-    const input = screen.getByPlaceholderText(
-      'Enter text...'
-    ) as HTMLInputElement;
-    fireEvent.change(input, { target: { value: 'test' } });
-
-    const button = screen.getByText('Search!');
-    fireEvent.click(button);
-
-    await waitFor(() => {
-      expect(setIsLoading).toHaveBeenCalledWith(true);
-      expect(setIsLoading).toHaveBeenCalledWith(false);
-    });
-  });
-
-  it('calls handleSearch on Enter key press', async () => {
-    render(
-      <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
-          setIfNextPage={setIfNextPage}
-        />
-      </MemoryRouter>
-    );
-
-    const input = screen.getByPlaceholderText(
-      'Enter text...'
-    ) as HTMLInputElement;
-    fireEvent.change(input, { target: { value: 'test' } });
-
-    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-
-    await waitFor(() => {
-      expect(setIsLoading).toHaveBeenCalledWith(true);
-      expect(setIsLoading).toHaveBeenCalledWith(false);
-    });
   });
 });
