@@ -1,5 +1,4 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
-import { GoToMainButton } from '../GoToMainButton/GoToMainButton';
 
 interface Props {
   children: ReactNode;
@@ -29,7 +28,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="error-content-container">
           <h1 className="error-content">Something went wrong!</h1>
           <img className="error-img" src="/cat.png" alt="Cat" />
-          <GoToMainButton />
+          <h3 className="error-boundary-h3">Reload the application please!</h3>
         </div>
       );
     }
