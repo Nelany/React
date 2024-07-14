@@ -5,12 +5,13 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 50px;
+  gap: 10px 50px;
   margin-bottom: 30px;
   padding: 5px;
   box-sizing: border-box;
   background-color: $transparent;
   transition: all 0.4s;
+  cursor:pointer
 }
 
 .results-item:hover {

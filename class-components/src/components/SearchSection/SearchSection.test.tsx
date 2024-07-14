@@ -27,8 +27,8 @@ describe('SearchSection', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByPlaceholderText('Enter text...')).toBeTruthy();
-    expect(screen.getByText('Search!')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Enter text...')).toBeInTheDocument();
+    expect(screen.getByText('Search!')).toBeInTheDocument();
   });
 
   it('updates input value on change', () => {
