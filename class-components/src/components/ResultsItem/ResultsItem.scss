@@ -1,0 +1,40 @@
+@import '../../utils/variables.scss';
+
+.results-item {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 50px;
+  margin-bottom: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: $transparent;
+  transition: all 0.4s;
+  cursor:pointer
+}
+
+.results-item:hover {
+  background-color: $lightHover;
+  transform: scale(1.005);
+  box-shadow: 0 3px 8px $shadow;
+}
+
+@media (max-width: 1000px) {
+
+  .results-item {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .result-img {
+    max-width: 90%;
+  }
+
+  .results-item {
+    gap: 10px;
+  }
+}

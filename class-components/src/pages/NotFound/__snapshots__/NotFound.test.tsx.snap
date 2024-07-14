@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders NotFound component correctly 1`] = `
+<div>
+  <div
+    class="error-content-container"
+  >
+    <h1
+      class="error-content"
+    >
+      Ooops... Page not found!
+    </h1>
+    <img
+      alt="Cat"
+      class="error-img"
+      src="/cat.png"
+    />
+    <button
+      class="go-to-main-button"
+    >
+      Return to Rick and Morty!
+    </button>
+  </div>
+</div>
+`;

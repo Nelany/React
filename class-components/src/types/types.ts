@@ -14,7 +14,7 @@ export type Character = {
   name: string;
   status: string;
   species: string;
-  type: string;
+  type?: string;
   gender: string;
   origin: {
     name: string;
@@ -28,4 +28,5 @@ export type Character = {
   episode: string[];
   url: string;
   created: string;
+  error?: string;
 };

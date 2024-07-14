@@ -48,6 +48,7 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'react-hooks/exhaustive-deps': 'off',
   },
 
   settings: {

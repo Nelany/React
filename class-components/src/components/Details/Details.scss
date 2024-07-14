@@ -1,0 +1,67 @@
+@import '../../utils/variables.scss';
+
+.details {
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  gap: 10px;
+}
+
+.details::-webkit-scrollbar {
+  width: 8px;
+}
+
+.details::-webkit-scrollbar-track {
+  background: $lightTransparent;
+  border-radius: 4px;
+}
+
+.details::-webkit-scrollbar-thumb {
+  background: $lightTransparent;
+  border-radius: 4px;
+}
+
+.details::-webkit-scrollbar-thumb:hover {
+  background: $light
+}
+
+.h2-details {
+  display: inline-block;
+  background-image: linear-gradient(25deg, $orange, $orange, $yellow, $yellow, $orange, $orange);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.h4-details {
+  width: 100%;
+}
+
+.details__img {
+  max-width: 95%;
+}
+
+.details__close-button {
+  align-self: end;
+  margin-bottom: 10px;
+  padding: 0.5em 0.9em 0.6em 0.8em;
+  background-color: $lightTransparent;
+  border: 1px solid $lightTransparent;
+  font-weight: 300;
+}
+
+@media (max-width: 600px) {
+  .details {
+    padding: 10px;
+  }
+
+  .details__close-button {
+    padding: 0.2em 0.6em 0.3em 0.5em;
+  }
+}

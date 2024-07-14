@@ -1,0 +1,201 @@
+@import '../../utils/variables.scss';
+
+.main {
+  width: 98vw;
+  min-height: 98vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+
+  .main__tittle {
+    height: 60px;
+    margin: 50px 0 0 0;
+  }
+
+  .error-button {
+    width: 100%;
+    margin-top: -20px;
+    padding: 0.1em 1.2em 0.3em 1.2em;
+
+    background-color: $yellowTransparent;
+    color: $darkBrown;
+    font-weight: 700;
+    text-shadow: none;
+  }
+
+  .error-button:hover {
+    background-color: $orangeTransparent;
+    transform: scale(1);
+  }
+
+  .main__results-container {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  .main__outlet {
+    width: 100%;
+    color: $light;
+    letter-spacing: 1px;
+    transition: all 0.5s;
+  }
+
+  .main__outlet-hidden {
+    width: 0;
+  }
+}
+
+.section {
+  width: 100%;
+  padding: 1.3em 2em;
+  box-sizing: border-box;
+}
+
+.search-section {
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: $darkBrown;
+
+  .search-input {
+    max-width: 100%;
+    border-radius: $radius;
+    border: 1px solid $shadow;
+    padding: 0.3em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: $light;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+.results-section {
+  flex-grow: 1;
+  background-color: $light;
+}
+
+.error-content-container {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.error-content {
+  height: 60px;
+  display: inline-block;
+  margin: 50px;
+
+}
+
+.error-img {
+  max-width: 70%;
+  max-height: 40vh;
+}
+
+.error-boundary-h3{margin-top: 30px;}
+
+@keyframes moveLeft {
+
+  0%,
+  100% {
+    left: 10px;
+  }
+
+  50% {
+    left: 20px;
+  }
+}
+
+
+@keyframes moveRight {
+
+  0%,
+  100% {
+    right: 10px;
+  }
+
+  50% {
+    right: 20px;
+  }
+}
+
+.rick-morty-img {
+  max-height: 130px;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  transform: scaleX(-1);
+  animation: moveRight 1.5s infinite;
+}
+
+.rick-morty-img-reverse {
+  transform: none;
+  right: 0;
+  left: 10px;
+  animation: moveLeft 1.5s infinite;
+}
+
+@media (max-width: 1000px) {
+  h1 {
+    font-size: 30px;
+  }
+
+  .main .main__tittle {
+    height: 35px;
+
+  }
+
+  .rick-morty-img {
+    max-height: 90px;
+    position: absolute;
+    top: 70px;
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 14px;
+  }
+
+  h3 {
+    font-size: 15px;
+  }
+
+  h4 {
+    font-size: 12px;
+  }
+
+  .main .main__tittle {
+    height: 25px;
+
+  }
+
+  .rick-morty-img {
+    max-height: 70px;
+
+    transform: scaleX(-1) rotate(90deg);
+    top: 10px;
+  }
+
+  .rick-morty-img-reverse {
+    transform: scaleX(1) rotate(90deg);
+
+  }
+}

@@ -1,0 +1,102 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ResultsSection > matches snapshot when loading 1`] = `
+<DocumentFragment>
+  <div
+    class="section results-section"
+  >
+    <h3>
+      Results:
+    </h3>
+    <div
+      class="spinner-container"
+      data-testid="loader"
+    >
+      <img
+        alt="Loading..."
+        class="spinner"
+        src="/spinner.png"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ResultsSection > matches snapshot with results 1`] = `
+<DocumentFragment>
+  <div
+    class="section results-section"
+  >
+    <h3>
+      Results:
+    </h3>
+    <div
+      class="results-item"
+      data-testid="results-item"
+    >
+      <img
+        alt="img"
+        class="result-img"
+        src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+      />
+      <div>
+        <h2>
+          Rick Sanchez
+        </h2>
+        <h4>
+          Status: Alive
+        </h4>
+        <h4>
+          Species: Human
+        </h4>
+        <h4>
+          Last known location: Earth
+        </h4>
+      </div>
+    </div>
+    <div
+      class="results-item"
+      data-testid="results-item"
+    >
+      <img
+        alt="img"
+        class="result-img"
+        src="https://rickandmortyapi.com/api/character/avatar/2.jpeg"
+      />
+      <div>
+        <h2>
+          Morty Smith
+        </h2>
+        <h4>
+          Status: Alive
+        </h4>
+        <h4>
+          Species: Human
+        </h4>
+        <h4>
+          Last known location: Earth
+        </h4>
+      </div>
+    </div>
+    <div
+      class="pagination"
+    >
+      <div
+        class="pagination__element pagination__button pagination__button-next pagination__button-disabled"
+      >
+        &lt;
+      </div>
+      <div
+        class="pagination__element pagination__number"
+      >
+        1
+      </div>
+      <div
+        class="pagination__element pagination__button pagination__button-next pagination__button-disabled"
+      >
+        &gt;
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
