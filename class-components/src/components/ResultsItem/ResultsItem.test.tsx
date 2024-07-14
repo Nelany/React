@@ -1,7 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter, useNavigate } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { ResultsItem } from './ResultsItem';
 import { vi } from 'vitest';
+import { Details } from '../Details/Details';
 
 vi.mock(
   'react-router-dom',
@@ -61,7 +62,7 @@ describe('ResultsItem', () => {
     );
   });
 
-  test('renders correctly with character information', () => {
+  test('renders the relevant card data', () => {
     render(
       <MemoryRouter>
         <ResultsItem name="Rick Sanchez" character={mockCharacter} />
@@ -77,5 +78,38 @@ describe('ResultsItem', () => {
       'src',
       mockCharacter.image
     );
+  });
+
+  test('clicking on a card opens a detailed card component', () => {
+    const mockNavigate = vi.fn();
+    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+
+    render(
+      <MemoryRouter initialEntries={[`/`]}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ResultsItem name="Rick Sanchez" character={mockCharacter} />
+            }
+          />
+          <Route path="/details/:id" element={<Details />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByTestId('results-item'));
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `/details/${mockCharacter.id}/?page=1`
+    );
+
+    render(
+      <MemoryRouter initialEntries={[`/details/${mockCharacter.id}`]}>
+        <Details />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('details')).toBeInTheDocument();
   });
 });

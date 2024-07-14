@@ -50,7 +50,7 @@ describe('SearchSection', () => {
     expect(input.value).toBe('test');
   });
 
-  it('saves input value to local storage on search button click', async () => {
+  it('clicking the Search button saves the entered value to the local storage', async () => {
     render(
       <MemoryRouter>
         <SearchSection
@@ -76,7 +76,7 @@ describe('SearchSection', () => {
     });
   });
 
-  it('fetches input value from local storage on component mount', () => {
+  it('the component retrieves the value from the local storage upon mounting', () => {
     localStorage.setItem('searchQuery', 'initial value');
 
     render(

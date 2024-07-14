@@ -113,7 +113,7 @@ describe('ResultsSection', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('displays the correct number of cards', () => {
+  it('renders the specified number of cards', () => {
     render(
       <MemoryRouter>
         <ResultsSection

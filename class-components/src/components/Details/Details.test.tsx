@@ -3,6 +3,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Details } from './Details';
 import { getCharacters } from '../../api/api';
 import { vi } from 'vitest';
+import userEvent from '@testing-library/user-event';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
@@ -30,7 +31,7 @@ describe('Details', () => {
     vi.clearAllMocks();
   });
 
-  test('renders loader when loading', async () => {
+  test('Check that a loading indicator is displayed while fetching data', async () => {
     (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
 
     render(
@@ -50,7 +51,7 @@ describe('Details', () => {
     expect(screen.queryByTestId('loader')).toBeNull();
   });
 
-  test('renders character details when loaded', async () => {
+  test('the detailed card component correctly displays the detailed card data', async () => {
     (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
 
     render(
@@ -75,5 +76,62 @@ describe('Details', () => {
     expect(screen.getByText('Gender: Male')).toBeInTheDocument();
     expect(screen.getByText('Origin: Earth (C-137)')).toBeInTheDocument();
     expect(screen.getByTestId('detailsCreated')).toBeInTheDocument();
+  });
+
+  test('an additional API call to fetch detailed information', async () => {
+    (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
+
+    render(
+      <MemoryRouter initialEntries={['/details/1']}>
+        <Routes>
+          <Route path="/details/:id" element={<Details />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    });
+
+    expect(getCharacters).toHaveBeenCalledTimes(1);
+    expect(getCharacters).toHaveBeenCalledWith({ id: '1' });
+  });
+
+  test('clicking the close button hides the component', async () => {
+    (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
+
+    render(
+      <MemoryRouter initialEntries={['/details/1']}>
+        <Routes>
+          <Route path="/details/:id" element={<Details />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    });
+
+    expect(screen.getByTestId('details')).toBeInTheDocument();
+
+    const closeButton = screen.getByText('X');
+    userEvent.click(closeButton);
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    });
+
+    expect(screen.queryByTestId('details')).toBeNull();
+
+    if (screen.queryByTestId('details')) {
+      console.log(
+        'Details component still in the document:',
+        screen.queryByTestId('details')
+      );
+    }
   });
 });
