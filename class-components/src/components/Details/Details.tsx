@@ -37,7 +37,7 @@ export const Details = () => {
   }, [id]);
 
   return (
-    <div className="details">
+    <div data-testid="details" className="details">
       <button className="details__close-button" onClick={handleClose}>
         X
       </button>
@@ -56,7 +56,10 @@ export const Details = () => {
           <h4 className="h4-details">{`Last known location: ${character.location.name}`}</h4>
           <h4 className="h4-details">{`Gender: ${character.gender}`}</h4>
           <h4 className="h4-details">{`Origin: ${character.origin.name}`}</h4>
-          <h4 className="h4-details">{`Created: ${new Date(character.created).toLocaleString()}`}</h4>
+          <h4
+            data-testid="detailsCreated"
+            className="h4-details"
+          >{`Created: ${new Date(character.created).toLocaleString()}`}</h4>
         </>
       )}
     </div>

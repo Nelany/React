@@ -17,7 +17,7 @@ export const getCharacters = async (props: Props) => {
       url.searchParams.set('name', props.searchString);
     }
   } else if (props.id) {
-    url.pathname += `${props.id}`;
+    url.pathname += props.id;
   }
 
   const characters = await fetch(url).then((response) => {

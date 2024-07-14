@@ -38,7 +38,7 @@ export const Main = () => {
   };
 
   return (
-    <div onClick={closeDetails} className="main">
+    <div data-testid="main-page" onClick={closeDetails} className="main">
       <img className="rick-morty-img" src="/rickmorty.png" alt="" />
       <img
         className="rick-morty-img rick-morty-img-reverse"

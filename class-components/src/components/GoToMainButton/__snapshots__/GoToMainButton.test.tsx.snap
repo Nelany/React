@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GoToMainButton component > matches snapshot 1`] = `
+<button
+  class="go-to-main-button"
+>
+  Return to Rick and Morty!
+</button>
+`;

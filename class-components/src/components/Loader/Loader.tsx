@@ -17,7 +17,7 @@ export const Loader = ({
   return (
     <>
       {isLoading && (
-        <div className="spinner-container">
+        <div data-testid="loader" className="spinner-container">
           <img className="spinner" src="/spinner.png" alt="Loading..." />
         </div>
       )}

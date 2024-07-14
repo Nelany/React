@@ -70,9 +70,7 @@ export const SearchSection = ({
   };
 
   useEffect(() => {
-    if (query) {
-      handleSearch(query);
-    } else handleSearch();
+    handleSearch(query);
   }, [page]);
 
   return (

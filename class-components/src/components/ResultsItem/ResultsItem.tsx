@@ -20,7 +20,11 @@ export const ResultsItem = ({ name, character }: Props) => {
   };
 
   return (
-    <div onClick={openCheckedId} className="results-item">
+    <div
+      data-testid="results-item"
+      onClick={openCheckedId}
+      className="results-item"
+    >
       <img className="result-img" src={character.image} alt="img" />
       <div>
         <h2>{name}</h2>
