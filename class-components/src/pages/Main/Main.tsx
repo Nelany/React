@@ -4,8 +4,10 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CharacterResponse } from '../../types/types';
 import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { ResultsSection } from '../../components/ResultSection/ResultsSection';
+import { useTheme } from '../../hooks/useTheme';
 
 export const Main = () => {
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
@@ -38,7 +40,11 @@ export const Main = () => {
   };
 
   return (
-    <div data-testid="main-page" onClick={closeDetails} className="main">
+    <div
+      data-testid="main-page"
+      onClick={closeDetails}
+      className={`main ${theme}`}
+    >
       <img className="rick-morty-img" src="/rickmorty.png" alt="" />
       <img
         className="rick-morty-img rick-morty-img-reverse"
@@ -54,9 +60,14 @@ export const Main = () => {
         setIfNextPage={setIfNextPage}
       />
 
-      <button className="error-button" onClick={handleErrorClick}>
-        Create an error!
-      </button>
+      <div className="main__buttons-container">
+        <button className="error-button" onClick={handleErrorClick}>
+          Create an error!
+        </button>
+        <button className="error-button" onClick={toggleTheme}>
+          Toggle Theme:{theme}
+        </button>
+      </div>
 
       <div className="main__results-container">
         <ResultsSection

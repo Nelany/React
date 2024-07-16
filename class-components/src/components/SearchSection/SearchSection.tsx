@@ -3,6 +3,8 @@ import { getCharacters } from '../../api/api';
 import { CharacterResponse } from '../../types/types';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import './SearchSection.scss';
+import { useTheme } from '../../hooks/useTheme';
 
 interface Props {
   setCharactersFromResponse: (response: CharacterResponse) => void;
@@ -15,6 +17,7 @@ export const SearchSection = ({
   setCharactersFromResponse,
   setIfNextPage,
 }: Props) => {
+  const { theme } = useTheme();
   const [query, setQuery] = useLocalStorage('searchQuery', '');
   const [inputValue, setInputValue] = useState<string>(query);
   const location = useLocation();
@@ -74,7 +77,7 @@ export const SearchSection = ({
   }, [page]);
 
   return (
-    <div className="section search-section">
+    <div className={`section ${theme} search-section`}>
       <input
         className="search-input"
         type="text"
