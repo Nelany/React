@@ -79,14 +79,16 @@ export const SearchSection = ({
   return (
     <div className={`section ${theme} search-section`}>
       <input
-        className="search-input"
+        className={`search-input ${theme}`}
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder="Enter text..."
       />
-      <button onClick={handleSearchButton}>Search!</button>
+      <button className={theme} onClick={handleSearchButton}>
+        Search!
+      </button>
     </div>
   );
 };

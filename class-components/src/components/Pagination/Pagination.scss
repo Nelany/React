@@ -42,3 +42,14 @@
     font-size: 20px;
   }
 }
+
+
+.pagination.dark{
+  color: $green;
+
+  .pagination__button:hover {
+    background-color: $dark;
+    box-shadow: 0 0 8px $green;
+    color: $green;
+  }
+}

@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import './Pagination.scss';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTheme } from '../../hooks/useTheme';
 
 type Props = {
   ifNextPage: boolean;
 };
 
 export const Pagination = (props: Props) => {
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -33,7 +35,7 @@ export const Pagination = (props: Props) => {
   };
 
   return (
-    <div className="pagination">
+    <div className={`pagination ${theme}`}>
       <div
         className={
           page === '1'

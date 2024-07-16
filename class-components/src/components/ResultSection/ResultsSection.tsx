@@ -3,6 +3,8 @@ import { CharacterResponse } from '../../types/types';
 import { Loader } from '../Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
 import { Dispatch, SetStateAction } from 'react';
+import './ResultsSection.scss';
+import { useTheme } from '../../hooks/useTheme';
 
 interface Props {
   characterResponse: CharacterResponse | null;
@@ -17,8 +19,10 @@ export const ResultsSection = ({
   ifNextPage,
   setIfReturnToRickNMorty,
 }: Props) => {
+  const { theme } = useTheme();
+
   return (
-    <div className="section results-section">
+    <div className={`section results-section ${theme}`}>
       <h3>Results:</h3>
       <Loader
         setIfReturnToRickNMorty={setIfReturnToRickNMorty}

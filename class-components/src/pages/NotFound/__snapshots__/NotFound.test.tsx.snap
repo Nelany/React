@@ -3,7 +3,7 @@
 exports[`renders NotFound component correctly 1`] = `
 <div>
   <div
-    class="error-content-container"
+    class="error-content-container light"
   >
     <h1
       class="error-content"

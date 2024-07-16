@@ -18,7 +18,7 @@ describe('ErrorBoundary', () => {
 
   test('renders children when there is no error', () => {
     render(
-      <ErrorBoundary>
+      <ErrorBoundary theme="light">
         <div data-testid="child">Child content</div>
       </ErrorBoundary>
     );
@@ -28,7 +28,7 @@ describe('ErrorBoundary', () => {
 
   test('renders error message when there is an error', () => {
     render(
-      <ErrorBoundary>
+      <ErrorBoundary theme="light">
         <ThrowError />
       </ErrorBoundary>
     );
@@ -44,7 +44,7 @@ describe('ErrorBoundary', () => {
     const consoleErrorSpy = vi.spyOn(console, 'error');
 
     render(
-      <ErrorBoundary>
+      <ErrorBoundary theme="light">
         <ThrowError />
       </ErrorBoundary>
     );

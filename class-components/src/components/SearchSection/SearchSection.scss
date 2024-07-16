@@ -21,6 +21,12 @@
     cursor: pointer;
     outline: none;
   }
+
+  .search-input.dark {
+    background-color: $black;
+    border: 1px solid $green;
+    color: $green;
+  }
 }
 
 .search-section.dark {

@@ -13,6 +13,11 @@
   gap: 10px;
 }
 
+.details.dark {
+  background-color: $dark;
+  // border: 1px solid $green;
+}
+
 .details::-webkit-scrollbar {
   width: 8px;
 }

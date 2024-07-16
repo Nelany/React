@@ -58,7 +58,7 @@ describe('Main component', () => {
   test('creates an error when error button is clicked', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <ErrorBoundary>
+        <ErrorBoundary theme="light">
           <Main />
         </ErrorBoundary>
       </MemoryRouter>

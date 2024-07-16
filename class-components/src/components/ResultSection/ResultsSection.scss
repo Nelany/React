@@ -1,0 +1,10 @@
+@import '../../utils/variables.scss';
+
+.results-section {
+  flex-grow: 1;
+  background-color: $light;
+}
+
+.results-section.dark {
+  background-color: $black;
+}

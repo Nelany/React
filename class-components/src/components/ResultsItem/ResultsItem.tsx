@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Character } from '../../types/types';
 import './ResultsItem.scss';
+import { useTheme } from '../../hooks/useTheme';
 
 interface Props {
   name: string;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export const ResultsItem = ({ name, character }: Props) => {
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -23,11 +25,11 @@ export const ResultsItem = ({ name, character }: Props) => {
     <div
       data-testid="results-item"
       onClick={openCheckedId}
-      className="results-item"
+      className={`results-item ${theme}`}
     >
       <img className="result-img" src={character.image} alt="img" />
       <div>
-        <h2>{name}</h2>
+        <h2 className={theme}>{name}</h2>
 
         <h4>{`Status: ${character.status}`}</h4>
         <h4>{`Species: ${character.species}`}</h4>

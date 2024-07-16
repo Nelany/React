@@ -2,6 +2,7 @@ import { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
+  theme: string;
 }
 
 interface State {
@@ -25,7 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="error-content-container">
+        <div className={`error-content-container ${this.props.theme}`}>
           <h1 className="error-content">Something went wrong!</h1>
           <img className="error-img" src="/cat.png" alt="Cat" />
           <h3 className="error-boundary-h3">Reload the application please!</h3>

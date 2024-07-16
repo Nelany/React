@@ -61,10 +61,10 @@ export const Main = () => {
       />
 
       <div className="main__buttons-container">
-        <button className="error-button" onClick={handleErrorClick}>
+        <button className={`error-button ${theme}`} onClick={handleErrorClick}>
           Create an error!
         </button>
-        <button className="error-button" onClick={toggleTheme}>
+        <button className={`error-button ${theme}`} onClick={toggleTheme}>
           Toggle Theme:{theme}
         </button>
       </div>

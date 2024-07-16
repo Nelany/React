@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import { getCharacters } from '../../api/api';
 import { Loader } from '../Loader/Loader';
 import { Character } from '../../types/types';
+import { useTheme } from '../../hooks/useTheme';
 
 export const Details = () => {
+  const { theme } = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,7 +39,7 @@ export const Details = () => {
   }, [id]);
 
   return (
-    <div data-testid="details" className="details">
+    <div data-testid="details" className={`details ${theme}`}>
       <button className="details__close-button" onClick={handleClose}>
         X
       </button>

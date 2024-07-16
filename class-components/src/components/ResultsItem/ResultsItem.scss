@@ -14,10 +14,24 @@
   cursor:pointer
 }
 
+.results-item.dark {
+  background-color: $black;
+  color: $green;
+  border: 1px solid $transparent;
+  letter-spacing: 1px;
+}
+
 .results-item:hover {
   background-color: $lightHover;
   transform: scale(1.005);
   box-shadow: 0 3px 8px $shadow;
+}
+
+.results-item.dark:hover {
+  background-color: $dark;
+  box-shadow: 0 0 5px $green;
+  border: 1px solid $green;
+
 }
 
 @media (max-width: 1000px) {
