@@ -60,6 +60,10 @@
 
 .main.dark {
   background-color: $black;
+
+  .main__outlet{
+    background-color: $dark;
+  }
 }
 
 

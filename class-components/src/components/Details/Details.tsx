@@ -1,17 +1,14 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './Details.scss';
-import { useEffect, useState } from 'react';
-import { getCharacters } from '../../api/api';
 import { Loader } from '../Loader/Loader';
-import { Character } from '../../types/types';
 import { useTheme } from '../../hooks/useTheme';
+import { useGetByIdQuery } from '../../api/rtkApi';
 
 export const Details = () => {
   const { theme } = useTheme();
   const { id } = useParams();
+  const { data: character, isLoading } = useGetByIdQuery(id || '');
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [character, setCharacter] = useState<Character | null>(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
@@ -20,23 +17,6 @@ export const Details = () => {
     searchParams.set('page', String(page));
     navigate(`/?${searchParams.toString()}`);
   };
-
-  const getDetails = async () => {
-    setIsLoading(true);
-
-    setTimeout(async () => {
-      const detailsResponse = await getCharacters({ id: id });
-
-      setCharacter(detailsResponse);
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  useEffect(() => {
-    if (id) {
-      getDetails();
-    }
-  }, [id]);
 
   return (
     <div data-testid="details" className={`details ${theme}`}>
