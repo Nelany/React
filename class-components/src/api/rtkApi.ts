@@ -1,14 +1,22 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Character, CharacterResponse } from '../types/types';
 
+type GetCharactersParams = { searchString?: string; page?: string };
+
 export const rtkApi = createApi({
   reducerPath: 'rtkApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://rickandmortyapi.com/api/character/',
   }),
   endpoints: (builder) => ({
-    getAll: builder.query<CharacterResponse, void>({
-      query: () => '',
+    getCharacters: builder.query<CharacterResponse, GetCharactersParams>({
+      query: ({ searchString, page }) => {
+        const searchParams = new URLSearchParams();
+        if (page) searchParams.set('page', page);
+        if (searchString) searchParams.set('name', searchString);
+
+        return `?${searchParams}`;
+      },
     }),
     getById: builder.query<Character, string>({
       query: (id) => id,
@@ -16,4 +24,4 @@ export const rtkApi = createApi({
   }),
 });
 
-export const { useGetAllQuery, useGetByIdQuery } = rtkApi;
+export const { useLazyGetCharactersQuery, useGetByIdQuery } = rtkApi;
