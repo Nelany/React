@@ -4,6 +4,7 @@ import { Loader } from '../Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
 import './ResultsSection.scss';
 import { useTheme } from '../../hooks/useTheme';
+import { Toast } from '../Toast/Toast';
 
 interface Props {
   characterResponse: CharacterResponse | null;
@@ -36,6 +37,7 @@ export const ResultsSection = ({
               character={character}
             />
           ))}
+          <Toast />
           <Pagination ifNextPage={ifNextPage} />
         </>
       )}
