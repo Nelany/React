@@ -27,7 +27,8 @@ export const ResultsItem = ({ name, character }: Props) => {
       onClick={openCheckedId}
       className={`results-item ${theme}`}
     >
-      <img className="result-img" src={character.image} alt="img" />
+      <img className="result-img" src={character.image} alt="img"></img>
+      <button className={`select-button unselected ${theme}`}>✓</button>
       <div>
         <h2 className={theme}>{name}</h2>
 

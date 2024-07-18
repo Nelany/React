@@ -1,6 +1,7 @@
 @import '../../utils/variables.scss';
 
 .results-item {
+  position: relative;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -11,7 +12,7 @@
   box-sizing: border-box;
   background-color: $transparent;
   transition: all 0.4s;
-  cursor:pointer
+  cursor: pointer
 }
 
 .results-item.dark {
@@ -21,10 +22,42 @@
   letter-spacing: 1px;
 }
 
+.select-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px 10px;
+  transition: all 0.4s;
+}
+
+.select-button.dark {
+  background-color: $green;
+}
+
+.select-button.unselected {
+  background-color: $transparent;
+  color: $transparent;
+  border: 1px solid $transparent;
+  box-shadow: none;
+  text-shadow: none;
+}
+
 .results-item:hover {
   background-color: $lightHover;
   transform: scale(1.005);
   box-shadow: 0 3px 8px $shadow;
+
+  .select-button.unselected {
+    background-color: $lightTransparent;
+    color: $transparent;
+    box-shadow: 0 0 8px $shadow;
+    text-shadow: none;
+  }
+
+  .select-button.unselected:hover {
+    background-color: $orange;
+    color: $light;
+  }
 }
 
 .results-item.dark:hover {
@@ -32,6 +65,18 @@
   box-shadow: 0 0 5px $green;
   border: 1px solid $green;
 
+  .select-button.unselected {
+    background-color: $lightTransparent;
+    color: $transparent;
+    border: 3px solid $green;
+    box-shadow: 0 0 8px $green;
+    text-shadow: none;
+  }
+
+  .select-button.unselected:hover {
+    background-color: $orange;
+    color: $green;
+  }
 }
 
 @media (max-width: 1000px) {
