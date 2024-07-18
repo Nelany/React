@@ -7,7 +7,7 @@ import { useGetByIdQuery } from '../../api/rtkApi';
 export const Details = () => {
   const { theme } = useTheme();
   const { id } = useParams();
-  const { data: character, isLoading } = useGetByIdQuery(id || '');
+  const { data: character, isLoading, isError } = useGetByIdQuery(id || '');
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -24,7 +24,7 @@ export const Details = () => {
         X
       </button>
 
-      <Loader isLoading={isLoading} response={character || {}} />
+      <Loader isLoading={isLoading} isError={isError} />
 
       {!isLoading && character && !character?.error && (
         <>

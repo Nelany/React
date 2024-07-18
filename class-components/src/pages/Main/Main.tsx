@@ -5,6 +5,8 @@ import { CharacterResponse } from '../../types/types';
 import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { ResultsSection } from '../../components/ResultSection/ResultsSection';
 import { useTheme } from '../../hooks/useTheme';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 export const Main = () => {
   const { theme, toggleTheme } = useTheme();
@@ -14,8 +16,9 @@ export const Main = () => {
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
   const [ifNextPage, setIfNextPage] = useState<boolean>(false);
-  const [ifReturnToRickNMorty, setIfReturnToRickNMorty] =
-    useState<boolean>(false);
+  const ifReturnToRickNMorty = useSelector(
+    (state: RootState) => state.ifReturnToRickNMorty.value
+  );
 
   const [characterResponse, setCharacterResponse] =
     useState<CharacterResponse | null>(null);
@@ -74,7 +77,6 @@ export const Main = () => {
           isLoading={isLoading}
           characterResponse={characterResponse}
           ifNextPage={ifNextPage}
-          setIfReturnToRickNMorty={setIfReturnToRickNMorty}
         />
 
         <div
