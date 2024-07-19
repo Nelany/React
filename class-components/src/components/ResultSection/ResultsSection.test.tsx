@@ -59,11 +59,7 @@ describe('ResultsSection', () => {
   test('renders loader when loading', () => {
     render(
       <MemoryRouter>
-        <ResultsSection
-          characterResponse={null}
-          isLoading={true}
-          ifNextPage={false}
-        />
+        <ResultsSection characterResponse={null} ifNextPage={false} />
       </MemoryRouter>
     );
 
@@ -75,7 +71,6 @@ describe('ResultsSection', () => {
       <MemoryRouter>
         <ResultsSection
           characterResponse={mockCharacterResponse}
-          isLoading={false}
           ifNextPage={false}
         />
       </MemoryRouter>
@@ -88,11 +83,7 @@ describe('ResultsSection', () => {
   test('matches snapshot when loading', () => {
     const { asFragment } = render(
       <MemoryRouter>
-        <ResultsSection
-          characterResponse={null}
-          isLoading={true}
-          ifNextPage={false}
-        />
+        <ResultsSection characterResponse={null} ifNextPage={false} />
       </MemoryRouter>
     );
 
@@ -104,7 +95,6 @@ describe('ResultsSection', () => {
       <MemoryRouter>
         <ResultsSection
           characterResponse={mockCharacterResponse}
-          isLoading={false}
           ifNextPage={false}
         />
       </MemoryRouter>
@@ -118,7 +108,6 @@ describe('ResultsSection', () => {
       <MemoryRouter>
         <ResultsSection
           characterResponse={mockCharacterResponse}
-          isLoading={false}
           ifNextPage={false}
         />
       </MemoryRouter>

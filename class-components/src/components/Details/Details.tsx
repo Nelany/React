@@ -7,11 +7,17 @@ import { useGetByIdQuery } from '../../api/rtkApi';
 export const Details = () => {
   const { theme } = useTheme();
   const { id } = useParams();
-  const { data: character, isLoading, isError } = useGetByIdQuery(id || '');
+  const {
+    data: character,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetByIdQuery(id || '');
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
+  const loaded = !(isLoading || isFetching);
 
   const handleClose = () => {
     searchParams.set('page', String(page));
@@ -24,9 +30,9 @@ export const Details = () => {
         X
       </button>
 
-      <Loader isLoading={isLoading} isError={isError} />
+      <Loader isLoading={!loaded} isError={isError} />
 
-      {!isLoading && character && !character?.error && (
+      {loaded && character && !character?.error && (
         <>
           <img className="details__img" src={character.image} alt="img" />
           <h2 className="h2-details">{character.name}</h2>

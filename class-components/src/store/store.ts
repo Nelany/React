@@ -3,12 +3,14 @@ import toastReducer from './toastSlice';
 import { rtkApi } from '../api/rtkApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import ifReturnToRickNMortyReducer from './ifReturnToRickNMortySlice';
+import isCharLoading from './charactersLoadingSlice';
 
 export const store = configureStore({
   reducer: {
     toast: toastReducer,
     [rtkApi.reducerPath]: rtkApi.reducer,
     ifReturnToRickNMorty: ifReturnToRickNMortyReducer,
+    isCharLoading: isCharLoading,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(rtkApi.middleware),

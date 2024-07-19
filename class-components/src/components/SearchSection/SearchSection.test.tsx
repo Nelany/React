@@ -8,7 +8,6 @@ vi.mock('../../api/api', () => ({
 }));
 
 const setCharactersFromResponse = vi.fn();
-const setIsLoading = vi.fn();
 const setIfNextPage = vi.fn();
 
 describe('SearchSection', () => {
@@ -21,7 +20,6 @@ describe('SearchSection', () => {
       <MemoryRouter>
         <SearchSection
           setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
           setIfNextPage={setIfNextPage}
         />
       </MemoryRouter>
@@ -36,7 +34,6 @@ describe('SearchSection', () => {
       <MemoryRouter>
         <SearchSection
           setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
           setIfNextPage={setIfNextPage}
         />
       </MemoryRouter>
@@ -55,7 +52,6 @@ describe('SearchSection', () => {
       <MemoryRouter>
         <SearchSection
           setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
           setIfNextPage={setIfNextPage}
         />
       </MemoryRouter>
@@ -83,7 +79,6 @@ describe('SearchSection', () => {
       <MemoryRouter>
         <SearchSection
           setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
           setIfNextPage={setIfNextPage}
         />
       </MemoryRouter>

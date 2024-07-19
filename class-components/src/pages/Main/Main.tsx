@@ -23,7 +23,6 @@ export const Main = () => {
   const [characterResponse, setCharacterResponse] =
     useState<CharacterResponse | null>(null);
   const [isError, setIsError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleErrorClick = () => {
     setIsError(true);
@@ -59,7 +58,6 @@ export const Main = () => {
       <SearchSection
         key={String(ifReturnToRickNMorty)}
         setCharactersFromResponse={setCharacterResponse}
-        setIsLoading={setIsLoading}
         setIfNextPage={setIfNextPage}
       />
 
@@ -74,7 +72,6 @@ export const Main = () => {
 
       <div className="main__results-container">
         <ResultsSection
-          isLoading={isLoading}
           characterResponse={characterResponse}
           ifNextPage={ifNextPage}
         />

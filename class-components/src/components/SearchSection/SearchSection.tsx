@@ -5,20 +5,19 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './SearchSection.scss';
 import { useTheme } from '../../hooks/useTheme';
 import { useLazyGetCharactersQuery } from '../../api/rtkApi';
+import { useDispatchIsCharLoading } from '../../store/charactersLoadingSlice';
 
 interface Props {
   setCharactersFromResponse: (response: CharacterResponse) => void;
-  setIsLoading: (isLoading: boolean) => void;
   setIfNextPage: (ifNextPage: boolean) => void;
 }
 
 export const SearchSection = ({
-  setIsLoading,
   setCharactersFromResponse,
   setIfNextPage,
 }: Props) => {
-  const [trigger, { data: charactersResponse, isLoading }] =
-    useLazyGetCharactersQuery();
+  const dispatchIsCharLoading = useDispatchIsCharLoading();
+  const [trigger, { data: charactersResponse }] = useLazyGetCharactersQuery();
   const { theme } = useTheme();
   const [query, setQuery] = useLocalStorage('searchQuery', '');
   const [inputValue, setInputValue] = useState<string>(query);
@@ -32,59 +31,28 @@ export const SearchSection = ({
     setInputValue(event.target.value);
   };
 
-  // const handleSearch = async (searchQuery?: string) => {
-  //   if (id) {
-  //     navigate(`/details/${id}/?${searchParams.toString()}`);
-  //   } else {
-  //     navigate(`/?${searchParams.toString()}`);
-  //   }
-
-  //   setIsLoading(true);
-
-  //   const queryToSearch = searchQuery !== undefined ? searchQuery : '';
-  //   const trimmedQuery = queryToSearch.trim();
-
-  //   setTimeout(async () => {
-  //     const charactersResponse = await getCharacters({
-  //       searchString: trimmedQuery,
-  //       page: page,
-  //     });
-
-  //     localStorage.setItem('searchQuery', trimmedQuery);
-  //     setCharactersFromResponse(charactersResponse);
-  //     setIfNextPage(Boolean(charactersResponse?.info?.next));
-  //     setIsLoading(false);
-  //   }, 1000);
-  // };
-
   useEffect(() => {
-    // if (id) {
-    //   navigate(`/details/${id}/?${searchParams.toString()}`);
-    // } else {
-    //   navigate(`/?${searchParams.toString()}`);
-    // }
-
-    setIsLoading(isLoading);
+    dispatchIsCharLoading(true);
 
     const queryToSearch = query !== undefined ? query : '';
     const trimmedQuery = queryToSearch.trim();
+    localStorage.setItem('searchQuery', trimmedQuery);
     const timer = setTimeout(async () => {
-      if (trimmedQuery) {
-        await trigger({ searchString: trimmedQuery, page });
-        localStorage.setItem('searchQuery', trimmedQuery);
-      }
+      await trigger({ searchString: trimmedQuery, page });
+      dispatchIsCharLoading(false);
     }, 1000);
 
     return () => clearTimeout(timer);
   }, [query]);
 
   useEffect(() => {
-    setIsLoading(isLoading);
+    dispatchIsCharLoading(true);
     const queryToSearch = query !== undefined ? query : '';
     const trimmedQuery = queryToSearch.trim();
+    localStorage.setItem('searchQuery', trimmedQuery);
     const timer = setTimeout(async () => {
       await trigger({ searchString: trimmedQuery, page });
-      localStorage.setItem('searchQuery', trimmedQuery);
+      dispatchIsCharLoading(false);
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -95,34 +63,17 @@ export const SearchSection = ({
       charactersResponse || { error: 'There is nothing here!' }
     );
     setIfNextPage(Boolean(charactersResponse?.info?.next));
-    setIsLoading(isLoading);
   }, [charactersResponse]);
-
-  // const handleSearch = async () => {
-  //   await trigger({ searchString: inputValue.trim(), page: '1' });
-  // };
 
   const prepareSearch = () => {
     setQuery(inputValue);
-
-    // const queryToSearch = query !== undefined ? query : '';
-    // const trimmedQuery = queryToSearch.trim();
-
-    // localStorage.setItem('searchQuery', trimmedQuery);
-
     searchParams.set('page', '1');
-    console.log(inputValue);
 
     if (id) {
       navigate(`/details/${id}/?${searchParams.toString()}`);
     } else {
       navigate(`/?${searchParams.toString()}`);
     }
-
-    console.log(query);
-    console.log(page);
-
-    // handleSearch(inputValue);
   };
 
   const handleSearchButton = (e: React.MouseEvent) => {
@@ -135,10 +86,6 @@ export const SearchSection = ({
       prepareSearch();
     }
   };
-
-  // useEffect(() => {
-  //   handleSearch(query);
-  // }, [page]);
 
   return (
     <div className={`section ${theme} search-section`}>
