@@ -2,6 +2,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Character } from '../../types/types';
 import './ResultsItem.scss';
 import { useTheme } from '../../hooks/useTheme';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedCharacters } from '../../store/selectedCharactersSlice';
+import { RootState } from '../../store/store';
 
 interface Props {
   name: string;
@@ -14,6 +17,14 @@ export const ResultsItem = ({ name, character }: Props) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
+  const dispatch = useDispatch();
+  const isSelected = useSelector(
+    (state: RootState) => !!state.selectedCharacters.data[character.id]
+  );
+
+  const handleSelectButtonClick = () => {
+    dispatch(setSelectedCharacters(character));
+  };
 
   const openCheckedId = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -28,7 +39,12 @@ export const ResultsItem = ({ name, character }: Props) => {
       className={`results-item ${theme}`}
     >
       <img className="result-img" src={character.image} alt="img"></img>
-      <button className={`select-button unselected ${theme}`}>✓</button>
+      <button
+        onClick={handleSelectButtonClick}
+        className={`select-button ${isSelected ? '' : 'unselected'} ${theme}`}
+      >
+        ✓
+      </button>
       <div>
         <h2 className={theme}>{name}</h2>
 
