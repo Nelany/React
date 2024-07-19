@@ -22,13 +22,13 @@ const selectedCharactersSlice = createSlice({
         state.data[character.id] = character;
       }
     },
-    removeSelectedCharacter: (state, action: PayloadAction<string>) => {
-      delete state.data[action.payload];
+    removeAllSelectedCharacters: (state) => {
+      state.data = {};
     },
   },
 });
 
-export const { setSelectedCharacters, removeSelectedCharacter } =
+export const { setSelectedCharacters, removeAllSelectedCharacters } =
   selectedCharactersSlice.actions;
 
 export default selectedCharactersSlice.reducer;
