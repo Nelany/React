@@ -4,6 +4,8 @@ import { rtkApi } from '../api/rtkApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import ifReturnToRickNMortyReducer from './ifReturnToRickNMortySlice';
 import isCharLoading from './charactersLoadingSlice';
+import charactersResponseReducer from './charactersResponseSlice';
+
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +13,7 @@ export const store = configureStore({
     [rtkApi.reducerPath]: rtkApi.reducer,
     ifReturnToRickNMorty: ifReturnToRickNMortyReducer,
     isCharLoading: isCharLoading,
+    charactersResponse: charactersResponseReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(rtkApi.middleware),

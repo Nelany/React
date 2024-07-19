@@ -1,18 +1,21 @@
 import { ResultsItem } from '../ResultsItem/ResultsItem';
-import { CharacterResponse } from '../../types/types';
 import { Loader } from '../Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
 import './ResultsSection.scss';
 import { useTheme } from '../../hooks/useTheme';
 import { Toast } from '../Toast/Toast';
 import { useIsCharLoading } from '../../store/charactersLoadingSlice';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
 
 interface Props {
-  characterResponse: CharacterResponse | null;
   ifNextPage: boolean;
 }
 
-export const ResultsSection = ({ characterResponse, ifNextPage }: Props) => {
+export const ResultsSection = ({ ifNextPage }: Props) => {
+  const characterResponse = useSelector(
+    (state: RootState) => state.charactersResponse.data
+  );
   const isCharLoading = useIsCharLoading();
   const { theme } = useTheme();
 

@@ -1,21 +1,19 @@
 import { useEffect, ChangeEvent, KeyboardEvent, useState } from 'react';
-import { CharacterResponse } from '../../types/types';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './SearchSection.scss';
 import { useTheme } from '../../hooks/useTheme';
 import { useLazyGetCharactersQuery } from '../../api/rtkApi';
 import { useDispatchIsCharLoading } from '../../store/charactersLoadingSlice';
+import { useDispatch } from 'react-redux';
+import { setCharactersResponse } from '../../store/charactersResponseSlice';
 
 interface Props {
-  setCharactersFromResponse: (response: CharacterResponse) => void;
   setIfNextPage: (ifNextPage: boolean) => void;
 }
 
-export const SearchSection = ({
-  setCharactersFromResponse,
-  setIfNextPage,
-}: Props) => {
+export const SearchSection = ({ setIfNextPage }: Props) => {
+  const dispatch = useDispatch();
   const dispatchIsCharLoading = useDispatchIsCharLoading();
   const [trigger, { data: charactersResponse }] = useLazyGetCharactersQuery();
   const { theme } = useTheme();
@@ -59,8 +57,10 @@ export const SearchSection = ({
   }, [page]);
 
   useEffect(() => {
-    setCharactersFromResponse(
-      charactersResponse || { error: 'There is nothing here!' }
+    dispatch(
+      setCharactersResponse(
+        charactersResponse || { error: 'There is nothing here!' }
+      )
     );
     setIfNextPage(Boolean(charactersResponse?.info?.next));
   }, [charactersResponse]);

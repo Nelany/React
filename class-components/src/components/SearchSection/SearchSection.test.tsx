@@ -7,7 +7,6 @@ vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
 }));
 
-const setCharactersFromResponse = vi.fn();
 const setIfNextPage = vi.fn();
 
 describe('SearchSection', () => {
@@ -18,10 +17,7 @@ describe('SearchSection', () => {
   it('renders input and button', () => {
     render(
       <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIfNextPage={setIfNextPage}
-        />
+        <SearchSection setIfNextPage={setIfNextPage} />
       </MemoryRouter>
     );
 
@@ -32,10 +28,7 @@ describe('SearchSection', () => {
   it('updates input value on change', () => {
     render(
       <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIfNextPage={setIfNextPage}
-        />
+        <SearchSection setIfNextPage={setIfNextPage} />
       </MemoryRouter>
     );
 
@@ -50,10 +43,7 @@ describe('SearchSection', () => {
   it('clicking the Search button saves the entered value to the local storage', async () => {
     render(
       <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIfNextPage={setIfNextPage}
-        />
+        <SearchSection setIfNextPage={setIfNextPage} />
       </MemoryRouter>
     );
 
@@ -77,10 +67,7 @@ describe('SearchSection', () => {
 
     render(
       <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIfNextPage={setIfNextPage}
-        />
+        <SearchSection setIfNextPage={setIfNextPage} />
       </MemoryRouter>
     );
 

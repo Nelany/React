@@ -1,7 +1,6 @@
 import './Main.scss';
 import { useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { CharacterResponse } from '../../types/types';
 import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { ResultsSection } from '../../components/ResultSection/ResultsSection';
 import { useTheme } from '../../hooks/useTheme';
@@ -20,8 +19,6 @@ export const Main = () => {
     (state: RootState) => state.ifReturnToRickNMorty.value
   );
 
-  const [characterResponse, setCharacterResponse] =
-    useState<CharacterResponse | null>(null);
   const [isError, setIsError] = useState<boolean>(false);
 
   const handleErrorClick = () => {
@@ -57,7 +54,6 @@ export const Main = () => {
       <h1 className="main__tittle">Rick and Morty</h1>
       <SearchSection
         key={String(ifReturnToRickNMorty)}
-        setCharactersFromResponse={setCharacterResponse}
         setIfNextPage={setIfNextPage}
       />
 
@@ -71,10 +67,7 @@ export const Main = () => {
       </div>
 
       <div className="main__results-container">
-        <ResultsSection
-          characterResponse={characterResponse}
-          ifNextPage={ifNextPage}
-        />
+        <ResultsSection ifNextPage={ifNextPage} />
 
         <div
           onClick={onClick}
