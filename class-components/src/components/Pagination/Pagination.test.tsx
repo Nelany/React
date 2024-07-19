@@ -8,7 +8,7 @@ describe('Pagination', () => {
       [
         {
           path: '/',
-          element: <Pagination ifNextPage={true} />,
+          element: <Pagination />,
         },
       ],
       {

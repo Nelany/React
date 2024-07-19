@@ -8,11 +8,7 @@ import { useIsCharLoading } from '../../store/charactersLoadingSlice';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 
-interface Props {
-  ifNextPage: boolean;
-}
-
-export const ResultsSection = ({ ifNextPage }: Props) => {
+export const ResultsSection = () => {
   const characterResponse = useSelector(
     (state: RootState) => state.charactersResponse.data
   );
@@ -38,7 +34,7 @@ export const ResultsSection = ({ ifNextPage }: Props) => {
             />
           ))}
           <Toast />
-          <Pagination ifNextPage={ifNextPage} />
+          <Pagination />
         </>
       )}
     </div>

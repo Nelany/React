@@ -59,7 +59,7 @@ describe('ResultsSection', () => {
   test('renders loader when loading', () => {
     render(
       <MemoryRouter>
-        <ResultsSection ifNextPage={false} />
+        <ResultsSection />
       </MemoryRouter>
     );
 
@@ -69,7 +69,7 @@ describe('ResultsSection', () => {
   test('renders character results when not loading', () => {
     render(
       <MemoryRouter>
-        <ResultsSection ifNextPage={false} />
+        <ResultsSection />
       </MemoryRouter>
     );
 
@@ -80,7 +80,7 @@ describe('ResultsSection', () => {
   test('matches snapshot when loading', () => {
     const { asFragment } = render(
       <MemoryRouter>
-        <ResultsSection ifNextPage={false} />
+        <ResultsSection />
       </MemoryRouter>
     );
 
@@ -90,7 +90,7 @@ describe('ResultsSection', () => {
   test('matches snapshot with results', () => {
     const { asFragment } = render(
       <MemoryRouter>
-        <ResultsSection ifNextPage={false} />
+        <ResultsSection />
       </MemoryRouter>
     );
 
@@ -100,7 +100,7 @@ describe('ResultsSection', () => {
   it('renders the specified number of cards', () => {
     render(
       <MemoryRouter>
-        <ResultsSection ifNextPage={false} />
+        <ResultsSection />
       </MemoryRouter>
     );
 

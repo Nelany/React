@@ -14,7 +14,6 @@ export const Main = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
-  const [ifNextPage, setIfNextPage] = useState<boolean>(false);
   const ifReturnToRickNMorty = useSelector(
     (state: RootState) => state.ifReturnToRickNMorty.value
   );
@@ -52,10 +51,7 @@ export const Main = () => {
       />
 
       <h1 className="main__tittle">Rick and Morty</h1>
-      <SearchSection
-        key={String(ifReturnToRickNMorty)}
-        setIfNextPage={setIfNextPage}
-      />
+      <SearchSection key={String(ifReturnToRickNMorty)} />
 
       <div className="main__buttons-container">
         <button className={`error-button ${theme}`} onClick={handleErrorClick}>
@@ -67,7 +63,7 @@ export const Main = () => {
       </div>
 
       <div className="main__results-container">
-        <ResultsSection ifNextPage={ifNextPage} />
+        <ResultsSection />
 
         <div
           onClick={onClick}

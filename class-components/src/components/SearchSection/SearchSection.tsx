@@ -8,11 +8,7 @@ import { useDispatchIsCharLoading } from '../../store/charactersLoadingSlice';
 import { useDispatch } from 'react-redux';
 import { setCharactersResponse } from '../../store/charactersResponseSlice';
 
-interface Props {
-  setIfNextPage: (ifNextPage: boolean) => void;
-}
-
-export const SearchSection = ({ setIfNextPage }: Props) => {
+export const SearchSection = () => {
   const dispatch = useDispatch();
   const dispatchIsCharLoading = useDispatchIsCharLoading();
   const [trigger, { data: charactersResponse }] = useLazyGetCharactersQuery();
@@ -62,7 +58,6 @@ export const SearchSection = ({ setIfNextPage }: Props) => {
         charactersResponse || { error: 'There is nothing here!' }
       )
     );
-    setIfNextPage(Boolean(charactersResponse?.info?.next));
   }, [charactersResponse]);
 
   const prepareSearch = () => {

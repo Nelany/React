@@ -7,8 +7,6 @@ vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
 }));
 
-const setIfNextPage = vi.fn();
-
 describe('SearchSection', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -17,7 +15,7 @@ describe('SearchSection', () => {
   it('renders input and button', () => {
     render(
       <MemoryRouter>
-        <SearchSection setIfNextPage={setIfNextPage} />
+        <SearchSection />
       </MemoryRouter>
     );
 
@@ -28,7 +26,7 @@ describe('SearchSection', () => {
   it('updates input value on change', () => {
     render(
       <MemoryRouter>
-        <SearchSection setIfNextPage={setIfNextPage} />
+        <SearchSection />
       </MemoryRouter>
     );
 
@@ -43,7 +41,7 @@ describe('SearchSection', () => {
   it('clicking the Search button saves the entered value to the local storage', async () => {
     render(
       <MemoryRouter>
-        <SearchSection setIfNextPage={setIfNextPage} />
+        <SearchSection />
       </MemoryRouter>
     );
 
@@ -67,7 +65,7 @@ describe('SearchSection', () => {
 
     render(
       <MemoryRouter>
-        <SearchSection setIfNextPage={setIfNextPage} />
+        <SearchSection />
       </MemoryRouter>
     );
 
