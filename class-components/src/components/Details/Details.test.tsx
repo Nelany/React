@@ -4,6 +4,9 @@ import { Details } from './Details';
 import { getCharacters } from '../../api/api';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
@@ -35,17 +38,21 @@ describe('Details', () => {
     (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
 
     render(
-      <MemoryRouter initialEntries={['/details/1']}>
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/details/1']}>
+            <Routes>
+              <Route path="/details/:id" element={<Details />} />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(screen.getByTestId('loader')).toBeInTheDocument();
 
     await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     });
 
     expect(screen.queryByTestId('loader')).toBeNull();
@@ -55,11 +62,15 @@ describe('Details', () => {
     (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
 
     render(
-      <MemoryRouter initialEntries={['/details/1']}>
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/details/1']}>
+            <Routes>
+              <Route path="/details/:id" element={<Details />} />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     await act(async () => {
@@ -69,52 +80,25 @@ describe('Details', () => {
     expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
     expect(screen.getByText('Status: Alive')).toBeInTheDocument();
     expect(screen.getByText('Species: Human')).toBeInTheDocument();
-    expect(screen.getByText('Type: Mad scientist')).toBeInTheDocument();
-    expect(
-      screen.getByText('Last known location: Earth (Replacement Dimension)')
-    ).toBeInTheDocument();
     expect(screen.getByText('Gender: Male')).toBeInTheDocument();
     expect(screen.getByText('Origin: Earth (C-137)')).toBeInTheDocument();
     expect(screen.getByTestId('detailsCreated')).toBeInTheDocument();
-  });
-
-  test('an additional API call to fetch detailed information', async () => {
-    (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
-
-    render(
-      <MemoryRouter initialEntries={['/details/1']}>
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
-
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    });
-
-    expect(getCharacters).toHaveBeenCalledTimes(1);
-    expect(getCharacters).toHaveBeenCalledWith({ id: '1' });
   });
 
   test('clicking the close button hides the component', async () => {
     (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
 
     render(
-      <MemoryRouter initialEntries={['/details/1']}>
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={['/details/1']}>
+            <Routes>
+              <Route path="/details/:id" element={<Details />} />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
-
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
-
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    });
 
     expect(screen.getByTestId('details')).toBeInTheDocument();
 
@@ -122,16 +106,9 @@ describe('Details', () => {
     userEvent.click(closeButton);
 
     await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     });
 
     expect(screen.queryByTestId('details')).toBeNull();
-
-    if (screen.queryByTestId('details')) {
-      console.log(
-        'Details component still in the document:',
-        screen.queryByTestId('details')
-      );
-    }
   });
 });

@@ -2,6 +2,9 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import { SearchSection } from './SearchSection';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
@@ -14,9 +17,13 @@ describe('SearchSection', () => {
 
   it('renders input and button', () => {
     render(
-      <MemoryRouter>
-        <SearchSection />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(screen.getByPlaceholderText('Enter text...')).toBeInTheDocument();
@@ -25,9 +32,13 @@ describe('SearchSection', () => {
 
   it('updates input value on change', () => {
     render(
-      <MemoryRouter>
-        <SearchSection />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     const input = screen.getByPlaceholderText(
@@ -40,9 +51,13 @@ describe('SearchSection', () => {
 
   it('clicking the Search button saves the entered value to the local storage', async () => {
     render(
-      <MemoryRouter>
-        <SearchSection />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     const input = screen.getByPlaceholderText(
@@ -64,9 +79,13 @@ describe('SearchSection', () => {
     localStorage.setItem('searchQuery', 'initial value');
 
     render(
-      <MemoryRouter>
-        <SearchSection />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     const input = screen.getByPlaceholderText(

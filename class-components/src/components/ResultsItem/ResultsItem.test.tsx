@@ -3,6 +3,9 @@ import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { ResultsItem } from './ResultsItem';
 import { vi } from 'vitest';
 import { Details } from '../Details/Details';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 vi.mock(
   'react-router-dom',
@@ -50,9 +53,13 @@ describe('ResultsItem', () => {
     (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
 
     render(
-      <MemoryRouter>
-        <ResultsItem name="Rick Sanchez" character={mockCharacter} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <ResultsItem name="Rick Sanchez" character={mockCharacter} />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     fireEvent.click(screen.getByTestId('results-item'));
@@ -64,9 +71,13 @@ describe('ResultsItem', () => {
 
   test('renders the relevant card data', () => {
     render(
-      <MemoryRouter>
-        <ResultsItem name="Rick Sanchez" character={mockCharacter} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <ResultsItem name="Rick Sanchez" character={mockCharacter} />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(screen.getByTestId('results-item')).toBeInTheDocument();
@@ -85,17 +96,21 @@ describe('ResultsItem', () => {
     (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
 
     render(
-      <MemoryRouter initialEntries={[`/`]}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ResultsItem name="Rick Sanchez" character={mockCharacter} />
-            }
-          />
-          <Route path="/details/:id" element={<Details />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={[`/`]}>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <ResultsItem name="Rick Sanchez" character={mockCharacter} />
+                }
+              />
+              <Route path="/details/:id" element={<Details />} />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     fireEvent.click(screen.getByTestId('results-item'));
@@ -105,9 +120,13 @@ describe('ResultsItem', () => {
     );
 
     render(
-      <MemoryRouter initialEntries={[`/details/${mockCharacter.id}`]}>
-        <Details />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={[`/details/${mockCharacter.id}`]}>
+            <Details />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(screen.getByTestId('details')).toBeInTheDocument();
