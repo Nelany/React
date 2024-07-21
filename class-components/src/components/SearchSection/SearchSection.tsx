@@ -11,7 +11,8 @@ import { setCharactersResponse } from '../../store/charactersResponseSlice';
 export const SearchSection = () => {
   const dispatch = useDispatch();
   const dispatchIsCharLoading = useDispatchIsCharLoading();
-  const [trigger, { data: charactersResponse }] = useLazyGetCharactersQuery();
+  const [trigger, { currentData: charactersResponse }] =
+    useLazyGetCharactersQuery();
   const { theme } = useTheme();
   const [query, setQuery] = useLocalStorage('searchQuery', '');
   const [inputValue, setInputValue] = useState<string>(query);
@@ -37,20 +38,7 @@ export const SearchSection = () => {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [query]);
-
-  useEffect(() => {
-    dispatchIsCharLoading(true);
-    const queryToSearch = query !== undefined ? query : '';
-    const trimmedQuery = queryToSearch.trim();
-    localStorage.setItem('searchQuery', trimmedQuery);
-    const timer = setTimeout(async () => {
-      await trigger({ searchString: trimmedQuery, page });
-      dispatchIsCharLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [page]);
+  }, [query, page]);
 
   useEffect(() => {
     dispatch(
