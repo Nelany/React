@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Pagination.scss';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
@@ -35,27 +36,31 @@ export const Pagination = () => {
     navigate(`/?${searchParams.toString()}`);
   };
 
+  const prevButton = classNames(
+    'pagination__element',
+    'pagination__button',
+    'pagination__button-prev',
+    {
+      'pagination__button-disabled': page === '1',
+    }
+  );
+
+  const nextButton = classNames(
+    'pagination__element',
+    'pagination__button',
+    'pagination__button-next',
+    {
+      'pagination__button-disabled': !ifNextPage,
+    }
+  );
+
   return (
     <div className={`pagination ${theme}`}>
-      <button
-        className={
-          page === '1'
-            ? 'pagination__element pagination__button pagination__button-next pagination__button-disabled'
-            : 'pagination__element pagination__button pagination__button-prev'
-        }
-        onClick={handlePrevClick}
-      >
+      <button className={prevButton} onClick={handlePrevClick}>
         {'<'}
       </button>
       <div className="pagination__element pagination__number">{pageNumber}</div>
-      <button
-        className={
-          ifNextPage
-            ? 'pagination__element pagination__button pagination__button-next'
-            : 'pagination__element pagination__button pagination__button-next pagination__button-disabled'
-        }
-        onClick={handleNextClick}
-      >
+      <button className={nextButton} onClick={handleNextClick}>
         {'>'}
       </button>
     </div>
