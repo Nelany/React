@@ -39,7 +39,7 @@ export const Pagination = () => {
 
   return (
     <div className={`pagination ${theme}`}>
-      <div
+      <button
         className={
           page === '1'
             ? 'pagination__element pagination__button pagination__button-next pagination__button-disabled'
@@ -48,9 +48,9 @@ export const Pagination = () => {
         onClick={handlePrevClick}
       >
         {'<'}
-      </div>
+      </button>
       <div className="pagination__element pagination__number">{pageNumber}</div>
-      <div
+      <button
         className={
           ifNextPage
             ? 'pagination__element pagination__button pagination__button-next'
@@ -59,7 +59,7 @@ export const Pagination = () => {
         onClick={handleNextClick}
       >
         {'>'}
-      </div>
+      </button>
     </div>
   );
 };

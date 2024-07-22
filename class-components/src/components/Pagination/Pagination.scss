@@ -17,23 +17,34 @@
     border-radius: $radius;
   }
 
-  .pagination__button {
+  button.pagination__button {
     width: 40px;
     height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: $radius;
+    border: none;
     background-color: $transparent;
-    padding-bottom: 5px;
+    padding: 0 0 5px 0;
+    font-size: 30px;
+    font-weight: 900;
     transition: all 0.4s;
+    text-shadow: none;
+    color: $dark;
+    box-shadow: 0px 2px 5px $transparent;
     cursor: pointer;
   }
 
-  .pagination__button:hover {
+  button.pagination__button:hover {
     background-color: $shadow;
     color: $light;
     transform: scale(1.05);
     box-shadow: 0 3px 8px $black;
   }
 
-  .pagination__button-disabled{
+  button.pagination__button-disabled{
     pointer-events: none;
     opacity: 0.5;
   }
@@ -47,9 +58,18 @@
 .pagination.dark{
   color: $green;
 
-  .pagination__button:hover {
+  button.pagination__button {
+    color: $green;
+  }
+
+  button.pagination__button:hover {
     background-color: $dark;
     box-shadow: 0 0 8px $green;
     color: $green;
+  }
+
+  button.pagination__button-disabled{
+    pointer-events: none;
+    opacity: 0.5;
   }
 }
