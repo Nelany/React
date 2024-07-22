@@ -1,7 +1,13 @@
 import './Main.scss';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  Outlet,
+  ScrollRestoration,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { ResultsSection } from '../../components/ResultSection/ResultsSection';
 import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { useTheme } from '../../hooks/useTheme';
@@ -43,6 +49,7 @@ export const Main = () => {
       onClick={closeDetails}
       className={`main ${theme}`}
     >
+      <ScrollRestoration />
       <img className="rick-morty-img" src="/rickmorty.png" alt="" />
       <img
         className="rick-morty-img rick-morty-img-reverse"

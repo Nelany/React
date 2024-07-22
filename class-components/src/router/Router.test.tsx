@@ -2,12 +2,15 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import {
   createBrowserRouter,
+  createMemoryRouter,
   MemoryRouter,
   Route,
+  RouterProvider,
   Routes,
 } from 'react-router-dom';
 import { router } from './Router';
 import { Details } from '../components/Details/Details';
+import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary';
 import { Main } from '../pages/Main/Main';
 import { NotFound } from '../pages/NotFound/NotFound';
 import { store } from '../store/store';
@@ -15,12 +18,26 @@ import { ThemeProvider } from '../ThemeContext/ThemeContext';
 
 describe('Router', () => {
   test('renders Main component for / route', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <ErrorBoundary theme="light">
+              <Main />
+            </ErrorBoundary>
+          ),
+        },
+      ],
+      {
+        initialEntries: ['/?page=1'],
+      }
+    );
+
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <Main />
-          </MemoryRouter>
+          <RouterProvider router={router} />
         </ThemeProvider>
       </Provider>
     );
@@ -57,14 +74,26 @@ describe('Router', () => {
   });
 
   test('renders Main component for / route', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <ErrorBoundary theme="light">
+              <Main />
+            </ErrorBoundary>
+          ),
+        },
+      ],
+      {
+        initialEntries: ['/?page=1'],
+      }
+    );
+
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <Routes>
-              <Route path="/" element={<Main />} />
-            </Routes>
-          </MemoryRouter>
+          <RouterProvider router={router} />
         </ThemeProvider>
       </Provider>
     );

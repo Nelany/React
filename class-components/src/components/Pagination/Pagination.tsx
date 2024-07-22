@@ -26,7 +26,6 @@ export const Pagination = () => {
     if (pageNumber > 1) {
       searchParams.set('page', String(pageNumber - 1));
       navigate(`/?${searchParams.toString()}`);
-      window.scrollTo(0, 0);
     }
   };
 
@@ -34,7 +33,6 @@ export const Pagination = () => {
     e.stopPropagation();
     searchParams.set('page', String(pageNumber + 1));
     navigate(`/?${searchParams.toString()}`);
-    window.scrollTo(0, 0);
   };
 
   return (

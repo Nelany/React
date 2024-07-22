@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 import { Main } from './Main';
@@ -23,14 +23,22 @@ describe('Main component', () => {
   });
 
   test('renders Main component', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <Main />,
+        },
+      ],
+      {
+        initialEntries: ['/?page=1'],
+      }
+    );
+
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <ErrorBoundary theme="light">
-              <Main />
-            </ErrorBoundary>
-          </MemoryRouter>
+          <RouterProvider router={router} />
         </ThemeProvider>
       </Provider>
     );
@@ -40,15 +48,26 @@ describe('Main component', () => {
   });
 
   test('navigates to different page on click', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <Main />,
+        },
+        {
+          path: '/details/:id',
+          element: <div>Details Page</div>,
+        },
+      ],
+      {
+        initialEntries: ['/?page=2'],
+      }
+    );
+
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter initialEntries={['/?page=2']}>
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/details/:id" element={<div>Details Page</div>} />
-            </Routes>
-          </MemoryRouter>
+          <RouterProvider router={router} />
         </ThemeProvider>
       </Provider>
     );
@@ -58,14 +77,22 @@ describe('Main component', () => {
   });
 
   test('renders SearchSection and ResultsSection components', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <Main />,
+        },
+      ],
+      {
+        initialEntries: ['/?page=1'],
+      }
+    );
+
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <ErrorBoundary theme="light">
-              <Main />
-            </ErrorBoundary>
-          </MemoryRouter>
+          <RouterProvider router={router} />
         </ThemeProvider>
       </Provider>
     );
@@ -75,14 +102,21 @@ describe('Main component', () => {
   });
 
   test('creates an error when error button is clicked', () => {
+    const router = createMemoryRouter([
+      {
+        path: '/',
+        element: (
+          <ErrorBoundary theme="light">
+            <Main />
+          </ErrorBoundary>
+        ),
+      },
+    ]);
+
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <ErrorBoundary theme="light">
-              <Main />
-            </ErrorBoundary>
-          </MemoryRouter>
+          <RouterProvider router={router} />
         </ThemeProvider>
       </Provider>
     );
