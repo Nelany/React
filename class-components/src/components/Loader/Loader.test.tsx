@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { Loader } from './Loader';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import { Provider } from 'react-redux';
 import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 describe('Loader Component', () => {
   test('the appropriate message is displayed if no cards are present', () => {

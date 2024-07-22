@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import toastReducer from './toastSlice';
-import { rtkApi } from '../api/rtkApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import ifReturnToRickNMortyReducer from './ifReturnToRickNMortySlice';
 import isCharLoading from './charactersLoadingSlice';
 import charactersResponseReducer from './charactersResponseSlice';
+import ifReturnToRickNMortyReducer from './ifReturnToRickNMortySlice';
 import selectedCharactersReducer from './selectedCharactersSlice';
+import toastReducer from './toastSlice';
+import { rtkApi } from '../api/rtkApi';
 
 
 export const store = configureStore({

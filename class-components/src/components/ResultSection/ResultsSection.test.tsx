@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { ResultsSection } from './ResultsSection';
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router-dom';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import { Provider } from 'react-redux';
 import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 describe('ResultsSection', () => {
   test('matches snapshot when loading', () => {

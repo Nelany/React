@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
-import { NotFound } from './NotFound';
-import { MemoryRouter } from 'react-router-dom';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+import { NotFound } from './NotFound';
 import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 test('renders NotFound component correctly', () => {
   const { container } = render(

@@ -1,10 +1,10 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Character } from '../../types/types';
-import './ResultsItem.scss';
-import { useTheme } from '../../hooks/useTheme';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useTheme } from '../../hooks/useTheme';
 import { setSelectedCharacters } from '../../store/selectedCharactersSlice';
 import { RootState } from '../../store/store';
+import { Character } from '../../types/types';
+import './ResultsItem.scss';
 
 interface Props {
   name: string;

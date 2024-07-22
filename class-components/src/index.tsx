@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
+import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router/Router';
-import { ThemeProvider } from './ThemeContext/ThemeContext';
-import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { ThemeProvider } from './ThemeContext/ThemeContext';
 
 const rootElement = document.getElementById('root')!;
 

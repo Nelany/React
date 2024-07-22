@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { GoToMainButton } from './GoToMainButton';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import { Provider } from 'react-redux';
 import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 describe('GoToMainButton component', () => {
   it('matches snapshot', () => {

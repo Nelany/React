@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ErrorBoundary } from './ErrorBoundary';
 import { vi } from 'vitest';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const ThrowError = () => {
   throw new Error('Test error');

@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { Pagination } from './Pagination';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import { Provider } from 'react-redux';
 import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 describe('Pagination', () => {
   test('updates URL query parameter when page changes', async () => {

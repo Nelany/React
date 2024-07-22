@@ -1,8 +1,8 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './Details.scss';
-import { Loader } from '../Loader/Loader';
-import { useTheme } from '../../hooks/useTheme';
 import { useGetByIdQuery } from '../../api/rtkApi';
+import { useTheme } from '../../hooks/useTheme';
+import { Loader } from '../Loader/Loader';
 
 export const Details = () => {
   const { theme } = useTheme();

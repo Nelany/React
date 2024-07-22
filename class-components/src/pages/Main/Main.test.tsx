@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import { Main } from './Main';
-import { SearchSection } from '../../components/SearchSection/SearchSection';
-import { ResultsSection } from '../../components/ResultSection/ResultsSection';
-import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
 import { vi } from 'vitest';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import { Provider } from 'react-redux';
+import { Main } from './Main';
+import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
+import { ResultsSection } from '../../components/ResultSection/ResultsSection';
+import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 vi.mock('../../components/SearchSection/SearchSection', () => ({
   SearchSection: vi.fn(() => <div>Mocked SearchSection</div>),

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './Pagination.scss';
+import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
 import { RootState } from '../../store/store';
-import { useSelector } from 'react-redux';
 
 export const Pagination = () => {
   const { theme } = useTheme();

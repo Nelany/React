@@ -1,11 +1,11 @@
 import { useEffect, ChangeEvent, KeyboardEvent, useState } from 'react';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLazyGetCharactersQuery } from '../../api/rtkApi';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import './SearchSection.scss';
 import { useTheme } from '../../hooks/useTheme';
-import { useLazyGetCharactersQuery } from '../../api/rtkApi';
 import { useDispatchIsCharLoading } from '../../store/charactersLoadingSlice';
-import { useDispatch } from 'react-redux';
 import { setCharactersResponse } from '../../store/charactersResponseSlice';
 
 export const SearchSection = () => {

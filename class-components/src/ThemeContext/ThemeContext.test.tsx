@@ -1,6 +1,6 @@
+import { useContext } from 'react';
 import { render, act } from '@testing-library/react';
 import { ThemeContext, ThemeProvider } from './ThemeContext';
-import { useContext } from 'react';
 
 const ConsumerComponent = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 type CharLoadingProps = { isCharLoading: boolean };
 

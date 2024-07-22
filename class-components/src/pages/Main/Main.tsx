@@ -1,10 +1,10 @@
 import './Main.scss';
 import { useState } from 'react';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { SearchSection } from '../../components/SearchSection/SearchSection';
-import { ResultsSection } from '../../components/ResultSection/ResultsSection';
-import { useTheme } from '../../hooks/useTheme';
 import { useSelector } from 'react-redux';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { ResultsSection } from '../../components/ResultSection/ResultsSection';
+import { SearchSection } from '../../components/SearchSection/SearchSection';
+import { useTheme } from '../../hooks/useTheme';
 import { RootState } from '../../store/store';
 
 export const Main = () => {

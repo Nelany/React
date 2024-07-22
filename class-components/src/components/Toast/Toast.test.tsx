@@ -1,11 +1,11 @@
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { Toast } from './Toast';
 import { vi } from 'vitest';
-import { Character } from '../../types/types';
+import { Toast } from './Toast';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { Character } from '../../types/types';
 
 vi.mock('../../store/selectedCharactersSlice', () => ({
   removeAllSelectedCharacters: vi.fn(),

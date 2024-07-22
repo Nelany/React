@@ -1,17 +1,17 @@
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import {
   createBrowserRouter,
   MemoryRouter,
   Route,
   Routes,
 } from 'react-router-dom';
-import { Main } from '../pages/Main/Main';
-import { Details } from '../components/Details/Details';
-import { NotFound } from '../pages/NotFound/NotFound';
 import { router } from './Router';
-import { ThemeProvider } from '../ThemeContext/ThemeContext';
-import { Provider } from 'react-redux';
+import { Details } from '../components/Details/Details';
+import { Main } from '../pages/Main/Main';
+import { NotFound } from '../pages/NotFound/NotFound';
 import { store } from '../store/store';
+import { ThemeProvider } from '../ThemeContext/ThemeContext';
 
 describe('Router', () => {
   test('renders Main component for / route', () => {

@@ -1,9 +1,9 @@
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
 import './Toast.scss';
 import { removeAllSelectedCharacters } from '../../store/selectedCharactersSlice';
 import { RootState } from '../../store/store';
-import { useRef } from 'react';
 
 export const Toast = () => {
   const linkRef = useRef(null);

@@ -1,7 +1,7 @@
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './GoToMainButton.scss';
 import { toggleIfReturnToRickNMorty } from '../../store/ifReturnToRickNMortySlice';
-import { useDispatch } from 'react-redux';
 
 interface GoToMainButtonProps {
   needRefresh?: boolean;

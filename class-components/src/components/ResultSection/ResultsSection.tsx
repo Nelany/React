@@ -1,12 +1,12 @@
-import { ResultsItem } from '../ResultsItem/ResultsItem';
-import { Loader } from '../Loader/Loader';
-import { Pagination } from '../Pagination/Pagination';
-import './ResultsSection.scss';
+import { useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
-import { Toast } from '../Toast/Toast';
 import { useIsCharLoading } from '../../store/charactersLoadingSlice';
 import { RootState } from '../../store/store';
-import { useSelector } from 'react-redux';
+import { Loader } from '../Loader/Loader';
+import { Pagination } from '../Pagination/Pagination';
+import { ResultsItem } from '../ResultsItem/ResultsItem';
+import { Toast } from '../Toast/Toast';
+import './ResultsSection.scss';
 
 export const ResultsSection = () => {
   const characterResponse = useSelector(

@@ -1,11 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
-import { ResultsItem } from './ResultsItem';
-import { vi } from 'vitest';
-import { Details } from '../Details/Details';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 import { Provider } from 'react-redux';
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { vi } from 'vitest';
+import { ResultsItem } from './ResultsItem';
 import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { Details } from '../Details/Details';
 
 vi.mock(
   'react-router-dom',
