@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
@@ -25,8 +26,13 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
+      const containerClasses = classNames(
+        'error-content-container',
+        this.props.theme
+      );
+
       return (
-        <div className={`error-content-container ${this.props.theme}`}>
+        <div className={containerClasses}>
           <h1 className="error-content">Something went wrong!</h1>
           <img className="error-img" src="/cat.png" alt="Cat" />
           <h3 className="error-boundary-h3">Reload the application please!</h3>

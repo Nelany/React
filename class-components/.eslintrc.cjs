@@ -80,7 +80,6 @@ module.exports = {
             patternOptions: { matchBase: true },
           },
         ],
-        pathGroupsExcludedImportTypes: ['react'],
         alphabetize: {
           order: 'asc',
           caseInsensitive: true,

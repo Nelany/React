@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
@@ -32,17 +33,19 @@ export const ResultsItem = ({ name, character }: Props) => {
     navigate(`/details/${character.id}/?${searchParams.toString()}`);
   };
 
+  const resultsItemClasses = classNames('results-item', theme);
+  const selectButtonClasses = classNames('select-button', theme, {
+    unselected: !isSelected,
+  });
+
   return (
     <div
       data-testid="results-item"
       onClick={openCheckedId}
-      className={`results-item ${theme}`}
+      className={resultsItemClasses}
     >
       <img className="result-img" src={character.image} alt="img"></img>
-      <button
-        onClick={handleSelectButtonClick}
-        className={`select-button ${isSelected ? '' : 'unselected'} ${theme}`}
-      >
+      <button onClick={handleSelectButtonClick} className={selectButtonClasses}>
         ✓
       </button>
       <div>

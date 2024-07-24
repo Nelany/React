@@ -1,9 +1,10 @@
+import classNames from 'classnames';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
-import './Toast.scss';
 import { removeAllSelectedCharacters } from '../../store/selectedCharactersSlice';
 import { RootState } from '../../store/store';
+import './Toast.scss';
 
 export const Toast = () => {
   const linkRef = useRef(null);
@@ -41,10 +42,12 @@ export const Toast = () => {
     URL.revokeObjectURL(url);
   };
 
+  const toastClasses = classNames('toast', theme, {
+    hidden: !numberOfSelectedCharacters,
+  });
+
   return (
-    <div
-      className={`toast ${theme} ${numberOfSelectedCharacters ? '' : 'hidden'}`}
-    >
+    <div className={toastClasses}>
       <h3>{numberOfSelectedCharacters} items are selected!</h3>
       <div className="toast__buttons-container">
         <button onClick={handleUnselectAll}>Unselect all</button>

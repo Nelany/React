@@ -1,8 +1,9 @@
+import classNames from 'classnames';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import './Details.scss';
 import { useGetByIdQuery } from '../../api/rtkApi';
 import { useTheme } from '../../hooks/useTheme';
 import { Loader } from '../Loader/Loader';
+import './Details.scss';
 
 export const Details = () => {
   const { theme } = useTheme();
@@ -24,8 +25,10 @@ export const Details = () => {
     navigate(`/?${searchParams.toString()}`);
   };
 
+  const detailsClasses = classNames('details', theme);
+
   return (
-    <div data-testid="details" className={`details ${theme}`}>
+    <div data-testid="details" className={detailsClasses}>
       <button className="details__close-button" onClick={handleClose}>
         X
       </button>

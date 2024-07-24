@@ -1,4 +1,4 @@
-import './Main.scss';
+import classNames from 'classnames';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -12,6 +12,7 @@ import { ResultsSection } from '../../components/ResultSection/ResultsSection';
 import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { useTheme } from '../../hooks/useTheme';
 import { RootState } from '../../store/store';
+import './Main.scss';
 
 export const Main = () => {
   const { theme, toggleTheme } = useTheme();
@@ -43,13 +44,19 @@ export const Main = () => {
     e.stopPropagation();
   };
 
+  const mainClasses = classNames('main', theme);
+  const buttonClasses = classNames('error-button', theme);
+  const outletClasses = classNames('main__outlet', {
+    'main__outlet-hidden': !id,
+  });
+
   return (
-    <div
-      data-testid="main-page"
-      onClick={closeDetails}
-      className={`main ${theme}`}
-    >
-      <ScrollRestoration />
+    <div data-testid="main-page" onClick={closeDetails} className={mainClasses}>
+      <ScrollRestoration
+        getKey={(location) => {
+          return location.search;
+        }}
+      />
       <img className="rick-morty-img" src="/rickmorty.png" alt="" />
       <img
         className="rick-morty-img rick-morty-img-reverse"
@@ -61,21 +68,18 @@ export const Main = () => {
       <SearchSection key={String(ifReturnToRickNMorty)} />
 
       <div className="main__buttons-container">
-        <button className={`error-button ${theme}`} onClick={handleErrorClick}>
+        <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
         </button>
-        <button className={`error-button ${theme}`} onClick={toggleTheme}>
-          Toggle Theme:{theme}
+        <button className={buttonClasses} onClick={toggleTheme}>
+          Toggle Theme: {theme}
         </button>
       </div>
 
       <div className="main__results-container">
         <ResultsSection />
 
-        <div
-          onClick={onClick}
-          className={id ? 'main__outlet' : 'main__outlet main__outlet-hidden'}
-        >
+        <div onClick={onClick} className={outletClasses}>
           <Outlet />
         </div>
       </div>

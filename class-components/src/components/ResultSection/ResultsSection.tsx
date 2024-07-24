@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
 import { useIsCharLoading } from '../../store/charactersLoadingSlice';
@@ -15,8 +16,10 @@ export const ResultsSection = () => {
   const isCharLoading = useIsCharLoading();
   const { theme } = useTheme();
 
+  const resultsSectionClasses = classNames('section results-section', theme);
+
   return (
-    <div className={`section results-section ${theme}`}>
+    <div className={resultsSectionClasses}>
       <h3>Results:</h3>
       <Loader
         isLoading={isCharLoading}

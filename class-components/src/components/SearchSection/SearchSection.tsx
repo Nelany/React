@@ -1,12 +1,13 @@
-import { useEffect, ChangeEvent, KeyboardEvent, useState } from 'react';
+import classNames from 'classnames';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useLazyGetCharactersQuery } from '../../api/rtkApi';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import './SearchSection.scss';
 import { useTheme } from '../../hooks/useTheme';
 import { useDispatchIsCharLoading } from '../../store/charactersLoadingSlice';
 import { setCharactersResponse } from '../../store/charactersResponseSlice';
+import './SearchSection.scss';
 
 export const SearchSection = () => {
   const dispatch = useDispatch();
@@ -70,10 +71,13 @@ export const SearchSection = () => {
     }
   };
 
+  const searchSectionClasses = classNames('section search-section', theme);
+  const searchInputClasses = classNames('search-input', theme);
+
   return (
-    <div className={`section ${theme} search-section`}>
+    <div className={searchSectionClasses}>
       <input
-        className={`search-input ${theme}`}
+        className={searchInputClasses}
         type="text"
         value={inputValue}
         onChange={handleInputChange}

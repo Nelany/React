@@ -1,5 +1,5 @@
-import { useContext } from 'react';
 import { render, act } from '@testing-library/react';
+import { useContext } from 'react';
 import { ThemeContext, ThemeProvider } from './ThemeContext';
 
 const ConsumerComponent = () => {

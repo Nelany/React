@@ -8,7 +8,7 @@
     "test": "vitest run --coverage",
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src/",
+    "lint": "eslint src/ --fix",
     "preview": "vite preview",
     "prepare": "cd .. && husky class-components/.husky"
   },
