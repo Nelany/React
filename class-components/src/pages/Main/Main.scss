@@ -10,26 +10,33 @@
   gap: 20px;
   box-sizing: border-box;
   margin-bottom: 10px;
+  background-color: $darkBrown;
 
   .main__tittle {
     height: 60px;
     margin: 50px 0 0 0;
   }
 
-  .error-button {
+  .main__buttons-container {
     width: 100%;
     margin-top: -20px;
-    padding: 0.1em 1.2em 0.3em 1.2em;
+    display: flex;
+    gap: 5px;
 
-    background-color: $yellowTransparent;
-    color: $darkBrown;
-    font-weight: 700;
-    text-shadow: none;
-  }
 
-  .error-button:hover {
-    background-color: $orangeTransparent;
-    transform: scale(1);
+    .error-button {
+      width: 100%;
+      padding: 0.1em 1.2em 0.3em 1.2em;
+      background-color: $yellowTransparent;
+      color: $darkBrown;
+      font-weight: 700;
+      text-shadow: none;
+    }
+
+    .error-button:hover {
+      background-color: $orangeTransparent;
+      transform: scale(1);
+    }
   }
 
   .main__results-container {
@@ -51,61 +58,24 @@
   }
 }
 
+.main.dark {
+  background-color: $black;
+
+  .main__outlet{
+    background-color: $dark;
+  }
+}
+
+
 .section {
   width: 100%;
   padding: 1.3em 2em;
   box-sizing: border-box;
 }
 
-.search-section {
-  min-height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  background-color: $darkBrown;
-
-  .search-input {
-    max-width: 100%;
-    border-radius: $radius;
-    border: 1px solid $shadow;
-    padding: 0.3em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: $light;
-    cursor: pointer;
-    outline: none;
-  }
+.result-section{
+  position: relative;
 }
-
-.results-section {
-  flex-grow: 1;
-  background-color: $light;
-}
-
-.error-content-container {
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-}
-
-.error-content {
-  height: 60px;
-  display: inline-block;
-  margin: 50px;
-
-}
-
-.error-img {
-  max-width: 70%;
-  max-height: 40vh;
-}
-
-.error-boundary-h3{margin-top: 30px;}
 
 @keyframes moveLeft {
 
@@ -162,6 +132,10 @@
     max-height: 90px;
     position: absolute;
     top: 70px;
+  }
+
+  .error-button{
+    font-size: 14px;
   }
 }
 

@@ -1,32 +1,33 @@
-import { ResultsItem } from '../ResultsItem/ResultsItem';
-import { CharacterResponse } from '../../types/types';
+import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+import { useTheme } from '../../hooks/useTheme';
+import { useIsCharLoading } from '../../store/characterSlice';
+import { RootState } from '../../store/store';
 import { Loader } from '../Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
-import { Dispatch, SetStateAction } from 'react';
+import { ResultsItem } from '../ResultsItem/ResultsItem';
+import { Toast } from '../Toast/Toast';
+import './ResultsSection.scss';
 
-interface Props {
-  characterResponse: CharacterResponse | null;
-  isLoading: boolean;
-  ifNextPage: boolean;
-  setIfReturnToRickNMorty?: Dispatch<SetStateAction<boolean>>;
-}
+export const ResultsSection = () => {
+  const characterResponse = useSelector(
+    (state: RootState) => state.characters.charactersResponse
+  );
+  const isCharLoading = useIsCharLoading();
+  const { theme } = useTheme();
 
-export const ResultsSection = ({
-  characterResponse,
-  isLoading,
-  ifNextPage,
-  setIfReturnToRickNMorty,
-}: Props) => {
+  const resultsSectionClasses = classNames('section results-section', theme);
+
   return (
-    <div className="section results-section">
+    <div className={resultsSectionClasses}>
       <h3>Results:</h3>
       <Loader
-        setIfReturnToRickNMorty={setIfReturnToRickNMorty}
-        isLoading={isLoading}
-        response={characterResponse || {}}
+        isLoading={isCharLoading}
+        isError={Boolean(characterResponse?.error)}
+        needRefresh={true}
       />
 
-      {!isLoading && characterResponse?.results && (
+      {!isCharLoading && characterResponse?.results && (
         <>
           {characterResponse.results.map((character) => (
             <ResultsItem
@@ -35,7 +36,8 @@ export const ResultsSection = ({
               character={character}
             />
           ))}
-          <Pagination ifNextPage={ifNextPage} />
+          <Toast />
+          <Pagination />
         </>
       )}
     </div>

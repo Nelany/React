@@ -1,0 +1,73 @@
+@import '../../utils/variables.scss';
+
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: $darkShadow;
+  box-shadow: 0 3px 8px $darkShadow;
+  border-radius: $radius;
+  border: 1px solid $lightTransparent;
+  transition: all 0.4s;
+
+  h3 {
+    color: $light;
+    text-shadow: 0 0 8px $dark;
+    margin-bottom: 5px;
+  }
+
+  .toast__buttons-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    box-shadow: 0 0 8px $darkShadow;
+  }
+
+  .none-link{
+    display: none;
+  }
+
+}
+
+.toast.dark {
+  border: 3px solid $green;
+  box-shadow: 0 0 8px $green;
+
+
+  h3 {
+    color: $green;
+    text-shadow: 0 0 8px $dark;
+  }
+
+}
+
+.toast.hidden {
+  bottom: 0;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .toast {
+    width: 250px;
+    bottom: 75px;
+    gap: 5px;
+    padding: 10px 20px;
+
+
+    button {
+      font-size: 11px;
+    }
+  }
+
+}

@@ -1,20 +1,22 @@
-import { useEffect, ChangeEvent, KeyboardEvent, useState } from 'react';
-import { getCharacters } from '../../api/api';
-import { CharacterResponse } from '../../types/types';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import classNames from 'classnames';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLazyGetCharactersQuery } from '../../api/rtkApi';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useTheme } from '../../hooks/useTheme';
+import {
+  useDispatchIsCharLoading,
+  setCharactersResponse,
+} from '../../store/characterSlice';
+import './SearchSection.scss';
 
-interface Props {
-  setCharactersFromResponse: (response: CharacterResponse) => void;
-  setIsLoading: (isLoading: boolean) => void;
-  setIfNextPage: (ifNextPage: boolean) => void;
-}
-
-export const SearchSection = ({
-  setIsLoading,
-  setCharactersFromResponse,
-  setIfNextPage,
-}: Props) => {
+export const SearchSection = () => {
+  const dispatch = useDispatch();
+  const dispatchIsCharLoading = useDispatchIsCharLoading();
+  const [trigger, { currentData: charactersResponse }] =
+    useLazyGetCharactersQuery();
+  const { theme } = useTheme();
   const [query, setQuery] = useLocalStorage('searchQuery', '');
   const [inputValue, setInputValue] = useState<string>(query);
   const location = useLocation();
@@ -27,35 +29,37 @@ export const SearchSection = ({
     setInputValue(event.target.value);
   };
 
-  const handleSearch = async (searchQuery?: string) => {
+  useEffect(() => {
+    dispatchIsCharLoading(true);
+
+    const queryToSearch = query !== undefined ? query : '';
+    const trimmedQuery = queryToSearch.trim();
+    localStorage.setItem('searchQuery', trimmedQuery);
+    const timer = setTimeout(async () => {
+      await trigger({ searchString: trimmedQuery, page });
+      dispatchIsCharLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [query, page]);
+
+  useEffect(() => {
+    dispatch(
+      setCharactersResponse(
+        charactersResponse || { error: 'There is nothing here!' }
+      )
+    );
+  }, [charactersResponse]);
+
+  const prepareSearch = () => {
+    setQuery(inputValue);
+    searchParams.set('page', '1');
+
     if (id) {
       navigate(`/details/${id}/?${searchParams.toString()}`);
     } else {
       navigate(`/?${searchParams.toString()}`);
     }
-
-    setIsLoading(true);
-
-    const queryToSearch = searchQuery !== undefined ? searchQuery : '';
-    const trimmedQuery = queryToSearch.trim();
-
-    setTimeout(async () => {
-      const charactersResponse = await getCharacters({
-        searchString: trimmedQuery,
-        page: page,
-      });
-
-      localStorage.setItem('searchQuery', trimmedQuery);
-      setCharactersFromResponse(charactersResponse);
-      setIfNextPage(Boolean(charactersResponse?.info?.next));
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  const prepareSearch = () => {
-    setQuery(inputValue);
-    searchParams.set('page', '1');
-    handleSearch(inputValue);
   };
 
   const handleSearchButton = (e: React.MouseEvent) => {
@@ -69,21 +73,22 @@ export const SearchSection = ({
     }
   };
 
-  useEffect(() => {
-    handleSearch(query);
-  }, [page]);
+  const searchSectionClasses = classNames('section search-section', theme);
+  const searchInputClasses = classNames('search-input', theme);
 
   return (
-    <div className="section search-section">
+    <div className={searchSectionClasses}>
       <input
-        className="search-input"
+        className={searchInputClasses}
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder="Enter text..."
       />
-      <button onClick={handleSearchButton}>Search!</button>
+      <button className={theme} onClick={handleSearchButton}>
+        Search!
+      </button>
     </div>
   );
 };

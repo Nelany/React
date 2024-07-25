@@ -1,31 +1,21 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { GoToMainButton } from './GoToMainButton';
-import { vi } from 'vitest';
+import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 describe('GoToMainButton component', () => {
   it('matches snapshot', () => {
     const { container } = render(
-      <Router>
-        <GoToMainButton />
-      </Router>
+      <Provider store={store}>
+        <ThemeProvider>
+          <Router>
+            <GoToMainButton />
+          </Router>
+        </ThemeProvider>
+      </Provider>
     );
     expect(container.firstChild).toMatchSnapshot();
-  });
-
-  it('calls setIfReturnToRickNMorty function when button is clicked and prop is provided', () => {
-    const setIfReturnToRickNMortyMock = vi.fn();
-
-    const { getByText } = render(
-      <Router>
-        <GoToMainButton setIfReturnToRickNMorty={setIfReturnToRickNMortyMock} />
-      </Router>
-    );
-
-    fireEvent.click(getByText('Return to Rick and Morty!'));
-
-    expect(setIfReturnToRickNMortyMock).toHaveBeenCalledWith(
-      expect.any(Function)
-    );
   });
 });

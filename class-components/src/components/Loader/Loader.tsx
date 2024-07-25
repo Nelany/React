@@ -1,19 +1,13 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Character, CharacterResponse } from '../../types/types';
 import { GoToMainButton } from '../GoToMainButton/GoToMainButton';
 import './Loader.scss';
 
 type Props = {
   isLoading: boolean;
-  response: CharacterResponse | Character;
-  setIfReturnToRickNMorty?: Dispatch<SetStateAction<boolean>>;
+  isError: boolean;
+  needRefresh?: boolean;
 };
 
-export const Loader = ({
-  isLoading,
-  response,
-  setIfReturnToRickNMorty,
-}: Props) => {
+export const Loader = ({ isLoading, isError, needRefresh }: Props) => {
   return (
     <>
       {isLoading && (
@@ -21,10 +15,10 @@ export const Loader = ({
           <img className="spinner" src="/spinner.png" alt="Loading..." />
         </div>
       )}
-      {!isLoading && response?.error && (
+      {!isLoading && isError && (
         <>
           <h4 className="error-message">There is nothing here!</h4>
-          <GoToMainButton setIfReturnToRickNMorty={setIfReturnToRickNMorty} />
+          <GoToMainButton needRefresh={needRefresh} />
         </>
       )}
     </>

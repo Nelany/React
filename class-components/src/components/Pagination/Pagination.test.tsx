@@ -1,6 +1,9 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { Pagination } from './Pagination';
+import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 describe('Pagination', () => {
   test('updates URL query parameter when page changes', async () => {
@@ -8,14 +11,20 @@ describe('Pagination', () => {
       [
         {
           path: '/',
-          element: <Pagination ifNextPage={true} />,
+          element: <Pagination />,
         },
       ],
       {
         initialEntries: ['/?page=1'],
       }
     );
-    render(<RouterProvider router={router} />);
+    render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
+    );
 
     expect(screen.getByText('1')).toBeInTheDocument();
 
@@ -24,7 +33,6 @@ describe('Pagination', () => {
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 2000));
     });
-    console.warn(window.location);
     expect(router.state.location.search).toBe('?page=2');
   });
 });

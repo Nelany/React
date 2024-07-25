@@ -1,15 +1,14 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import { SearchSection } from './SearchSection';
+import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
 }));
-
-const setCharactersFromResponse = vi.fn();
-const setIsLoading = vi.fn();
-const setIfNextPage = vi.fn();
 
 describe('SearchSection', () => {
   beforeEach(() => {
@@ -18,13 +17,13 @@ describe('SearchSection', () => {
 
   it('renders input and button', () => {
     render(
-      <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
-          setIfNextPage={setIfNextPage}
-        />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(screen.getByPlaceholderText('Enter text...')).toBeInTheDocument();
@@ -33,13 +32,13 @@ describe('SearchSection', () => {
 
   it('updates input value on change', () => {
     render(
-      <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
-          setIfNextPage={setIfNextPage}
-        />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     const input = screen.getByPlaceholderText(
@@ -52,13 +51,13 @@ describe('SearchSection', () => {
 
   it('clicking the Search button saves the entered value to the local storage', async () => {
     render(
-      <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
-          setIfNextPage={setIfNextPage}
-        />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     const input = screen.getByPlaceholderText(
@@ -80,13 +79,13 @@ describe('SearchSection', () => {
     localStorage.setItem('searchQuery', 'initial value');
 
     render(
-      <MemoryRouter>
-        <SearchSection
-          setCharactersFromResponse={setCharactersFromResponse}
-          setIsLoading={setIsLoading}
-          setIfNextPage={setIfNextPage}
-        />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     const input = screen.getByPlaceholderText(

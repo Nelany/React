@@ -1,11 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import { Main } from './Main';
-import { SearchSection } from '../../components/SearchSection/SearchSection';
-import { ResultsSection } from '../../components/ResultSection/ResultsSection';
-import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
 import { vi } from 'vitest';
+import { Main } from './Main';
+import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
+import { ResultsSection } from '../../components/ResultSection/ResultsSection';
+import { SearchSection } from '../../components/SearchSection/SearchSection';
+import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
 vi.mock('../../components/SearchSection/SearchSection', () => ({
   SearchSection: vi.fn(() => <div>Mocked SearchSection</div>),
@@ -20,10 +23,24 @@ describe('Main component', () => {
   });
 
   test('renders Main component', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <Main />,
+        },
+      ],
+      {
+        initialEntries: ['/?page=1'],
+      }
+    );
+
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <Main />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(screen.getByText('Rick and Morty')).toBeInTheDocument();
@@ -31,13 +48,28 @@ describe('Main component', () => {
   });
 
   test('navigates to different page on click', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <Main />,
+        },
+        {
+          path: '/details/:id',
+          element: <div>Details Page</div>,
+        },
+      ],
+      {
+        initialEntries: ['/?page=2'],
+      }
+    );
+
     render(
-      <MemoryRouter initialEntries={['/?page=2']}>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/details/:id" element={<div>Details Page</div>} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
     );
 
     fireEvent.click(screen.getByText('Rick and Morty'));
@@ -45,10 +77,24 @@ describe('Main component', () => {
   });
 
   test('renders SearchSection and ResultsSection components', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <Main />,
+        },
+      ],
+      {
+        initialEntries: ['/?page=1'],
+      }
+    );
+
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <Main />
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(SearchSection).toHaveBeenCalled();
@@ -56,12 +102,23 @@ describe('Main component', () => {
   });
 
   test('creates an error when error button is clicked', () => {
+    const router = createMemoryRouter([
+      {
+        path: '/',
+        element: (
+          <ErrorBoundary theme="light">
+            <Main />
+          </ErrorBoundary>
+        ),
+      },
+    ]);
+
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <ErrorBoundary>
-          <Main />
-        </ErrorBoundary>
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
     );
 
     fireEvent.click(screen.getByText('Create an error!'));

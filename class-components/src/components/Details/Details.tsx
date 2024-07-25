@@ -1,50 +1,41 @@
+import classNames from 'classnames';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import './Details.scss';
-import { useEffect, useState } from 'react';
-import { getCharacters } from '../../api/api';
+import { useGetByIdQuery } from '../../api/rtkApi';
+import { useTheme } from '../../hooks/useTheme';
 import { Loader } from '../Loader/Loader';
-import { Character } from '../../types/types';
+import './Details.scss';
 
 export const Details = () => {
+  const { theme } = useTheme();
   const { id } = useParams();
+  const {
+    data: character,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetByIdQuery(id || '');
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [character, setCharacter] = useState<Character | null>(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
+  const loaded = !(isLoading || isFetching);
 
   const handleClose = () => {
     searchParams.set('page', String(page));
     navigate(`/?${searchParams.toString()}`);
   };
 
-  const getDetails = async () => {
-    setIsLoading(true);
-
-    setTimeout(async () => {
-      const detailsResponse = await getCharacters({ id: id });
-
-      setCharacter(detailsResponse);
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  useEffect(() => {
-    if (id) {
-      getDetails();
-    }
-  }, [id]);
+  const detailsClasses = classNames('details', theme);
 
   return (
-    <div data-testid="details" className="details">
+    <div data-testid="details" className={detailsClasses}>
       <button className="details__close-button" onClick={handleClose}>
         X
       </button>
 
-      <Loader isLoading={isLoading} response={character || {}} />
+      <Loader isLoading={!loaded} isError={isError} />
 
-      {!isLoading && character && !character?.error && (
+      {loaded && character && !character?.error && (
         <>
           <img className="details__img" src={character.image} alt="img" />
           <h2 className="h2-details">{character.name}</h2>

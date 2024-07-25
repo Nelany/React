@@ -1,12 +1,14 @@
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './GoToMainButton.scss';
-import { Dispatch, SetStateAction } from 'react';
+import { toggleIfReturnToRickNMorty } from '../../store/ifReturnToRickNMortySlice';
 
-type Props = {
-  setIfReturnToRickNMorty?: Dispatch<SetStateAction<boolean>>;
-};
+interface GoToMainButtonProps {
+  needRefresh?: boolean;
+}
 
-export const GoToMainButton = ({ setIfReturnToRickNMorty }: Props) => {
+export const GoToMainButton = ({ needRefresh }: GoToMainButtonProps) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const navigateToMain = (e: React.MouseEvent) => {
@@ -14,8 +16,8 @@ export const GoToMainButton = ({ setIfReturnToRickNMorty }: Props) => {
     localStorage.setItem('searchQuery', '');
     navigate('/', { replace: true });
 
-    if (setIfReturnToRickNMorty) {
-      setIfReturnToRickNMorty((prev: boolean) => !prev);
+    if (needRefresh) {
+      dispatch(toggleIfReturnToRickNMorty());
     }
   };
 

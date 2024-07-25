@@ -1,24 +1,31 @@
-import './Main.scss';
+import classNames from 'classnames';
 import { useState } from 'react';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { CharacterResponse } from '../../types/types';
-import { SearchSection } from '../../components/SearchSection/SearchSection';
+import { useSelector } from 'react-redux';
+import {
+  Outlet,
+  ScrollRestoration,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { ResultsSection } from '../../components/ResultSection/ResultsSection';
+import { SearchSection } from '../../components/SearchSection/SearchSection';
+import { useTheme } from '../../hooks/useTheme';
+import { RootState } from '../../store/store';
+import './Main.scss';
 
 export const Main = () => {
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get('page') || '1';
-  const [ifNextPage, setIfNextPage] = useState<boolean>(false);
-  const [ifReturnToRickNMorty, setIfReturnToRickNMorty] =
-    useState<boolean>(false);
+  const ifReturnToRickNMorty = useSelector(
+    (state: RootState) => state.ifReturnToRickNMorty.value
+  );
 
-  const [characterResponse, setCharacterResponse] =
-    useState<CharacterResponse | null>(null);
   const [isError, setIsError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleErrorClick = () => {
     setIsError(true);
@@ -37,8 +44,19 @@ export const Main = () => {
     e.stopPropagation();
   };
 
+  const mainClasses = classNames('main', theme);
+  const buttonClasses = classNames('error-button', theme);
+  const outletClasses = classNames('main__outlet', {
+    'main__outlet-hidden': !id,
+  });
+
   return (
-    <div data-testid="main-page" onClick={closeDetails} className="main">
+    <div data-testid="main-page" onClick={closeDetails} className={mainClasses}>
+      <ScrollRestoration
+        getKey={(location) => {
+          return location.search;
+        }}
+      />
       <img className="rick-morty-img" src="/rickmorty.png" alt="" />
       <img
         className="rick-morty-img rick-morty-img-reverse"
@@ -47,29 +65,21 @@ export const Main = () => {
       />
 
       <h1 className="main__tittle">Rick and Morty</h1>
-      <SearchSection
-        key={String(ifReturnToRickNMorty)}
-        setCharactersFromResponse={setCharacterResponse}
-        setIsLoading={setIsLoading}
-        setIfNextPage={setIfNextPage}
-      />
+      <SearchSection key={String(ifReturnToRickNMorty)} />
 
-      <button className="error-button" onClick={handleErrorClick}>
-        Create an error!
-      </button>
+      <div className="main__buttons-container">
+        <button className={buttonClasses} onClick={handleErrorClick}>
+          Create an error!
+        </button>
+        <button className={buttonClasses} onClick={toggleTheme}>
+          Toggle Theme: {theme}
+        </button>
+      </div>
 
       <div className="main__results-container">
-        <ResultsSection
-          isLoading={isLoading}
-          characterResponse={characterResponse}
-          ifNextPage={ifNextPage}
-          setIfReturnToRickNMorty={setIfReturnToRickNMorty}
-        />
+        <ResultsSection />
 
-        <div
-          onClick={onClick}
-          className={id ? 'main__outlet' : 'main__outlet main__outlet-hidden'}
-        >
+        <div onClick={onClick} className={outletClasses}>
           <Outlet />
         </div>
       </div>
