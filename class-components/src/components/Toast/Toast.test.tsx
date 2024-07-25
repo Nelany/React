@@ -7,7 +7,7 @@ import { Toast } from './Toast';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 import { Character } from '../../types/types';
 
-vi.mock('../../store/selectedCharactersSlice', () => ({
+vi.mock('../../store/characterSlice', () => ({
   removeAllSelectedCharacters: vi.fn(),
 }));
 
@@ -56,19 +56,19 @@ const mockSelectedCharacters: Record<string, Character> = {
 
 const testSlice = createSlice({
   name: 'test',
-  initialState: { data: mockSelectedCharacters },
+  initialState: { selectedCharacters: mockSelectedCharacters },
   reducers: {
     setSelectedCharacters: (state, action) => {
       const character = action.payload;
 
-      if (state.data[character.id]) {
-        delete state.data[character.id];
+      if (state.selectedCharacters[character.id]) {
+        delete state.selectedCharacters[character.id];
       } else {
-        state.data[character.id] = character;
+        state.selectedCharacters[character.id] = character;
       }
     },
     removeAllSelectedCharacters: (state) => {
-      state.data = {};
+      state.selectedCharacters = {};
     },
   },
 });
@@ -76,7 +76,7 @@ const testSlice = createSlice({
 const { reducer } = testSlice;
 const mockStore = configureStore({
   reducer: {
-    selectedCharacters: reducer,
+    characters: reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   devTools: true,

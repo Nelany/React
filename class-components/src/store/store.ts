@@ -1,21 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import isCharLoading from './charactersLoadingSlice';
-import charactersResponseReducer from './charactersResponseSlice';
+import characterReducer from './characterSlice';
 import ifReturnToRickNMortyReducer from './ifReturnToRickNMortySlice';
-import selectedCharactersReducer from './selectedCharactersSlice';
-import toastReducer from './toastSlice';
 import { rtkApi } from '../api/rtkApi';
-
+import toastReducer from './toastSlice';
 
 export const store = configureStore({
   reducer: {
     toast: toastReducer,
     [rtkApi.reducerPath]: rtkApi.reducer,
     ifReturnToRickNMorty: ifReturnToRickNMortyReducer,
-    isCharLoading: isCharLoading,
-    charactersResponse: charactersResponseReducer,
-    selectedCharacters: selectedCharactersReducer,
+    characters: characterReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(rtkApi.middleware),

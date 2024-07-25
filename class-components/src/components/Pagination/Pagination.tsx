@@ -14,7 +14,7 @@ export const Pagination = () => {
   const page = searchParams.get('page') || '1';
   const [pageNumber, setPageNumber] = useState<number>(Number(page));
   const ifNextPage = useSelector(
-    (state: RootState) => state.charactersResponse.data?.info?.next
+    (state: RootState) => state.characters.charactersResponse?.info?.next
   );
 
   useEffect(() => {

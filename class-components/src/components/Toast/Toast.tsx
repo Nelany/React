@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
-import { removeAllSelectedCharacters } from '../../store/selectedCharactersSlice';
+import { removeAllSelectedCharacters } from '../../store/characterSlice';
 import { RootState } from '../../store/store';
 import './Toast.scss';
 
@@ -11,7 +11,7 @@ export const Toast = () => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const selectedCharacters = useSelector(
-    (state: RootState) => state.selectedCharacters.data
+    (state: RootState) => state.characters.selectedCharacters
   );
   const numberOfSelectedCharacters = Object.keys(selectedCharacters).length;
 

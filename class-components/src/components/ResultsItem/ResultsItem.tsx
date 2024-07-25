@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
-import { setSelectedCharacters } from '../../store/selectedCharactersSlice';
+import { setSelectedCharacters } from '../../store/characterSlice';
 import { RootState } from '../../store/store';
 import { Character } from '../../types/types';
 import './ResultsItem.scss';
@@ -20,7 +20,7 @@ export const ResultsItem = ({ name, character }: Props) => {
   const page = searchParams.get('page') || '1';
   const dispatch = useDispatch();
   const isSelected = useSelector(
-    (state: RootState) => !!state.selectedCharacters.data[character.id]
+    (state: RootState) => !!state.characters.selectedCharacters[character.id]
   );
 
   const handleSelectButtonClick = () => {

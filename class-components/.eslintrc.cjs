@@ -49,43 +49,6 @@ module.exports = {
       },
     ],
     'react-hooks/exhaustive-deps': 'off',
-    'import/order': [
-      'error',
-      {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          ['sibling', 'parent'],
-          'index',
-          'object',
-          'type',
-        ],
-        pathGroups: [
-          {
-            pattern: 'react',
-            group: 'external',
-            position: 'before',
-          },
-          {
-            pattern: '*.scss',
-            group: 'object',
-            position: 'after',
-            patternOptions: { matchBase: true },
-          },
-          {
-            pattern: '*.png',
-            group: 'object',
-            position: 'after',
-            patternOptions: { matchBase: true },
-          },
-        ],
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-      },
-    ],
   },
 
   settings: {

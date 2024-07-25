@@ -5,8 +5,10 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useLazyGetCharactersQuery } from '../../api/rtkApi';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useTheme } from '../../hooks/useTheme';
-import { useDispatchIsCharLoading } from '../../store/charactersLoadingSlice';
-import { setCharactersResponse } from '../../store/charactersResponseSlice';
+import {
+  useDispatchIsCharLoading,
+  setCharactersResponse,
+} from '../../store/characterSlice';
 import './SearchSection.scss';
 
 export const SearchSection = () => {

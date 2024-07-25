@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
-import { useIsCharLoading } from '../../store/charactersLoadingSlice';
+import { useIsCharLoading } from '../../store/characterSlice';
 import { RootState } from '../../store/store';
 import { Loader } from '../Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
@@ -11,7 +11,7 @@ import './ResultsSection.scss';
 
 export const ResultsSection = () => {
   const characterResponse = useSelector(
-    (state: RootState) => state.charactersResponse.data
+    (state: RootState) => state.characters.charactersResponse
   );
   const isCharLoading = useIsCharLoading();
   const { theme } = useTheme();

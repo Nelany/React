@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import selectedCharactersReducer, {
-  setSelectedCharacters,
-  removeAllSelectedCharacters,
-} from './selectedCharactersSlice';
 import { Character } from '../types/types';
+import characterReducer, {
+  removeAllSelectedCharacters,
+  setSelectedCharacters,
+} from './characterSlice';
 
 describe('selectedCharactersSlice', () => {
   const store = configureStore({
-    reducer: { selectedCharacters: selectedCharactersReducer },
+    reducer: { characters: characterReducer },
   });
 
   test('should handle initial state', () => {
-    expect(store.getState().selectedCharacters.data).toEqual({});
+    expect(store.getState().characters.selectedCharacters).toEqual({});
   });
 
   test('should handle setSelectedCharacters by adding a character', () => {
@@ -35,7 +35,7 @@ describe('selectedCharactersSlice', () => {
       created: '',
     };
     store.dispatch(setSelectedCharacters(testCharacter));
-    expect(store.getState().selectedCharacters.data['1']).toEqual(
+    expect(store.getState().characters.selectedCharacters['1']).toEqual(
       testCharacter
     );
   });
@@ -82,6 +82,6 @@ describe('selectedCharactersSlice', () => {
     store.dispatch(setSelectedCharacters(testCharacter1));
     store.dispatch(setSelectedCharacters(testCharacter2));
     store.dispatch(removeAllSelectedCharacters());
-    expect(store.getState().selectedCharacters.data).toEqual({});
+    expect(store.getState().characters.selectedCharacters).toEqual({});
   });
 });
