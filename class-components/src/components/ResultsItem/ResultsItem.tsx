@@ -25,10 +25,8 @@ export const ResultsItem = ({ name, character }: Props) => {
 
   const openCheckedId = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const searchParams = new URLSearchParams(
-      router.query as Record<string, string>
-    );
-    const page = searchParams.get('page') || '1';
+    const page = router.query.page || '1';
+    const searchParams = new URLSearchParams();
     searchParams.set('page', String(page));
     router.push(`/details/${character.id}/?${searchParams.toString()}`);
   };

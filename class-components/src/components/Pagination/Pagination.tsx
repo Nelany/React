@@ -25,7 +25,7 @@ export const Pagination = () => {
     if (pageNumber > 1) {
       router.push({
         pathname: '/',
-        query: { ...query, page: String(pageNumber - 1) },
+        query: { page: String(pageNumber - 1) },
       });
     }
   };
@@ -34,7 +34,7 @@ export const Pagination = () => {
     e.stopPropagation();
     router.push({
       pathname: '/',
-      query: { ...query, page: String(pageNumber + 1) },
+      query: { page: String(pageNumber + 1) },
     });
   };
 
