@@ -1,11 +1,10 @@
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
 import { setSelectedCharacters } from '../../store/characterSlice';
 import { RootState } from '../../store/store';
 import { Character } from '../../types/types';
-import './ResultsItem.scss';
 
 interface Props {
   name: string;
@@ -14,10 +13,7 @@ interface Props {
 
 export const ResultsItem = ({ name, character }: Props) => {
   const { theme } = useTheme();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const page = searchParams.get('page') || '1';
+  const router = useRouter();
   const dispatch = useDispatch();
   const isSelected = useSelector(
     (state: RootState) => !!state.characters.selectedCharacters[character.id]
@@ -29,8 +25,12 @@ export const ResultsItem = ({ name, character }: Props) => {
 
   const openCheckedId = (e: React.MouseEvent) => {
     e.stopPropagation();
+    const searchParams = new URLSearchParams(
+      router.query as Record<string, string>
+    );
+    const page = searchParams.get('page') || '1';
     searchParams.set('page', String(page));
-    navigate(`/details/${character.id}/?${searchParams.toString()}`);
+    router.push(`/details/${character.id}/?${searchParams.toString()}`);
   };
 
   const resultsItemClasses = classNames('results-item', theme);

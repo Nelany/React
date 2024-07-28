@@ -7,7 +7,6 @@ import { Loader } from '../Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
 import { ResultsItem } from '../ResultsItem/ResultsItem';
 import { Toast } from '../Toast/Toast';
-import './ResultsSection.scss';
 
 export const ResultsSection = () => {
   const characterResponse = useSelector(

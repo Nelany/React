@@ -1,25 +1,18 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { ReactNode, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Outlet,
-  ScrollRestoration,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
-import { ResultsSection } from '../../components/ResultSection/ResultsSection';
-import { SearchSection } from '../../components/SearchSection/SearchSection';
-import { useTheme } from '../../hooks/useTheme';
-import { RootState } from '../../store/store';
-import './Main.scss';
+import { ResultsSection } from '../src/components/ResultSection/ResultsSection';
+import { SearchSection } from '../src/components/SearchSection/SearchSection';
+import { useTheme } from '../src/hooks/useTheme';
+import { RootState } from '../src/store/store';
 
-export const Main = () => {
+const Main = ({ children }: { children: ReactNode }) => {
   const { theme, toggleTheme } = useTheme();
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const router = useRouter();
+  const { id } = router.query;
+  const location = router.asPath;
+  const searchParams = new URLSearchParams(location.split('?')[1]);
   const page = searchParams.get('page') || '1';
   const ifReturnToRickNMorty = useSelector(
     (state: RootState) => state.ifReturnToRickNMorty.value
@@ -37,7 +30,7 @@ export const Main = () => {
 
   const closeDetails = () => {
     searchParams.set('page', String(page));
-    navigate(`/?${searchParams.toString()}`);
+    router.push(`/?${searchParams.toString()}`);
   };
 
   const onClick = (e: React.MouseEvent) => {
@@ -52,21 +45,13 @@ export const Main = () => {
 
   return (
     <div data-testid="main-page" onClick={closeDetails} className={mainClasses}>
-      <ScrollRestoration
-        getKey={(location) => {
-          return location.search;
-        }}
-      />
-      <img className="rick-morty-img" src="/rickmorty.png" alt="" />
       <img
-        className="rick-morty-img rick-morty-img-reverse"
+        className="rick-morty-img"
         src="/rickmorty.png"
         alt="Rick and Morty"
       />
-
       <h1 className="main__tittle">Rick and Morty</h1>
       <SearchSection key={String(ifReturnToRickNMorty)} />
-
       <div className="main__buttons-container">
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
@@ -75,14 +60,14 @@ export const Main = () => {
           Toggle Theme: {theme}
         </button>
       </div>
-
       <div className="main__results-container">
         <ResultsSection />
-
         <div onClick={onClick} className={outletClasses}>
-          <Outlet />
+          {children}
         </div>
       </div>
     </div>
   );
 };
+
+export default Main;

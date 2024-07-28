@@ -1,12 +1,12 @@
-import { render, screen, act } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { vi } from 'vitest';
-import { Details } from './Details';
-import { getCharacters } from '../../api/api';
-import { store } from '../../store/store';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { getCharacters } from '../src/api/api';
+import { store } from '../src/store/store';
+import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
+import { Details } from './details/[id]';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),

@@ -1,14 +1,14 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import '@testing-library/jest-dom';
 import { vi } from 'vitest';
-import { Main } from './Main';
-import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
-import { ResultsSection } from '../../components/ResultSection/ResultsSection';
-import { SearchSection } from '../../components/SearchSection/SearchSection';
-import { store } from '../../store/store';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { ErrorBoundary } from '../src/components/ErrorBoundary/ErrorBoundary';
+import { ResultsSection } from '../src/components/ResultSection/ResultsSection';
+import { SearchSection } from '../src/components/SearchSection/SearchSection';
+import { store } from '../src/store/store';
+import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
+import Main from './Layout';
 
 vi.mock('../../components/SearchSection/SearchSection', () => ({
   SearchSection: vi.fn(() => <div>Mocked SearchSection</div>),
@@ -27,7 +27,7 @@ describe('Main component', () => {
       [
         {
           path: '/',
-          element: <Main />,
+          element: <Main children={undefined} />,
         },
       ],
       {
@@ -52,7 +52,7 @@ describe('Main component', () => {
       [
         {
           path: '/',
-          element: <Main />,
+          element: <Main children={undefined} />,
         },
         {
           path: '/details/:id',
@@ -81,7 +81,7 @@ describe('Main component', () => {
       [
         {
           path: '/',
-          element: <Main />,
+          element: <Main children={undefined} />,
         },
       ],
       {
@@ -107,7 +107,7 @@ describe('Main component', () => {
         path: '/',
         element: (
           <ErrorBoundary theme="light">
-            <Main />
+            <Main children={undefined} />
           </ErrorBoundary>
         ),
       },

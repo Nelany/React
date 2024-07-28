@@ -1,4 +1,12 @@
-@import '../../utils/variables.scss';
+@import '../src/utils/variables.scss';
+@import '../src/components/SearchSection/SearchSection.scss';
+@import '../pages/details/Details.scss';
+@import '../pages/NotFound.scss';
+@import '../src/components/Loader/Loader.scss';
+@import '../src/components/Pagination/Pagination.scss';
+@import '../src/components/ResultSection/ResultsSection.scss';
+@import '../src/components/ResultsItem/ResultsItem.scss';
+@import '../src/components/Toast/Toast.scss';
 
 .main {
   width: 98vw;
@@ -61,7 +69,7 @@
 .main.dark {
   background-color: $black;
 
-  .main__outlet{
+  .main__outlet {
     background-color: $dark;
   }
 }
@@ -73,7 +81,7 @@
   box-sizing: border-box;
 }
 
-.result-section{
+.result-section {
   position: relative;
 }
 
@@ -134,7 +142,7 @@
     top: 70px;
   }
 
-  .error-button{
+  .error-button {
     font-size: 14px;
   }
 }

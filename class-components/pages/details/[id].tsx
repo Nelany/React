@@ -1,28 +1,30 @@
 import classNames from 'classnames';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useGetByIdQuery } from '../../api/rtkApi';
-import { useTheme } from '../../hooks/useTheme';
-import { Loader } from '../Loader/Loader';
-import './Details.scss';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useGetByIdQuery } from '../../src/api/rtkApi';
+import { Loader } from '../../src/components/Loader/Loader';
+import { useTheme } from '../../src/hooks/useTheme';
 
-export const Details = () => {
+export default function Details() {
   const { theme } = useTheme();
-  const { id } = useParams();
+  const router = useRouter();
+  const { id } = router.query;
+
   const {
     data: character,
     isLoading,
     isFetching,
     isError,
-  } = useGetByIdQuery(id || '');
-  const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  } = useGetByIdQuery(id?.toString() || '');
+  console.log('id', router.query);
+  const location = router.asPath;
+  const searchParams = new URLSearchParams(location.split('?')[1]);
   const page = searchParams.get('page') || '1';
   const loaded = !(isLoading || isFetching);
 
   const handleClose = () => {
     searchParams.set('page', String(page));
-    navigate(`/?${searchParams.toString()}`);
+    router.push(`/?${searchParams.toString()}`);
   };
 
   const detailsClasses = classNames('details', theme);
@@ -44,9 +46,9 @@ export const Details = () => {
           {character.type && (
             <h4 className="h4-details">{`Type: ${character.type}`}</h4>
           )}
-          <h4 className="h4-details">{`Last known location: ${character.location.name}`}</h4>
+          <h4 className="h4-details">{`Last known location: ${character.location?.name}`}</h4>
           <h4 className="h4-details">{`Gender: ${character.gender}`}</h4>
-          <h4 className="h4-details">{`Origin: ${character.origin.name}`}</h4>
+          <h4 className="h4-details">{`Origin: ${character.origin?.name}`}</h4>
           <h4
             data-testid="detailsCreated"
             className="h4-details"
@@ -55,4 +57,4 @@ export const Details = () => {
       )}
     </div>
   );
-};
+}
