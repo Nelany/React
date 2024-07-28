@@ -18,11 +18,6 @@ export const GoToMainButton = ({ needRefresh }: GoToMainButtonProps) => {
     if (needRefresh) {
       dispatch(toggleIfReturnToRickNMorty());
     }
-    //  if (needRefresh) {
-    //   router.reload();
-    // } else {
-    //   router.push('/');
-    // }
   };
 
   return (

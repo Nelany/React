@@ -4,6 +4,16 @@ import { MemoryRouter } from 'react-router-dom';
 import { store } from '../src/store/store';
 import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
 import NotFound from './404';
+import { vi } from 'vitest';
+
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    query: { page: '1' },
+    asPath: '/',
+  }),
+}));
 
 test('renders NotFound component correctly', () => {
   const { container } = render(

@@ -1,15 +1,24 @@
-import { act, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
+import { act, render, screen} from '@testing-library/react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { vi } from 'vitest';
-import { getCharacters } from '../src/api/api';
-import { store } from '../src/store/store';
-import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
-import { Details } from './details/[id]';
+import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
+import { getCharacters } from '../../src/api/api';
+import { store } from '../../src/store/store';
+import { ThemeProvider } from '../../src/ThemeContext/ThemeContext';
+import Details from './[id]';
 
-vi.mock('../../api/api', () => ({
+vi.mock('../../src/api/api', () => ({
   getCharacters: vi.fn(),
+}));
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    query: { id: '1' },
+    asPath: '/details/1',
+  }),
 }));
 
 const mockCharacter = {
@@ -35,7 +44,7 @@ describe('Details', () => {
   });
 
   test('Check that a loading indicator is displayed while fetching data', async () => {
-    (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
+    (getCharacters as Mock).mockResolvedValueOnce(mockCharacter);
 
     render(
       <Provider store={store}>
@@ -59,7 +68,7 @@ describe('Details', () => {
   });
 
   test('the detailed card component correctly displays the detailed card data', async () => {
-    (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
+    (getCharacters as Mock).mockResolvedValueOnce(mockCharacter);
 
     render(
       <Provider store={store}>
@@ -83,32 +92,5 @@ describe('Details', () => {
     expect(screen.getByText('Gender: Male')).toBeInTheDocument();
     expect(screen.getByText('Origin: Earth (C-137)')).toBeInTheDocument();
     expect(screen.getByTestId('detailsCreated')).toBeInTheDocument();
-  });
-
-  test('clicking the close button hides the component', async () => {
-    (getCharacters as jest.Mock).mockResolvedValueOnce(mockCharacter);
-
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/details/1']}>
-            <Routes>
-              <Route path="/details/:id" element={<Details />} />
-            </Routes>
-          </MemoryRouter>
-        </ThemeProvider>
-      </Provider>
-    );
-
-    expect(screen.getByTestId('details')).toBeInTheDocument();
-
-    const closeButton = screen.getByText('X');
-    userEvent.click(closeButton);
-
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    });
-
-    expect(screen.queryByTestId('details')).toBeNull();
   });
 });

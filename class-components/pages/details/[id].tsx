@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useGetByIdQuery } from '../../src/api/rtkApi';
 import { Loader } from '../../src/components/Loader/Loader';
 import { useTheme } from '../../src/hooks/useTheme';
@@ -16,7 +15,6 @@ export default function Details() {
     isFetching,
     isError,
   } = useGetByIdQuery(id?.toString() || '');
-  console.log('id', router.query);
   const location = router.asPath;
   const searchParams = new URLSearchParams(location.split('?')[1]);
   const page = searchParams.get('page') || '1';
@@ -24,7 +22,7 @@ export default function Details() {
 
   const handleClose = () => {
     searchParams.set('page', String(page));
-    router.push(`/?${searchParams.toString()}`);
+    router.push(`/?${searchParams.toString()}`, undefined, { scroll: false });
   };
 
   const detailsClasses = classNames('details', theme);

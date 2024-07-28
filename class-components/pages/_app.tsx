@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
+import ErrorBoundary from '../src/components/ErrorBoundary/ErrorBoundary';
 import { store } from '../src/store/store';
 import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
 import '../styles/index.scss';
@@ -12,9 +13,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <React.StrictMode>
       <ThemeProvider>
         <Provider store={store}>
-          <Main>
-            <Component {...pageProps} />
-          </Main>
+          <ErrorBoundary theme="light">
+            <Main>
+              <Component {...pageProps} />
+            </Main>
+          </ErrorBoundary>
         </Provider>
       </ThemeProvider>
     </React.StrictMode>

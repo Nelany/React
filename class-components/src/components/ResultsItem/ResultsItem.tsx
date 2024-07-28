@@ -19,7 +19,9 @@ export const ResultsItem = ({ name, character }: Props) => {
     (state: RootState) => !!state.characters.selectedCharacters[character.id]
   );
 
-  const handleSelectButtonClick = () => {
+  const handleSelectButtonClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
     dispatch(setSelectedCharacters(character));
   };
 
@@ -28,7 +30,11 @@ export const ResultsItem = ({ name, character }: Props) => {
     const page = router.query.page || '1';
     const searchParams = new URLSearchParams();
     searchParams.set('page', String(page));
-    router.push(`/details/${character.id}/?${searchParams.toString()}`);
+    router.push(
+      `/details/${character.id}/?${searchParams.toString()}`,
+      undefined,
+      { scroll: false }
+    );
   };
 
   const resultsItemClasses = classNames('results-item', theme);

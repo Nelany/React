@@ -30,7 +30,7 @@ const Main = ({ children }: { children: ReactNode }) => {
 
   const closeDetails = () => {
     searchParams.set('page', String(page));
-    router.push(`/?${searchParams.toString()}`);
+    router.push(`/?${searchParams.toString()}`, undefined, { scroll: false });
   };
 
   const onClick = (e: React.MouseEvent) => {
@@ -47,10 +47,13 @@ const Main = ({ children }: { children: ReactNode }) => {
     return <>{children}</>;
   }
 
-
   return (
     <div data-testid="main-page" onClick={closeDetails} className={mainClasses}>
-      <img className="rick-morty-img" src="/rickmorty.png" alt="Rick and Morty" />
+      <img
+        className="rick-morty-img"
+        src="/rickmorty.png"
+        alt="Rick and Morty"
+      />
       <img
         className="rick-morty-img rick-morty-img-reverse"
         src="/rickmorty.png"
