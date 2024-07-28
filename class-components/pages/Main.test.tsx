@@ -8,7 +8,7 @@ import { ResultsSection } from '../src/components/ResultSection/ResultsSection';
 import { SearchSection } from '../src/components/SearchSection/SearchSection';
 import { store } from '../src/store/store';
 import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
-import Main from './Layout';
+import Main from './Main';
 
 vi.mock('../../components/SearchSection/SearchSection', () => ({
   SearchSection: vi.fn(() => <div>Mocked SearchSection</div>),

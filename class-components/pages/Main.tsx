@@ -43,10 +43,16 @@ const Main = ({ children }: { children: ReactNode }) => {
     'main__outlet-hidden': !id,
   });
 
+  if (router.pathname === '/404') {
+    return <>{children}</>;
+  }
+
+
   return (
     <div data-testid="main-page" onClick={closeDetails} className={mainClasses}>
+      <img className="rick-morty-img" src="/rickmorty.png" alt="Rick and Morty" />
       <img
-        className="rick-morty-img"
+        className="rick-morty-img rick-morty-img-reverse"
         src="/rickmorty.png"
         alt="Rick and Morty"
       />
