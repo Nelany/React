@@ -6,6 +6,14 @@ import { SearchSection } from './SearchSection';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    query: { page: '1' },
+    asPath: '/',
+  }),
+}));
+
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
 }));

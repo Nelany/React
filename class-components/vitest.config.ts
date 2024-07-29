@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
+import { coverageConfigDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react()],
@@ -10,6 +10,11 @@ export default defineConfig({
     exclude: ['node_modules', 'dist', '**/*.json'],
     coverage: {
       reporter: ['text', 'json', 'html'],
+      exclude: [
+        'next.config.js',
+        'pages/_document.tsx',
+        ...coverageConfigDefaults.exclude,
+      ],
     },
   },
 });
