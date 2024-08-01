@@ -1,24 +1,23 @@
 import classNames from 'classnames';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useGetByIdQuery } from '../../src/api/rtkApi';
+import { ParsedUrlQuery } from 'querystring';
+import { rtkApi } from '../../src/api/rtkApi';
 import { Loader } from '../../src/components/Loader/Loader';
 import { useTheme } from '../../src/hooks/useTheme';
+import { store } from '../../src/store/store';
+import { Character } from '../../src/types/types';
+interface DetailsProps {
+  character: Character | null;
+  isError: boolean;
+}
 
-export default function Details() {
+export default function Details({ character, isError }: DetailsProps) {
   const { theme } = useTheme();
   const router = useRouter();
-  const { id } = router.query;
-
-  const {
-    data: character,
-    isLoading,
-    isFetching,
-    isError,
-  } = useGetByIdQuery(id?.toString() || '');
   const location = router.asPath;
   const searchParams = new URLSearchParams(location.split('?')[1]);
   const page = searchParams.get('page') || '1';
-  const loaded = !(isLoading || isFetching);
 
   const handleClose = () => {
     searchParams.set('page', String(page));
@@ -33,9 +32,9 @@ export default function Details() {
         X
       </button>
 
-      <Loader isLoading={!loaded} isError={isError} />
+      <Loader isLoading={!character} isError={isError} />
 
-      {loaded && character && !character?.error && (
+      {character && !character?.error && (
         <>
           <img className="details__img" src={character.image} alt="img" />
           <h2 className="h2-details">{character.name}</h2>
@@ -56,3 +55,22 @@ export default function Details() {
     </div>
   );
 }
+
+interface Params extends ParsedUrlQuery {
+  id: string;
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params as Params;
+  const { getById } = rtkApi.endpoints;
+
+  const result = await store.dispatch(getById.initiate(id));
+
+  return {
+    props: {
+      character: result.data || null,
+      isError: !!result.error,
+    },
+  };
+};

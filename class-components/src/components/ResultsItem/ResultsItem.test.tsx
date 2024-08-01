@@ -97,7 +97,10 @@ describe('ResultsItem', () => {
                   <ResultsItem name="Rick Sanchez" character={mockCharacter} />
                 }
               />
-              <Route path="/details/:id" element={<Details />} />
+              <Route
+                path="/details/:id"
+                element={<Details character={mockCharacter} isError={false} />}
+              />
             </Routes>
           </MemoryRouter>
         </ThemeProvider>
@@ -116,7 +119,7 @@ describe('ResultsItem', () => {
       <Provider store={store}>
         <ThemeProvider>
           <MemoryRouter initialEntries={[`/details/${mockCharacter.id}`]}>
-            <Details />
+            <Details character={mockCharacter} isError={false} />
           </MemoryRouter>
         </ThemeProvider>
       </Provider>
