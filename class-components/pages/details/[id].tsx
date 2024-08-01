@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
+import { useEffect, useState } from 'react';
 import { rtkApi } from '../../src/api/rtkApi';
 import { Loader } from '../../src/components/Loader/Loader';
 import { useTheme } from '../../src/hooks/useTheme';
 import { store } from '../../src/store/store';
 import { Character } from '../../src/types/types';
+
 interface DetailsProps {
   character: Character | null;
   isError: boolean;
@@ -18,6 +20,26 @@ export default function Details({ character, isError }: DetailsProps) {
   const location = router.asPath;
   const searchParams = new URLSearchParams(location.split('?')[1]);
   const page = searchParams.get('page') || '1';
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (character !== null || isError) {
+      setIsLoading(false);
+    }
+  }, [character, isError]);
+
+  useEffect(() => {
+    Router.events.on('routeChangeStart', () => {
+      setIsLoading(true);
+    });
+    Router.events.on('routeChangeComplete', () => {
+      setIsLoading(false);
+    });
+    Router.events.on('routeChangeError', () => {
+      setIsLoading(false);
+    });
+  }, [Router]);
 
   const handleClose = () => {
     searchParams.set('page', String(page));
@@ -32,9 +54,9 @@ export default function Details({ character, isError }: DetailsProps) {
         X
       </button>
 
-      <Loader isLoading={!character} isError={isError} />
+      <Loader isLoading={isLoading} isError={isError} />
 
-      {character && !character?.error && (
+      {!isLoading && character && !character?.error && (
         <>
           <img className="details__img" src={character.image} alt="img" />
           <h2 className="h2-details">{character.name}</h2>
@@ -60,7 +82,6 @@ interface Params extends ParsedUrlQuery {
   id: string;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params as Params;
   const { getById } = rtkApi.endpoints;

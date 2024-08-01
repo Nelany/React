@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ResultsSection } from '../src/components/ResultSection/ResultsSection';
-import { SearchSection } from '../src/components/SearchSection/SearchSection';
-import { useTheme } from '../src/hooks/useTheme';
-import { RootState } from '../src/store/store';
+import { useTheme } from '../../hooks/useTheme';
+import { RootState } from '../../store/store';
+import { ResultsSection } from '../ResultSection/ResultsSection';
+import { SearchSection } from '../SearchSection/SearchSection';
 
 const Main = ({ children }: { children: ReactNode }) => {
   const { theme, toggleTheme } = useTheme();

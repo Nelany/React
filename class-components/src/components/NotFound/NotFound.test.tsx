@@ -1,11 +1,10 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { store } from '../src/store/store';
-import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
-import NotFound from './404';
+import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import NotFound from '../../../pages/404';
 import { vi } from 'vitest';
-
 
 vi.mock('next/router', () => ({
   useRouter: () => ({

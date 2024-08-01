@@ -3,10 +3,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { vi } from 'vitest';
-import { store } from '../src/store/store';
-import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
-import Main from './Main';
-import ErrorBoundary from '../src/components/ErrorBoundary/ErrorBoundary';
+import { store } from '../../store/store';
+import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import Main from '../Main/Main';
 
 vi.mock('next/router', () => ({
   useRouter: () => ({

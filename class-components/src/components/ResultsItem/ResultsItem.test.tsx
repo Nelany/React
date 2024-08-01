@@ -15,6 +15,11 @@ vi.mock('next/router', () => ({
     query: { page: '1' },
     asPath: '/',
   }),
+  Router: {
+    events: {
+      on: vi.fn(),
+    },
+  },
 }));
 
 const mockCharacter = {
