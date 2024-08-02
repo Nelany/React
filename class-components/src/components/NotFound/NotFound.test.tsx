@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import NotFound from '../../../pages/404';
+import NotFound from '../../../app/error';
 import { vi } from 'vitest';
 
 vi.mock('next/router', () => ({

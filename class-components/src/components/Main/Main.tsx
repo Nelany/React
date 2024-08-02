@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -26,8 +27,7 @@ const Main = ({ characterId, currentPage }: PageProps) => {
   }
 
   const closeDetails = () => {
-    searchParams.set('page', String(page));
-    router.push(`/?${searchParams.toString()}`, undefined, { scroll: false });
+    router.push(`/?page=${page}`, { scroll: false });
   };
 
   const onClick = (e: React.MouseEvent) => {

@@ -6,7 +6,7 @@ import { vi } from 'vitest';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import Main from '../Main/Main';
+import Main from './Main';
 
 vi.mock('next/router', () => ({
   useRouter: () => ({

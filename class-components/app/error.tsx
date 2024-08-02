@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { GoToMainButton } from '../src/components/GoToMainButton/GoToMainButton';
 import { useTheme } from '../src/hooks/useTheme';
+import React from 'react';
 
 export default function NotFound() {
   const { theme } = useTheme();
