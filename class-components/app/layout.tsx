@@ -1,17 +1,17 @@
-'use client';
 import React from 'react';
 import { Provider } from 'react-redux';
-import ErrorBoundary from '../src/components/ErrorBoundary/ErrorBoundary';
 import Main from '../src/components/Main/Main';
+import ServerThemeProvider from '../src/components/ServerThemeProvider/ServerThemeProvider';
 import { store } from '../src/store/store';
-import { ThemeProvider } from '../src/ThemeContext/ThemeContext';
 import '../styles/index.scss';
 import '../styles/Main.scss';
 
 export default function RootLayout({
   children,
+  theme,
 }: {
   children: React.ReactNode;
+  theme: string;
 }) {
   return (
     <html lang="en">
@@ -23,13 +23,11 @@ export default function RootLayout({
       </head>
       <body>
         <React.StrictMode>
-          <ThemeProvider>
+          <ServerThemeProvider theme={theme}>
             <Provider store={store}>
-              <ErrorBoundary theme="light">
-                <Main>{children}</Main>
-              </ErrorBoundary>
+              <Main theme={theme}>{children}</Main>
             </Provider>
-          </ThemeProvider>
+          </ServerThemeProvider>
         </React.StrictMode>
       </body>
     </html>

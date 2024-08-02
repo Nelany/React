@@ -58,9 +58,7 @@ const Main = ({ characterId, currentPage }: PageProps) => {
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
         </button>
-        <button className={buttonClasses} onClick={toggleTheme}>
-          Toggle Theme: {theme}
-        </button>
+        <button className={buttonClasses}>Toggle Theme: {theme}</button>
       </div>
       <div className="main__results-container">
         <ResultsSection />

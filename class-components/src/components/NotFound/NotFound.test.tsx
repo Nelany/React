@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import NotFound from '../../../app/error';
+import NotFound from '../../../app/not-found';
 import { vi } from 'vitest';
 
 vi.mock('next/router', () => ({
@@ -19,7 +19,7 @@ test('renders NotFound component correctly', () => {
     <Provider store={store}>
       <ThemeProvider>
         <MemoryRouter>
-          <NotFound />
+          <NotFound theme={'light'} />
         </MemoryRouter>
       </ThemeProvider>
     </Provider>
