@@ -1,8 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import Main from '../src/components/Main/Main';
 import ServerThemeProvider from '../src/components/ServerThemeProvider/ServerThemeProvider';
-import { store } from '../src/store/store';
 import '../styles/index.scss';
 import '../styles/Main.scss';
 
@@ -23,11 +20,7 @@ export default function RootLayout({
       </head>
       <body>
         <React.StrictMode>
-          <ServerThemeProvider theme={theme}>
-            <Provider store={store}>
-              <Main theme={theme}>{children}</Main>
-            </Provider>
-          </ServerThemeProvider>
+          <ServerThemeProvider theme={theme}>{children}</ServerThemeProvider>
         </React.StrictMode>
       </body>
     </html>

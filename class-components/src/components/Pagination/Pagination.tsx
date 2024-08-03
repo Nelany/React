@@ -1,5 +1,6 @@
+'use client';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
@@ -8,8 +9,8 @@ import { RootState } from '../../store/store';
 export const Pagination = () => {
   const { theme } = useTheme();
   const router = useRouter();
-  const { query } = router;
-  const page = query.page || '1';
+  const searchParams = new URLSearchParams(window.location.search);
+  const page = searchParams.get('page') || '1';
   const [pageNumber, setPageNumber] = useState<number>(Number(page));
   const ifNextPage = useSelector(
     (state: RootState) => state.characters.charactersResponse?.info?.next
@@ -23,19 +24,15 @@ export const Pagination = () => {
     e.stopPropagation();
 
     if (pageNumber > 1) {
-      router.push({
-        pathname: '/',
-        query: { page: String(pageNumber - 1) },
-      });
+      searchParams.set('page', String(pageNumber - 1));
+      router.push(`/?${searchParams.toString()}`);
     }
   };
 
   const handleNextClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    router.push({
-      pathname: '/',
-      query: { page: String(pageNumber + 1) },
-    });
+    searchParams.set('page', String(pageNumber + 1));
+    router.push(`/?${searchParams.toString()}`);
   };
 
   const prevButtonClasses = classNames(

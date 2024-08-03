@@ -1,20 +1,19 @@
 'use client';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
-import { PageProps } from '../../types/types';
 import { Details } from '../Details/Details';
 import { ResultsSection } from '../ResultSection/ResultsSection';
 import { SearchSection } from '../SearchSection/SearchSection';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-const Main = ({ characterId, currentPage }: PageProps) => {
+const Main = () => {
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
-  const { id } = characterId ? { id: characterId } : router.query;
-  const location = router.asPath;
-  const searchParams = new URLSearchParams(location.split('?')[1]);
-  const page = currentPage || searchParams.get('page') || '1';
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const id = pathname.split('/')[2];
+  const page = searchParams.get('page') || '1';
 
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -27,7 +26,7 @@ const Main = ({ characterId, currentPage }: PageProps) => {
   }
 
   const closeDetails = () => {
-    router.push(`/?page=${page}`, { scroll: false });
+    router.push(`/?page=${page}`);
   };
 
   const onClick = (e: React.MouseEvent) => {
@@ -58,12 +57,14 @@ const Main = ({ characterId, currentPage }: PageProps) => {
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
         </button>
-        <button className={buttonClasses}>Toggle Theme: {theme}</button>
+        <button className={buttonClasses} onClick={toggleTheme}>
+          Toggle Theme: {theme}
+        </button>
       </div>
       <div className="main__results-container">
         <ResultsSection />
         <div onClick={onClick} className={outletClasses}>
-          <Details />
+          {id && <Details />}
         </div>
       </div>
     </div>

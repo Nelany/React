@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';

@@ -1,4 +1,6 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter } from 'next/navigation';
 
 interface GoToMainButtonProps {
   needRefresh?: boolean;
@@ -13,7 +15,7 @@ export const GoToMainButton = ({ needRefresh }: GoToMainButtonProps) => {
     router.push('/');
 
     if (needRefresh) {
-      router.reload();
+      router.refresh();
     }
   };
 
