@@ -14,6 +14,8 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const getInitialTheme = () => {
+    const document =
+      typeof window !== 'undefined' ? window.document : { cookie: '' };
     const cookies = cookie.parse(document.cookie);
 
     return cookies.theme || 'light';
