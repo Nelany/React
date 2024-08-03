@@ -6,6 +6,7 @@ import { Details } from '../Details/Details';
 import { ResultsSection } from '../ResultSection/ResultsSection';
 import { SearchSection } from '../SearchSection/SearchSection';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import cookie from 'cookie';
 
 const Main = () => {
   const { theme, toggleTheme } = useTheme();
@@ -19,6 +20,11 @@ const Main = () => {
 
   const handleErrorClick = () => {
     setIsError(true);
+  };
+
+  const handleToggleTheme = () => {
+    toggleTheme();
+    document.cookie = cookie.serialize('theme', theme, { path: '/' });
   };
 
   if (isError) {
@@ -57,7 +63,7 @@ const Main = () => {
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
         </button>
-        <button className={buttonClasses} onClick={toggleTheme}>
+        <button className={buttonClasses} onClick={handleToggleTheme}>
           Toggle Theme: {theme}
         </button>
       </div>

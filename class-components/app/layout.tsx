@@ -1,14 +1,11 @@
 import React from 'react';
-import ServerThemeProvider from '../src/components/ServerThemeProvider/ServerThemeProvider';
 import '../styles/index.scss';
 import '../styles/Main.scss';
 
 export default function RootLayout({
   children,
-  theme,
 }: {
   children: React.ReactNode;
-  theme: string;
 }) {
   return (
     <html lang="en">
@@ -20,7 +17,7 @@ export default function RootLayout({
       </head>
       <body>
         <React.StrictMode>
-          <ServerThemeProvider theme={theme}>{children}</ServerThemeProvider>
+          {children}
         </React.StrictMode>
       </body>
     </html>
