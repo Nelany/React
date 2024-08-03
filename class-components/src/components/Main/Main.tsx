@@ -1,22 +1,19 @@
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import { ReactNode, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
-import { RootState } from '../../store/store';
+import { PageProps } from '../../types/types';
+import { Details } from '../Details/Details';
 import { ResultsSection } from '../ResultSection/ResultsSection';
 import { SearchSection } from '../SearchSection/SearchSection';
 
-const Main = ({ children }: { children: ReactNode }) => {
+const Main = ({ characterId, currentPage }: PageProps) => {
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = characterId ? { id: characterId } : router.query;
   const location = router.asPath;
   const searchParams = new URLSearchParams(location.split('?')[1]);
-  const page = searchParams.get('page') || '1';
-  const ifReturnToRickNMorty = useSelector(
-    (state: RootState) => state.ifReturnToRickNMorty.value
-  );
+  const page = currentPage || searchParams.get('page') || '1';
 
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -43,10 +40,6 @@ const Main = ({ children }: { children: ReactNode }) => {
     'main__outlet-hidden': !id,
   });
 
-  if (router.pathname === '/404') {
-    return <>{children}</>;
-  }
-
   return (
     <div data-testid="main-page" onClick={closeDetails} className={mainClasses}>
       <img
@@ -60,7 +53,7 @@ const Main = ({ children }: { children: ReactNode }) => {
         alt="Rick and Morty"
       />
       <h1 className="main__tittle">Rick and Morty</h1>
-      <SearchSection key={String(ifReturnToRickNMorty)} />
+      <SearchSection />
       <div className="main__buttons-container">
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
@@ -72,7 +65,7 @@ const Main = ({ children }: { children: ReactNode }) => {
       <div className="main__results-container">
         <ResultsSection />
         <div onClick={onClick} className={outletClasses}>
-          {children}
+          <Details />
         </div>
       </div>
     </div>

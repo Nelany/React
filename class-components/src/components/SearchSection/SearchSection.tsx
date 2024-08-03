@@ -33,12 +33,13 @@ export const SearchSection = () => {
     const queryToSearch = query !== undefined ? query : '';
     const trimmedQuery = queryToSearch.trim();
     localStorage.setItem('searchQuery', trimmedQuery);
-    const timer = setTimeout(async () => {
+
+    const load = async () => {
       await trigger({ searchString: trimmedQuery, page });
       dispatchIsCharLoading(false);
-    }, 1000);
+    };
 
-    return () => clearTimeout(timer);
+    load();
   }, [query, page]);
 
   useEffect(() => {

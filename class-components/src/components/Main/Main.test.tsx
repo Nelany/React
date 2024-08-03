@@ -33,7 +33,7 @@ describe('Main component', () => {
       [
         {
           path: '/',
-          element: <Main children={undefined} />,
+          element: <Main characterId={null} currentPage={null} />,
         },
       ],
       {
@@ -58,7 +58,7 @@ describe('Main component', () => {
       [
         {
           path: '/',
-          element: <Main children={undefined} />,
+          element: <Main characterId={null} currentPage={null} />,
         },
         {
           path: '/details/:id',
@@ -88,7 +88,7 @@ describe('Main component', () => {
         path: '/',
         element: (
           <ErrorBoundary theme="light">
-            <Main children={undefined} />
+            <Main characterId={null} currentPage={null} />
           </ErrorBoundary>
         ),
       },

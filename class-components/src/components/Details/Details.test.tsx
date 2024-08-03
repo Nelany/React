@@ -1,13 +1,13 @@
 import '@testing-library/jest-dom';
 import { act, render, screen } from '@testing-library/react';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
+
 import { getCharacters } from '../../api/api';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import Details from '../../../pages/details/[id]';
+import { Details } from './Details';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
@@ -60,10 +60,7 @@ describe('Details', () => {
         <ThemeProvider>
           <MemoryRouter initialEntries={['/details/1']}>
             <Routes>
-              <Route
-                path="/details/:id"
-                element={<Details character={mockCharacter} isError={false} />}
-              />
+              <Route path="/details/:id" element={<Details />} />
             </Routes>
           </MemoryRouter>
         </ThemeProvider>

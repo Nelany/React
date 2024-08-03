@@ -2,9 +2,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { vi } from 'vitest';
-import Details from '../../../pages/details/[id]';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { Details } from '../Details/Details';
 import { ResultsItem } from './ResultsItem';
 
 const pushMock = vi.fn();
@@ -102,10 +102,7 @@ describe('ResultsItem', () => {
                   <ResultsItem name="Rick Sanchez" character={mockCharacter} />
                 }
               />
-              <Route
-                path="/details/:id"
-                element={<Details character={mockCharacter} isError={false} />}
-              />
+              <Route path="/details/:id" element={<Details />} />
             </Routes>
           </MemoryRouter>
         </ThemeProvider>
@@ -124,7 +121,7 @@ describe('ResultsItem', () => {
       <Provider store={store}>
         <ThemeProvider>
           <MemoryRouter initialEntries={[`/details/${mockCharacter.id}`]}>
-            <Details character={mockCharacter} isError={false} />
+            <Details />
           </MemoryRouter>
         </ThemeProvider>
       </Provider>
