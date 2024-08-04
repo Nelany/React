@@ -7,8 +7,6 @@ import { Details } from '../Details/Details';
 import { ResultsSection } from '../ResultSection/ResultsSection';
 import { SearchSection } from '../SearchSection/SearchSection';
 
-import cookie from 'cookie';
-
 const Main = () => {
   const { theme, toggleTheme } = useTheme();
   const { id } = useParams<{ id: string }>();
@@ -24,8 +22,6 @@ const Main = () => {
   const handleToggleTheme = (event: React.MouseEvent) => {
     event.stopPropagation();
     toggleTheme();
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    document.cookie = cookie.serialize('theme', newTheme, { path: '/' });
   };
 
   if (isError) {
