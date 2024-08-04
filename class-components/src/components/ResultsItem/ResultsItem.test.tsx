@@ -1,26 +1,28 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { vi } from 'vitest';
 import { store } from '../../store/store';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 import { Details } from '../Details/Details';
 import { ResultsItem } from './ResultsItem';
 
 const pushMock = vi.fn();
 
-vi.mock('next/router', () => ({
-  useRouter: () => ({
-    push: pushMock,
-    query: { page: '1' },
-    asPath: '/',
-  }),
-  Router: {
-    events: {
-      on: vi.fn(),
-    },
-  },
-}));
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
+
+  return {
+    ...actual,
+    useRouter: vi.fn(() => ({
+      push: pushMock,
+      replace: vi.fn(),
+    })),
+    useSearchParams: vi.fn(() => ({
+      get: vi.fn(),
+    })),
+    usePathname: vi.fn(),
+    useParams: vi.fn(() => ({ id: '1' })),
+  };
+});
 
 const mockCharacter = {
   id: 1,
@@ -51,11 +53,7 @@ describe('ResultsItem', () => {
   test('calls navigate with correct URL when clicked', async () => {
     render(
       <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter>
-            <ResultsItem name="Rick Sanchez" character={mockCharacter} />
-          </MemoryRouter>
-        </ThemeProvider>
+        <ResultsItem name="Rick Sanchez" character={mockCharacter} />
       </Provider>
     );
 
@@ -63,7 +61,6 @@ describe('ResultsItem', () => {
 
     expect(pushMock).toHaveBeenCalledWith(
       `/details/${mockCharacter.id}/?page=1`,
-      undefined,
       { scroll: false }
     );
   });
@@ -71,11 +68,7 @@ describe('ResultsItem', () => {
   test('renders the relevant card data', () => {
     render(
       <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter>
-            <ResultsItem name="Rick Sanchez" character={mockCharacter} />
-          </MemoryRouter>
-        </ThemeProvider>
+        <ResultsItem name="Rick Sanchez" character={mockCharacter} />
       </Provider>
     );
 
@@ -93,19 +86,7 @@ describe('ResultsItem', () => {
   test('clicking on a card opens a detailed card component', () => {
     render(
       <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter initialEntries={[`/`]}>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <ResultsItem name="Rick Sanchez" character={mockCharacter} />
-                }
-              />
-              <Route path="/details/:id" element={<Details />} />
-            </Routes>
-          </MemoryRouter>
-        </ThemeProvider>
+        <ResultsItem name="Rick Sanchez" character={mockCharacter} />
       </Provider>
     );
 
@@ -113,17 +94,12 @@ describe('ResultsItem', () => {
 
     expect(pushMock).toHaveBeenCalledWith(
       `/details/${mockCharacter.id}/?page=1`,
-      undefined,
       { scroll: false }
     );
 
     render(
       <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter initialEntries={[`/details/${mockCharacter.id}`]}>
-            <Details />
-          </MemoryRouter>
-        </ThemeProvider>
+        <Details />
       </Provider>
     );
 

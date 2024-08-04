@@ -7,13 +7,22 @@ import { Pagination } from './Pagination';
 
 const pushMock = vi.fn();
 
-vi.mock('next/router', () => ({
-  useRouter: () => ({
-    push: pushMock,
-    query: { page: '1' },
-    asPath: '/',
-  }),
-}));
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
+
+  return {
+    ...actual,
+    useRouter: vi.fn(() => ({
+      push: pushMock,
+      replace: vi.fn(),
+    })),
+    useSearchParams: vi.fn(() => ({
+      get: vi.fn(),
+    })),
+    usePathname: vi.fn(),
+    useParams: vi.fn(() => ({ id: '1' })),
+  };
+});
 
 describe('Pagination', () => {
   test('updates URL query parameter when page changes', async () => {
@@ -33,9 +42,6 @@ describe('Pagination', () => {
 
     fireEvent.click(screen.getByText('>'), { force: true });
 
-    expect(pushMock).toHaveBeenCalledWith({
-      pathname: '/',
-      query: { page: '2' },
-    });
+    expect(pushMock).toHaveBeenCalledWith('/?page=2');
   });
 });

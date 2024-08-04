@@ -1,18 +1,26 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { describe, beforeEach, it, expect, vi } from 'vitest';
-import { SearchSection } from './SearchSection';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { SearchSection } from './SearchSection';
 
-vi.mock('next/router', () => ({
-  useRouter: () => ({
-    push: vi.fn(),
-    query: { page: '1' },
-    asPath: '/',
-  }),
-}));
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
+
+  return {
+    ...actual,
+    useRouter: vi.fn(() => ({
+      push: vi.fn(),
+      replace: vi.fn(),
+    })),
+    useSearchParams: vi.fn(() => ({
+      get: vi.fn(),
+    })),
+    usePathname: vi.fn(),
+    useParams: vi.fn(() => ({ id: '1' })),
+  };
+});
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
@@ -27,9 +35,7 @@ describe('SearchSection', () => {
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection />
-          </MemoryRouter>
+          <SearchSection />
         </ThemeProvider>
       </Provider>
     );
@@ -42,9 +48,7 @@ describe('SearchSection', () => {
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection />
-          </MemoryRouter>
+          <SearchSection />
         </ThemeProvider>
       </Provider>
     );
@@ -61,9 +65,7 @@ describe('SearchSection', () => {
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection />
-          </MemoryRouter>
+          <SearchSection />
         </ThemeProvider>
       </Provider>
     );
@@ -89,9 +91,7 @@ describe('SearchSection', () => {
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection />
-          </MemoryRouter>
+          <SearchSection />
         </ThemeProvider>
       </Provider>
     );

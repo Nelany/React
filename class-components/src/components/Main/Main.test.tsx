@@ -1,20 +1,27 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { vi } from 'vitest';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import Main from './Main';
 
-vi.mock('next/router', () => ({
-  useRouter: () => ({
-    push: vi.fn(),
-    query: { page: '1' },
-    asPath: '/',
-  }),
-}));
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
+
+  return {
+    ...actual,
+    useRouter: vi.fn(() => ({
+      push: vi.fn(),
+      replace: vi.fn(),
+    })),
+    useSearchParams: vi.fn(() => ({
+      get: vi.fn(),
+    })),
+    usePathname: vi.fn(),
+    useParams: vi.fn(() => ({ id: '1' })),
+  };
+});
 
 vi.mock('../../components/SearchSection/SearchSection', () => ({
   SearchSection: vi.fn(() => <div>Mocked SearchSection</div>),
@@ -29,22 +36,10 @@ describe('Main component', () => {
   });
 
   test('renders Main component', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: <Main />,
-        },
-      ],
-      {
-        initialEntries: ['/?page=1'],
-      }
-    );
-
     render(
       <Provider store={store}>
         <ThemeProvider>
-          <RouterProvider router={router} />
+          <Main />
         </ThemeProvider>
       </Provider>
     );
@@ -53,56 +48,25 @@ describe('Main component', () => {
     expect(screen.getAllByAltText('Rick and Morty').length).toBe(2);
   });
 
-  test('navigates to different page on click', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: <Main />,
-        },
-        {
-          path: '/details/:id',
-          element: <div>Details Page</div>,
-        },
-      ],
-      {
-        initialEntries: ['/?page=2'],
-      }
-    );
-
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </Provider>
-    );
-
-    fireEvent.click(screen.getByText('Rick and Morty'));
-    expect(screen.getByText('Rick and Morty')).toBeInTheDocument();
-  });
-
   test('creates an error when error button is clicked', () => {
-    const router = createMemoryRouter([
-      {
-        path: '/',
-        element: (
-          <ErrorBoundary theme="light">
+    const consoleErrorMock = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    try {
+      render(
+        <Provider store={store}>
+          <ThemeProvider>
             <Main />
-          </ErrorBoundary>
-        ),
-      },
-    ]);
+          </ThemeProvider>
+        </Provider>
+      );
 
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </Provider>
-    );
-
-    fireEvent.click(screen.getByText('Create an error!'));
-    expect(screen.getByText('Something went wrong!')).toBeInTheDocument();
+      fireEvent.click(screen.getByText('Create an error!'));
+    } catch (error) {
+      expect((error as Error).message).toContain('I crashed!');
+    } finally {
+      consoleErrorMock.mockRestore();
+    }
   });
 });

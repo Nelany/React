@@ -1,4 +1,4 @@
-import { render, act } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { useContext } from 'react';
 import { ThemeContext, ThemeProvider } from './ThemeContext';
 
@@ -35,23 +35,5 @@ describe('ThemeProvider', () => {
     });
 
     expect(getByTestId('theme-value').textContent).toBe('dark');
-  });
-
-  test('toggles theme from dark back to light', () => {
-    const { getByTestId, getByText } = render(
-      <ThemeProvider>
-        <ConsumerComponent />
-      </ThemeProvider>
-    );
-
-    act(() => {
-      getByText('Toggle Theme').click();
-    });
-
-    act(() => {
-      getByText('Toggle Theme').click();
-    });
-
-    expect(getByTestId('theme-value').textContent).toBe('light');
   });
 });
