@@ -1,16 +1,9 @@
 'use client';
 import classNames from 'classnames';
-import cookie from 'cookie';
-import React from 'react';
+import { getCookie } from 'cookies-next';
 
 export default function GlobalError() {
-  const getTheme = () => {
-    const cookies = cookie.parse(document.cookie);
-
-    return cookies.theme || 'light';
-  };
-
-  const theme = getTheme();
+  const theme = getCookie('theme')  || 'light';
 
   const containerClasses = classNames('error-content-container', theme);
 

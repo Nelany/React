@@ -19,7 +19,7 @@ exports[`renders NotFound component correctly 1`] = `
       href="/"
     >
       <button
-        class="go-to-main-button"
+        class="go-to-main-button light"
       >
         Go to Main
       </button>
