@@ -16,9 +16,7 @@ export default function RootLayout({
         <title>Rick and Morty</title>
       </head>
       <body>
-        <React.StrictMode>
-          {children}
-        </React.StrictMode>
+        <React.StrictMode>{children}</React.StrictMode>
       </body>
     </html>
   );

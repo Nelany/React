@@ -1,6 +1,6 @@
 'use client';
 import classNames from 'classnames';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useGetByIdQuery } from '../../api/rtkApi';
 import { useTheme } from '../../hooks/useTheme';
 import { Loader } from '../Loader/Loader';
@@ -8,9 +8,8 @@ import { Loader } from '../Loader/Loader';
 export const Details = () => {
   const { theme } = useTheme();
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const id = pathname.split('/')[2] || '';
+  const { id } = useParams<{ id: string }>();
   const {
     data: character,
     isLoading,
@@ -22,7 +21,7 @@ export const Details = () => {
   const loaded = !(isLoading || isFetching);
 
   const handleClose = () => {
-    router.push(`/?${page}`, {
+    router.push(`/?page=${page}`, {
       scroll: false,
     });
   };

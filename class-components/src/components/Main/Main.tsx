@@ -1,28 +1,28 @@
 'use client';
 import classNames from 'classnames';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { Details } from '../Details/Details';
 import { ResultsSection } from '../ResultSection/ResultsSection';
 import { SearchSection } from '../SearchSection/SearchSection';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
 import cookie from 'cookie';
 
 const Main = () => {
   const { theme, toggleTheme } = useTheme();
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const id = pathname.split('/')[2];
   const page = searchParams.get('page') || '1';
-
   const [isError, setIsError] = useState<boolean>(false);
 
   const handleErrorClick = () => {
     setIsError(true);
   };
 
-  const handleToggleTheme = () => {
+  const handleToggleTheme = (event: React.MouseEvent) => {
+    event.stopPropagation();
     toggleTheme();
     document.cookie = cookie.serialize('theme', theme, { path: '/' });
   };
@@ -63,7 +63,10 @@ const Main = () => {
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
         </button>
-        <button className={buttonClasses} onClick={handleToggleTheme}>
+        <button
+          className={buttonClasses}
+          onClick={(e: React.MouseEvent) => handleToggleTheme(e)}
+        >
           Toggle Theme: {theme}
         </button>
       </div>

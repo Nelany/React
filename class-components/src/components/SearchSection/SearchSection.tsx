@@ -1,5 +1,6 @@
 'use client';
 import classNames from 'classnames';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLazyGetCharactersQuery } from '../../api/rtkApi';
@@ -9,7 +10,6 @@ import {
   setCharactersResponse,
   useDispatchIsCharLoading,
 } from '../../store/characterSlice';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 export const SearchSection = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,6 @@ export const SearchSection = () => {
   const [inputValue, setInputValue] = useState<string>(query);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get('id');
   const page = searchParams.get('page') || '1';
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -53,14 +52,7 @@ export const SearchSection = () => {
 
   const prepareSearch = () => {
     setQuery(inputValue);
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set('page', '1');
-
-    if (id) {
-      router.push(`/details/${id}/?${newSearchParams.toString()}`);
-    } else {
-      router.push(`/?${newSearchParams.toString()}`);
-    }
+    router.push(`/?page=1`);
   };
 
   const handleSearchButton = (e: React.MouseEvent) => {
@@ -85,6 +77,7 @@ export const SearchSection = () => {
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
+        onClick={(e) => e.stopPropagation()}
         placeholder="Enter text..."
       />
       <button className={theme} onClick={handleSearchButton}>
