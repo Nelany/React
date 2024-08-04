@@ -24,7 +24,8 @@ const Main = () => {
   const handleToggleTheme = (event: React.MouseEvent) => {
     event.stopPropagation();
     toggleTheme();
-    document.cookie = cookie.serialize('theme', theme, { path: '/' });
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    document.cookie = cookie.serialize('theme', newTheme, { path: '/' });
   };
 
   if (isError) {

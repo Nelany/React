@@ -13,6 +13,8 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+  const [theme, setTheme] = useState('light');
+
   const getInitialTheme = () => {
     const document =
       typeof window !== 'undefined' ? window.document : { cookie: '' };
@@ -21,15 +23,13 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     return cookies.theme || 'light';
   };
 
-  const [theme, setTheme] = useState(getInitialTheme);
+  useEffect(() => {
+    setTheme(getInitialTheme());
+  }, []);
 
   const toggleTheme = () => {
     setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
   };
-
-  useEffect(() => {
-    document.cookie = cookie.serialize('theme', theme, { path: '/' });
-  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
