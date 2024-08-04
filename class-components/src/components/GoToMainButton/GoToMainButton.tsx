@@ -1,6 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { toggleIfReturnToRickNMorty } from '../../store/ifReturnToRickNMortySlice';
+import { useDispatch } from 'react-redux';
 
 interface GoToMainButtonProps {
   needRefresh?: boolean;
@@ -8,6 +10,7 @@ interface GoToMainButtonProps {
 
 export const GoToMainButton = ({ needRefresh }: GoToMainButtonProps) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const navigateToMain = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -15,7 +18,7 @@ export const GoToMainButton = ({ needRefresh }: GoToMainButtonProps) => {
     router.push('/');
 
     if (needRefresh) {
-      router.refresh();
+      dispatch(toggleIfReturnToRickNMorty());
     }
   };
 

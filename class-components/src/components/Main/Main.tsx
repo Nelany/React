@@ -6,6 +6,8 @@ import { useTheme } from '../../hooks/useTheme';
 import { Details } from '../Details/Details';
 import { ResultsSection } from '../ResultSection/ResultsSection';
 import { SearchSection } from '../SearchSection/SearchSection';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
 
 const Main = () => {
   const { theme, toggleTheme } = useTheme();
@@ -14,6 +16,9 @@ const Main = () => {
   const searchParams = useSearchParams();
   const page = searchParams.get('page') || '1';
   const [isError, setIsError] = useState<boolean>(false);
+  const ifReturnToRickNMorty = useSelector(
+    (state: RootState) => state.ifReturnToRickNMorty.value
+  );
 
   const handleErrorClick = () => {
     setIsError(true);
@@ -55,7 +60,7 @@ const Main = () => {
         alt="Rick and Morty"
       />
       <h1 className="main__tittle">Rick and Morty</h1>
-      <SearchSection />
+      <SearchSection key={String(ifReturnToRickNMorty)} />
       <div className="main__buttons-container">
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!

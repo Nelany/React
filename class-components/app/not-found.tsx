@@ -12,7 +12,7 @@ export default function NotFound({ theme }: NotFoundProps) {
       <h1 className="error-content">Ooops... Page not found!</h1>
       <img className="error-img" src="/cat.png" alt="Cat" />
       <Link href="/">
-        <a className="go-to-main-button">Go to Main</a>
+        <button className="go-to-main-button">Go to Main</button>
       </Link>
     </div>
   );
