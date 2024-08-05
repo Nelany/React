@@ -51,8 +51,8 @@ export const SearchSection = () => {
   }, [charactersResponse]);
 
   const prepareSearch = () => {
-    setQuery(inputValue);
     router.push(`/?page=1`);
+    setQuery(inputValue);
   };
 
   const handleSearchButton = (e: React.MouseEvent) => {

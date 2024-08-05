@@ -28,14 +28,9 @@
   },
   "include": [
     "src",
-    "pages/Main.test.tsx",
-    "pages/NotFound.test.tsx",
-    "pages/Details.test.tsx",
     "./dist/types/**/*.ts",
-    "./next-env.d.ts"
+    "./next-env.d.ts",
+    "./app/**/*.tsx"
   ],
-  "exclude": [
-      "node_modules",
-      "dist",
-    ]
+  "exclude": ["node_modules", "dist"]
 }
