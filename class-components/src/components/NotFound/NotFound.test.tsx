@@ -1,28 +1,16 @@
 import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { store } from '../../store/store';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import NotFound from '../../../pages/404';
 import { vi } from 'vitest';
+import NotFound from '../../../app/not-found';
 
-vi.mock('next/router', () => ({
-  useRouter: () => ({
-    push: vi.fn(),
-    query: { page: '1' },
-    asPath: '/',
-  }),
+vi.mock('cookies-next', () => ({
+  getCookie: vi.fn(() => 'light'),
+}));
+
+vi.mock('next/headers', () => ({
+  cookies: {},
 }));
 
 test('renders NotFound component correctly', () => {
-  const { container } = render(
-    <Provider store={store}>
-      <ThemeProvider>
-        <MemoryRouter>
-          <NotFound />
-        </MemoryRouter>
-      </ThemeProvider>
-    </Provider>
-  );
+  const { container } = render(<NotFound />);
   expect(container).toMatchSnapshot();
 });

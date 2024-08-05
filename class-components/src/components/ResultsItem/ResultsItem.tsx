@@ -1,5 +1,6 @@
+'use client';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
 import { setSelectedCharacters } from '../../store/characterSlice';
@@ -27,14 +28,12 @@ export const ResultsItem = ({ name, character }: Props) => {
 
   const openCheckedId = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const page = router.query.page || '1';
-    const searchParams = new URLSearchParams();
+    const searchParams = new URLSearchParams(window.location.search);
+    const page = searchParams.get('page') || '1';
     searchParams.set('page', String(page));
-    router.push(
-      `/details/${character.id}/?${searchParams.toString()}`,
-      undefined,
-      { scroll: false }
-    );
+    router.push(`/details/${character.id}/?${searchParams.toString()}`, {
+      scroll: false,
+    });
   };
 
   const resultsItemClasses = classNames('results-item', theme);

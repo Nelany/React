@@ -1,24 +1,32 @@
+'use client';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
-import { PageProps } from '../../types/types';
 import { Details } from '../Details/Details';
 import { ResultsSection } from '../ResultSection/ResultsSection';
 import { SearchSection } from '../SearchSection/SearchSection';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
 
-const Main = ({ characterId, currentPage }: PageProps) => {
+const Main = () => {
   const { theme, toggleTheme } = useTheme();
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const { id } = characterId ? { id: characterId } : router.query;
-  const location = router.asPath;
-  const searchParams = new URLSearchParams(location.split('?')[1]);
-  const page = currentPage || searchParams.get('page') || '1';
-
+  const searchParams = useSearchParams();
+  const page = searchParams.get('page') || '1';
   const [isError, setIsError] = useState<boolean>(false);
+  const ifReturnToRickNMorty = useSelector(
+    (state: RootState) => state.ifReturnToRickNMorty.value
+  );
 
   const handleErrorClick = () => {
     setIsError(true);
+  };
+
+  const handleToggleTheme = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    toggleTheme();
   };
 
   if (isError) {
@@ -26,8 +34,7 @@ const Main = ({ characterId, currentPage }: PageProps) => {
   }
 
   const closeDetails = () => {
-    searchParams.set('page', String(page));
-    router.push(`/?${searchParams.toString()}`, undefined, { scroll: false });
+    router.push(`/?page=${page}`);
   };
 
   const onClick = (e: React.MouseEvent) => {
@@ -53,19 +60,22 @@ const Main = ({ characterId, currentPage }: PageProps) => {
         alt="Rick and Morty"
       />
       <h1 className="main__tittle">Rick and Morty</h1>
-      <SearchSection />
+      <SearchSection key={String(ifReturnToRickNMorty)} />
       <div className="main__buttons-container">
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
         </button>
-        <button className={buttonClasses} onClick={toggleTheme}>
+        <button
+          className={buttonClasses}
+          onClick={(e: React.MouseEvent) => handleToggleTheme(e)}
+        >
           Toggle Theme: {theme}
         </button>
       </div>
       <div className="main__results-container">
         <ResultsSection />
         <div onClick={onClick} className={outletClasses}>
-          <Details />
+          {id && <Details />}
         </div>
       </div>
     </div>

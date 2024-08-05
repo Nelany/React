@@ -1,30 +1,32 @@
 import '@testing-library/jest-dom';
 import { act, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
 
 import { getCharacters } from '../../api/api';
 import { store } from '../../store/store';
-import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 import { Details } from './Details';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
 }));
 
-vi.mock('next/router', () => ({
-  useRouter: () => ({
-    push: vi.fn(),
-    query: { id: '1' },
-    asPath: '/details/1',
-  }),
-  Router: {
-    events: {
-      on: vi.fn(),
-    },
-  },
-}));
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
+
+  return {
+    ...actual,
+    useRouter: vi.fn(() => ({
+      push: vi.fn(),
+      replace: vi.fn(),
+    })),
+    useSearchParams: vi.fn(() => ({
+      get: vi.fn(),
+    })),
+    usePathname: vi.fn(),
+    useParams: vi.fn(() => ({ id: '1' })),
+  };
+});
 
 const mockCharacter = {
   id: 1,
@@ -57,18 +59,12 @@ describe('Details', () => {
 
     render(
       <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/details/1']}>
-            <Routes>
-              <Route path="/details/:id" element={<Details />} />
-            </Routes>
-          </MemoryRouter>
-        </ThemeProvider>
+        <Details />
       </Provider>
     );
 
     await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
     });
 
     expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();

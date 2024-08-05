@@ -1,17 +1,21 @@
 import classNames from 'classnames';
-import { GoToMainButton } from '../src/components/GoToMainButton/GoToMainButton';
-import { useTheme } from '../src/hooks/useTheme';
+import { getCookie } from 'cookies-next';
+import { cookies } from 'next/headers';
+import Link from 'next/link';
 
 export default function NotFound() {
-  const { theme } = useTheme();
+  const theme = getCookie('theme', { cookies }) || 'light';
 
   const containerClasses = classNames('error-content-container', theme);
+  const buttonClasses = classNames('go-to-main-button', theme);
 
   return (
     <div className={containerClasses}>
       <h1 className="error-content">Ooops... Page not found!</h1>
       <img className="error-img" src="/cat.png" alt="Cat" />
-      <GoToMainButton />
+      <Link href="/">
+        <button className={buttonClasses}>Go to Main</button>
+      </Link>
     </div>
   );
 }

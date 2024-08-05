@@ -1,4 +1,13 @@
-.go-to-main-button{
+@import "../../utils/variables.scss";
+
+.go-to-main-button {
   margin: 40px 0;
   border: none;
+}
+
+button.go-to-main-button.dark {
+  background-color: $green;
+  color: $dark;
+  font-weight: 700;
+  text-shadow: none;
 }

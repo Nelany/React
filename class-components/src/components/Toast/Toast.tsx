@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +15,8 @@ export const Toast = () => {
   );
   const numberOfSelectedCharacters = Object.keys(selectedCharacters).length;
 
-  const handleUnselectAll = () => {
+  const handleUnselectAll = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(removeAllSelectedCharacters());
   };
 

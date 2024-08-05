@@ -30,8 +30,3 @@ export type Character = {
   created: string;
   error?: string;
 };
-
-export interface PageProps {
-  characterId: string | null;
-  currentPage: string | null;
-}
