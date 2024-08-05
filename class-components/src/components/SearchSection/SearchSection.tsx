@@ -34,12 +34,12 @@ export const SearchSection = () => {
     const trimmedQuery = queryToSearch.trim();
     localStorage.setItem('searchQuery', trimmedQuery);
 
-    const load = async () => {
+    const timer = setTimeout(async () => {
       await trigger({ searchString: trimmedQuery, page });
       dispatchIsCharLoading(false);
-    };
+    }, 1000);
 
-    load();
+    return () => clearTimeout(timer);
   }, [query, page]);
 
   useEffect(() => {
