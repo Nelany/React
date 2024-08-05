@@ -4,6 +4,15 @@ import { MemoryRouter } from 'react-router-dom';
 import { Loader } from './Loader';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { vi } from 'vitest';
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    query: { id: '1' },
+    asPath: '/details/1',
+  }),
+}));
 
 describe('Loader Component', () => {
   test('the appropriate message is displayed if no cards are present', () => {

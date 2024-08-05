@@ -1,23 +1,19 @@
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import './GoToMainButton.scss';
-import { toggleIfReturnToRickNMorty } from '../../store/ifReturnToRickNMortySlice';
+import { useRouter } from 'next/router';
 
 interface GoToMainButtonProps {
   needRefresh?: boolean;
 }
 
 export const GoToMainButton = ({ needRefresh }: GoToMainButtonProps) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const navigateToMain = (e: React.MouseEvent) => {
     e.stopPropagation();
     localStorage.setItem('searchQuery', '');
-    navigate('/', { replace: true });
+    router.push('/');
 
     if (needRefresh) {
-      dispatch(toggleIfReturnToRickNMorty());
+      router.reload();
     }
   };
 

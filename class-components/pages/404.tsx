@@ -1,9 +1,8 @@
 import classNames from 'classnames';
-import { GoToMainButton } from '../../components/GoToMainButton/GoToMainButton';
-import { useTheme } from '../../hooks/useTheme';
-import './NotFound.scss';
+import { GoToMainButton } from '../src/components/GoToMainButton/GoToMainButton';
+import { useTheme } from '../src/hooks/useTheme';
 
-export const NotFound = () => {
+export default function NotFound() {
   const { theme } = useTheme();
 
   const containerClasses = classNames('error-content-container', theme);
@@ -15,4 +14,4 @@ export const NotFound = () => {
       <GoToMainButton />
     </div>
   );
-};
+}

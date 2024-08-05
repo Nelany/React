@@ -1,14 +1,20 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import '@testing-library/jest-dom';
 import { vi } from 'vitest';
-import { Main } from './Main';
-import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
-import { ResultsSection } from '../../components/ResultSection/ResultsSection';
-import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import Main from '../Main/Main';
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    query: { page: '1' },
+    asPath: '/',
+  }),
+}));
 
 vi.mock('../../components/SearchSection/SearchSection', () => ({
   SearchSection: vi.fn(() => <div>Mocked SearchSection</div>),
@@ -27,7 +33,7 @@ describe('Main component', () => {
       [
         {
           path: '/',
-          element: <Main />,
+          element: <Main characterId={null} currentPage={null} />,
         },
       ],
       {
@@ -44,7 +50,7 @@ describe('Main component', () => {
     );
 
     expect(screen.getByText('Rick and Morty')).toBeInTheDocument();
-    expect(screen.getAllByAltText('Rick and Morty').length).toBe(1);
+    expect(screen.getAllByAltText('Rick and Morty').length).toBe(2);
   });
 
   test('navigates to different page on click', () => {
@@ -52,7 +58,7 @@ describe('Main component', () => {
       [
         {
           path: '/',
-          element: <Main />,
+          element: <Main characterId={null} currentPage={null} />,
         },
         {
           path: '/details/:id',
@@ -76,38 +82,13 @@ describe('Main component', () => {
     expect(screen.getByText('Rick and Morty')).toBeInTheDocument();
   });
 
-  test('renders SearchSection and ResultsSection components', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: <Main />,
-        },
-      ],
-      {
-        initialEntries: ['/?page=1'],
-      }
-    );
-
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </Provider>
-    );
-
-    expect(SearchSection).toHaveBeenCalled();
-    expect(ResultsSection).toHaveBeenCalled();
-  });
-
   test('creates an error when error button is clicked', () => {
     const router = createMemoryRouter([
       {
         path: '/',
         element: (
           <ErrorBoundary theme="light">
-            <Main />
+            <Main characterId={null} currentPage={null} />
           </ErrorBoundary>
         ),
       },

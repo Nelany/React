@@ -49,6 +49,7 @@ module.exports = {
       },
     ],
     'react-hooks/exhaustive-deps': 'off',
+    'react-refresh/only-export-components': 'off',
   },
 
   settings: {

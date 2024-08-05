@@ -1,26 +1,26 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { vi } from 'vitest';
-import { ResultsItem } from './ResultsItem';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 import { Details } from '../Details/Details';
+import { ResultsItem } from './ResultsItem';
 
-vi.mock(
-  'react-router-dom',
-  async (importOriginal: () => Promise<Record<string, unknown>>) => {
-    const actual = await importOriginal();
+const pushMock = vi.fn();
 
-    return {
-      ...actual,
-      useNavigate: vi.fn(),
-      useLocation: vi.fn(() => ({
-        search: '',
-      })),
-    };
-  }
-);
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: pushMock,
+    query: { page: '1' },
+    asPath: '/',
+  }),
+  Router: {
+    events: {
+      on: vi.fn(),
+    },
+  },
+}));
 
 const mockCharacter = {
   id: 1,
@@ -49,9 +49,6 @@ describe('ResultsItem', () => {
   });
 
   test('calls navigate with correct URL when clicked', async () => {
-    const mockNavigate = vi.fn();
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
-
     render(
       <Provider store={store}>
         <ThemeProvider>
@@ -64,8 +61,10 @@ describe('ResultsItem', () => {
 
     fireEvent.click(screen.getByTestId('results-item'));
 
-    expect(mockNavigate).toHaveBeenCalledWith(
-      `/details/${mockCharacter.id}/?page=1`
+    expect(pushMock).toHaveBeenCalledWith(
+      `/details/${mockCharacter.id}/?page=1`,
+      undefined,
+      { scroll: false }
     );
   });
 
@@ -92,9 +91,6 @@ describe('ResultsItem', () => {
   });
 
   test('clicking on a card opens a detailed card component', () => {
-    const mockNavigate = vi.fn();
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
-
     render(
       <Provider store={store}>
         <ThemeProvider>
@@ -115,8 +111,10 @@ describe('ResultsItem', () => {
 
     fireEvent.click(screen.getByTestId('results-item'));
 
-    expect(mockNavigate).toHaveBeenCalledWith(
-      `/details/${mockCharacter.id}/?page=1`
+    expect(pushMock).toHaveBeenCalledWith(
+      `/details/${mockCharacter.id}/?page=1`,
+      undefined,
+      { scroll: false }
     );
 
     render(

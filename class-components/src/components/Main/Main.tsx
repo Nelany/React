@@ -1,29 +1,19 @@
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import {
-  Outlet,
-  ScrollRestoration,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
-import { ResultsSection } from '../../components/ResultSection/ResultsSection';
-import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { useTheme } from '../../hooks/useTheme';
-import { RootState } from '../../store/store';
-import './Main.scss';
+import { PageProps } from '../../types/types';
+import { Details } from '../Details/Details';
+import { ResultsSection } from '../ResultSection/ResultsSection';
+import { SearchSection } from '../SearchSection/SearchSection';
 
-export const Main = () => {
+const Main = ({ characterId, currentPage }: PageProps) => {
   const { theme, toggleTheme } = useTheme();
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const page = searchParams.get('page') || '1';
-  const ifReturnToRickNMorty = useSelector(
-    (state: RootState) => state.ifReturnToRickNMorty.value
-  );
+  const router = useRouter();
+  const { id } = characterId ? { id: characterId } : router.query;
+  const location = router.asPath;
+  const searchParams = new URLSearchParams(location.split('?')[1]);
+  const page = currentPage || searchParams.get('page') || '1';
 
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -37,7 +27,7 @@ export const Main = () => {
 
   const closeDetails = () => {
     searchParams.set('page', String(page));
-    navigate(`/?${searchParams.toString()}`);
+    router.push(`/?${searchParams.toString()}`, undefined, { scroll: false });
   };
 
   const onClick = (e: React.MouseEvent) => {
@@ -52,21 +42,18 @@ export const Main = () => {
 
   return (
     <div data-testid="main-page" onClick={closeDetails} className={mainClasses}>
-      <ScrollRestoration
-        getKey={(location) => {
-          return location.search;
-        }}
+      <img
+        className="rick-morty-img"
+        src="/rickmorty.png"
+        alt="Rick and Morty"
       />
-      <img className="rick-morty-img" src="/rickmorty.png" alt="" />
       <img
         className="rick-morty-img rick-morty-img-reverse"
         src="/rickmorty.png"
         alt="Rick and Morty"
       />
-
       <h1 className="main__tittle">Rick and Morty</h1>
-      <SearchSection key={String(ifReturnToRickNMorty)} />
-
+      <SearchSection />
       <div className="main__buttons-container">
         <button className={buttonClasses} onClick={handleErrorClick}>
           Create an error!
@@ -75,14 +62,14 @@ export const Main = () => {
           Toggle Theme: {theme}
         </button>
       </div>
-
       <div className="main__results-container">
         <ResultsSection />
-
         <div onClick={onClick} className={outletClasses}>
-          <Outlet />
+          <Details />
         </div>
       </div>
     </div>
   );
 };
+
+export default Main;

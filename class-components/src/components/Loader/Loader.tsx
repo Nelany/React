@@ -1,5 +1,4 @@
 import { GoToMainButton } from '../GoToMainButton/GoToMainButton';
-import './Loader.scss';
 
 type Props = {
   isLoading: boolean;

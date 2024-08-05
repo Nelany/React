@@ -1,15 +1,14 @@
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useLazyGetCharactersQuery } from '../../api/rtkApi';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useTheme } from '../../hooks/useTheme';
 import {
-  useDispatchIsCharLoading,
   setCharactersResponse,
+  useDispatchIsCharLoading,
 } from '../../store/characterSlice';
-import './SearchSection.scss';
 
 export const SearchSection = () => {
   const dispatch = useDispatch();
@@ -19,11 +18,10 @@ export const SearchSection = () => {
   const { theme } = useTheme();
   const [query, setQuery] = useLocalStorage('searchQuery', '');
   const [inputValue, setInputValue] = useState<string>(query);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const router = useRouter();
+  const { id } = router.query;
+  const searchParams = new URLSearchParams(router.asPath.split('?')[1]);
   const page = searchParams.get('page') || '1';
-  const navigate = useNavigate();
-  const { id } = useParams();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -35,6 +33,7 @@ export const SearchSection = () => {
     const queryToSearch = query !== undefined ? query : '';
     const trimmedQuery = queryToSearch.trim();
     localStorage.setItem('searchQuery', trimmedQuery);
+
     const timer = setTimeout(async () => {
       await trigger({ searchString: trimmedQuery, page });
       dispatchIsCharLoading(false);
@@ -56,9 +55,9 @@ export const SearchSection = () => {
     searchParams.set('page', '1');
 
     if (id) {
-      navigate(`/details/${id}/?${searchParams.toString()}`);
+      router.push(`/details/${id}/?${searchParams.toString()}`);
     } else {
-      navigate(`/?${searchParams.toString()}`);
+      router.push(`/?${searchParams.toString()}`);
     }
   };
 

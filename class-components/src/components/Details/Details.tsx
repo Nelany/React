@@ -1,28 +1,31 @@
 import classNames from 'classnames';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { useGetByIdQuery } from '../../api/rtkApi';
 import { useTheme } from '../../hooks/useTheme';
 import { Loader } from '../Loader/Loader';
-import './Details.scss';
 
 export const Details = () => {
   const { theme } = useTheme();
-  const { id } = useParams();
+  const router = useRouter();
+  const { id } = router.query;
   const {
     data: character,
     isLoading,
     isFetching,
     isError,
-  } = useGetByIdQuery(id || '');
-  const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  } = useGetByIdQuery(id?.toString() || '');
+  const location = router.asPath;
+  const searchParams = new URLSearchParams(location.split('?')[1]);
   const page = searchParams.get('page') || '1';
+
   const loaded = !(isLoading || isFetching);
 
   const handleClose = () => {
     searchParams.set('page', String(page));
-    navigate(`/?${searchParams.toString()}`);
+    router.push(`/?${searchParams.toString()}`, undefined, {
+      scroll: false,
+      shallow: true,
+    });
   };
 
   const detailsClasses = classNames('details', theme);
@@ -44,9 +47,9 @@ export const Details = () => {
           {character.type && (
             <h4 className="h4-details">{`Type: ${character.type}`}</h4>
           )}
-          <h4 className="h4-details">{`Last known location: ${character.location.name}`}</h4>
+          <h4 className="h4-details">{`Last known location: ${character.location?.name}`}</h4>
           <h4 className="h4-details">{`Gender: ${character.gender}`}</h4>
-          <h4 className="h4-details">{`Origin: ${character.origin.name}`}</h4>
+          <h4 className="h4-details">{`Origin: ${character.origin?.name}`}</h4>
           <h4
             data-testid="detailsCreated"
             className="h4-details"
