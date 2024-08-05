@@ -1,6 +1,14 @@
+import { Metadata } from 'next';
 import React from 'react';
 import '../styles/index.scss';
 import '../styles/Main.scss';
+
+export const metadata: Metadata = {
+  title: 'Rick and Morty',
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
 
 export default function RootLayout({
   children,
@@ -9,12 +17,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta charSet="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Rick and Morty</title>
-      </head>
       <body>
         <React.StrictMode>{children}</React.StrictMode>
       </body>

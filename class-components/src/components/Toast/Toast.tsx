@@ -15,7 +15,8 @@ export const Toast = () => {
   );
   const numberOfSelectedCharacters = Object.keys(selectedCharacters).length;
 
-  const handleUnselectAll = () => {
+  const handleUnselectAll = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(removeAllSelectedCharacters());
   };
 
