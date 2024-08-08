@@ -1,6 +1,4 @@
-'use client';
 import classNames from 'classnames';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLazyGetCharactersQuery } from '../../api/rtkApi';
@@ -10,6 +8,7 @@ import {
   setCharactersResponse,
   useDispatchIsCharLoading,
 } from '../../store/characterSlice';
+import { useNavigate, useSearchParams } from '@remix-run/react';
 
 export const SearchSection = () => {
   const dispatch = useDispatch();
@@ -19,8 +18,8 @@ export const SearchSection = () => {
   const { theme } = useTheme();
   const [query, setQuery] = useLocalStorage('searchQuery', '');
   const [inputValue, setInputValue] = useState<string>(query);
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || '1';
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +50,7 @@ export const SearchSection = () => {
   }, [charactersResponse]);
 
   const prepareSearch = () => {
-    router.push(`/?page=1`);
+    navigate(`/?page=1`);
     setQuery(inputValue);
   };
 

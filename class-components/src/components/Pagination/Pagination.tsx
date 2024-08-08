@@ -1,6 +1,5 @@
-'use client';
 import classNames from 'classnames';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from '@remix-run/react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
@@ -8,7 +7,7 @@ import { RootState } from '../../store/store';
 
 export const Pagination = () => {
   const { theme } = useTheme();
-  const router = useRouter();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(window.location.search);
   const page = searchParams.get('page') || '1';
   const [pageNumber, setPageNumber] = useState<number>(Number(page));
@@ -25,14 +24,14 @@ export const Pagination = () => {
 
     if (pageNumber > 1) {
       searchParams.set('page', String(pageNumber - 1));
-      router.push(`/?${searchParams.toString()}`);
+      navigate(`/?${searchParams.toString()}`);
     }
   };
 
   const handleNextClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     searchParams.set('page', String(pageNumber + 1));
-    router.push(`/?${searchParams.toString()}`);
+    navigate(`/?${searchParams.toString()}`);
   };
 
   const prevButtonClasses = classNames(

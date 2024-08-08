@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { vi } from 'vitest';
 import { store } from '../../store/store';
-import { Details } from '../Details/Details';
+import Details from '../../../app/routes/details.$id';
 import { ResultsItem } from './ResultsItem';
 
 const pushMock = vi.fn();

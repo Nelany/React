@@ -1,11 +1,10 @@
-'use client';
 import classNames from 'classnames';
-import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
 import { setSelectedCharacters } from '../../store/characterSlice';
 import { RootState } from '../../store/store';
 import { Character } from '../../types/types';
+import { useNavigate } from '@remix-run/react';
 
 interface Props {
   name: string;
@@ -14,7 +13,7 @@ interface Props {
 
 export const ResultsItem = ({ name, character }: Props) => {
   const { theme } = useTheme();
-  const router = useRouter();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSelected = useSelector(
     (state: RootState) => !!state.characters.selectedCharacters[character.id]
@@ -31,9 +30,7 @@ export const ResultsItem = ({ name, character }: Props) => {
     const searchParams = new URLSearchParams(window.location.search);
     const page = searchParams.get('page') || '1';
     searchParams.set('page', String(page));
-    router.push(`/details/${character.id}/?${searchParams.toString()}`, {
-      scroll: false,
-    });
+    navigate(`/details/${character.id}/?${searchParams.toString()}`);
   };
 
   const resultsItemClasses = classNames('results-item', theme);

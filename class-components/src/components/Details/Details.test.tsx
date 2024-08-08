@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
 
 import { getCharacters } from '../../api/api';
 import { store } from '../../store/store';
-import { Details } from './Details';
+import Details from '../../../app/routes/details.$id';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
