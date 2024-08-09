@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useState } from 'react';
+import Cookies from 'js-cookie';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
 export const ThemeContext = createContext({
   theme: 'light',
@@ -12,22 +13,27 @@ interface ThemeProviderProps {
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState('light');
 
-  // const getInitialTheme = async (): Promise<string> => {
-  //   const cookie = document.cookie;
+  const getInitialTheme = (): string => {
+    const cookieTheme = Cookies.get('theme');
+    console.log('Initial theme from cookies:', cookieTheme); // Отладочный вывод
 
-  //   return cookie?.theme || 'light';
-  // };
+    return cookieTheme || 'light';
+  };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const initialTheme = await getInitialTheme();
-  //     setTheme(initialTheme);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+  }, []);
 
   const toggleTheme = () => {
     setTheme((currentTheme) => {
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      Cookies.set('theme', newTheme, {
+        path: '/',
+        expires: 7,
+        sameSite: 'Lax',
+      });
+      console.log('New theme set in cookies:', newTheme); // Отладочный вывод
 
       return newTheme;
     });

@@ -32,6 +32,7 @@ const Main = ({ children }: MainProps) => {
   };
 
   if (isError) {
+    console.log('Error thrown in Main component');
     throw new Error('I crashed!');
   }
 

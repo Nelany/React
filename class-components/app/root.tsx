@@ -11,6 +11,7 @@ import {
 // import { parse } from 'cookie';
 import NotFound from '../src/components/NotFound/NotFound';
 import PageProvider from '../src/components/PageProvider/PageProvider';
+// import Error from '../src/components/Error/Error';
 // import '../styles/Main.scss';
 
 // import { themeCookie } from '../cookies';
@@ -43,11 +44,13 @@ export const meta: MetaFunction = () => {
 export function links() {
   return [
     { rel: 'icon', href: '/favicon.ico' },
-    { rel: 'stylesheet', href: '../styles/Main.scss' },
+    { rel: 'stylesheet', href: '/styles/Main.scss' },
   ];
 }
 
 export default function RootLayout() {
+  console.log('Root rerender');
+
   return (
     <html>
       <head>
@@ -80,7 +83,15 @@ export function ErrorBoundary() {
   // eslint-disable-next-line prefer-rest-params
   // console.warn(arguments);
   const error = useRouteError();
-  // console.error(error);
+  console.log('ErrorBoundary called', error);
+
+  // const [errorMy, setErrorMy] = useState<Error | null>(null);
+
+  // useEffect(() => {
+  //   if (error && error instanceof Error) {
+  //     setErrorMy(error);
+  //   }
+  // }, [error]);
 
   return (
     <html>
@@ -93,11 +104,9 @@ export function ErrorBoundary() {
         {isRouteErrorResponse(error) && <NotFound />}
 
         {error instanceof Error && (
+          // <Error/>
           <div>
             <h1>EEEEEEEEEEError</h1>
-            <p>{error.message}</p>
-            <p>The stack trace is:</p>
-            <pre>{error.stack}</pre>
           </div>
         )}
         {!(error instanceof Error) && !isRouteErrorResponse(error) && (
