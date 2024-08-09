@@ -5,6 +5,7 @@ import { configDefaults } from 'vitest/config';
 export default defineConfig({
   define: {
     global: {},
+    'process.env': {},
   },
   plugins: [remix()],
   resolve: {

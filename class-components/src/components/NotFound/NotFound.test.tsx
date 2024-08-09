@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
-import NotFound from '../../../app/not-found';
+import NotFound from './NotFound';
 
 vi.mock('cookies-next', () => ({
   getCookie: vi.fn(() => 'light'),

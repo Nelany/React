@@ -41,7 +41,16 @@
 
 .details.dark {
   background-color: $dark;
-}
+
+  .details__close-button {
+    align-self: end;
+    margin-bottom: 10px;
+    padding: 0.5em 0.9em 0.6em 0.8em;
+    background-color: $greenTransparent;
+    border: 1px solid $green;
+    color: $green;
+    font-weight: 300;
+  }}
 
 .details::-webkit-scrollbar {
   width: 8px;

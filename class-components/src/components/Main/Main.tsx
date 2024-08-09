@@ -26,7 +26,7 @@ const Main = ({ children }: MainProps) => {
     setIsError(true);
   };
 
-  const handleToggleTheme = (event: React.MouseEvent) => {
+  const handleToggleTheme = async (event: React.MouseEvent) => {
     event.stopPropagation();
     toggleTheme();
   };

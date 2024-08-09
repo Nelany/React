@@ -1,4 +1,5 @@
 import { LoaderFunction } from '@remix-run/node';
+import { useLoaderData, useLocation, useNavigate } from '@remix-run/react';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { rtkApi } from '../../src/api/rtkApi';
@@ -6,7 +7,6 @@ import { Loader } from '../../src/components/Loader/Loader';
 import { useTheme } from '../../src/hooks/useTheme';
 import { store } from '../../src/store/store';
 import { Character } from '../../src/types/types';
-import { useLoaderData, useLocation, useNavigate } from '@remix-run/react';
 
 interface LoaderData {
   character: Character | null;
@@ -17,18 +17,17 @@ export const loader: LoaderFunction = async ({ params }) => {
   const { id } = params;
   const { getById } = rtkApi.endpoints;
 
+
   if (id) {
     const result = await store.dispatch(getById.initiate(id));
 
     return {
-
-        character: result.data || null,
-        isError: !!result.error,
-
+      character: result.data || null,
+      isError: !!result.error,
     };
   }
 
-  return { character: null, isError: true  };
+  return { character: null, isError: true};
 };
 
 export default function Details() {

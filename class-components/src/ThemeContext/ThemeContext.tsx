@@ -1,6 +1,4 @@
-'use client';
-import { getCookie, setCookie } from 'cookies-next';
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 
 export const ThemeContext = createContext({
   theme: 'light',
@@ -14,18 +12,25 @@ interface ThemeProviderProps {
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState('light');
 
-  const getInitialTheme = () => {
-    return getCookie('theme') || 'light';
-  };
+  // const getInitialTheme = async (): Promise<string> => {
+  //   const cookie = document.cookie;
 
-  useEffect(() => {
-    setTheme(getInitialTheme());
-  }, []);
+  //   return cookie?.theme || 'light';
+  // };
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const initialTheme = await getInitialTheme();
+  //     setTheme(initialTheme);
+  //   })();
+  // }, []);
 
   const toggleTheme = () => {
-    setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setCookie('theme', newTheme);
+    setTheme((currentTheme) => {
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      return newTheme;
+    });
   };
 
   return (
