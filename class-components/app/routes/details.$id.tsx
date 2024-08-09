@@ -17,7 +17,6 @@ export const loader: LoaderFunction = async ({ params }) => {
   const { id } = params;
   const { getById } = rtkApi.endpoints;
 
-
   if (id) {
     const result = await store.dispatch(getById.initiate(id));
 
@@ -27,7 +26,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     };
   }
 
-  return { character: null, isError: true};
+  return { character: null, isError: true };
 };
 
 export default function Details() {
@@ -45,18 +44,6 @@ export default function Details() {
       setIsLoading(false);
     }
   }, [character, isError]);
-
-  // useEffect(() => {
-  //   Router.events.on('routeChangeStart', () => {
-  //     setIsLoading(true);
-  //   });
-  //   Router.events.on('routeChangeComplete', () => {
-  //     setIsLoading(false);
-  //   });
-  //   Router.events.on('routeChangeError', () => {
-  //     setIsLoading(false);
-  //   });
-  // }, [Router]);
 
   const handleClose = () => {
     searchParams.set('page', String(page));

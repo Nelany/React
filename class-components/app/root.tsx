@@ -1,4 +1,3 @@
-// import { json, LoaderFunction } from '@remix-run/node';
 import {
   isRouteErrorResponse,
   Links,
@@ -8,29 +7,9 @@ import {
   Scripts,
   useRouteError,
 } from '@remix-run/react';
-// import { parse } from 'cookie';
 import NotFound from '../src/components/NotFound/NotFound';
 import PageProvider from '../src/components/PageProvider/PageProvider';
-// import Error from '../src/components/Error/Error';
-// import '../styles/Main.scss';
-
-// import { themeCookie } from '../cookies';
-
-// export const action = async ({ request }: { request: Request }) => {
-//   const { theme } = await request.json();
-
-//   return new Response(null, {
-//     headers: { 'Set-Cookie': await themeCookie.serialize(theme) },
-//   });
-// };
-
-// export const loader: LoaderFunction = async ({ request }) => {
-//   const cookieHeader = request.headers.get('Cookie');
-//   const cookies = cookieHeader ? parse(cookieHeader) : {};
-//   const theme = cookies.theme || 'light';
-
-//   return json({ theme });
-// };
+import Error from '../src/components/Error/Error';
 
 export const meta: MetaFunction = () => {
   return [
@@ -49,7 +28,6 @@ export function links() {
 }
 
 export default function RootLayout() {
-  console.log('Root rerender');
 
   return (
     <html>
@@ -67,31 +45,8 @@ export default function RootLayout() {
   );
 }
 
-// interface LoaderData {
-//   theme: string;
-// }
-
-// export const loader: LoaderFunction = async ({ request }) => {
-//   const cookieHeader = request.headers.get('Cookie');
-//   const cookies = cookieHeader ? parse(cookieHeader) : {};
-//   const theme = cookies.theme || 'light';
-
-//   return json<LoaderData>({ theme });
-// };
-
 export function ErrorBoundary() {
-  // eslint-disable-next-line prefer-rest-params
-  // console.warn(arguments);
   const error = useRouteError();
-  console.log('ErrorBoundary called', error);
-
-  // const [errorMy, setErrorMy] = useState<Error | null>(null);
-
-  // useEffect(() => {
-  //   if (error && error instanceof Error) {
-  //     setErrorMy(error);
-  //   }
-  // }, [error]);
 
   return (
     <html>
@@ -104,10 +59,7 @@ export function ErrorBoundary() {
         {isRouteErrorResponse(error) && <NotFound />}
 
         {error instanceof Error && (
-          // <Error/>
-          <div>
-            <h1>EEEEEEEEEEError</h1>
-          </div>
+          <Error/>
         )}
         {!(error instanceof Error) && !isRouteErrorResponse(error) && (
           <h1>Unknown Error</h1>

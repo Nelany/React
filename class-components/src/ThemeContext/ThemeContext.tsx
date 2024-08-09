@@ -15,7 +15,6 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
   const getInitialTheme = (): string => {
     const cookieTheme = Cookies.get('theme');
-    console.log('Initial theme from cookies:', cookieTheme); // Отладочный вывод
 
     return cookieTheme || 'light';
   };
@@ -33,7 +32,6 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         expires: 7,
         sameSite: 'Lax',
       });
-      console.log('New theme set in cookies:', newTheme); // Отладочный вывод
 
       return newTheme;
     });
