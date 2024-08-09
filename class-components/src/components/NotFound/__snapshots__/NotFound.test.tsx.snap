@@ -15,15 +15,11 @@ exports[`renders NotFound component correctly 1`] = `
       class="error-img"
       src="/cat.png"
     />
-    <a
-      href="/"
+    <button
+      class="go-to-main-button light"
     >
-      <button
-        class="go-to-main-button light"
-      >
-        Go to Main
-      </button>
-    </a>
+      Go to Main
+    </button>
   </div>
 </div>
 `;

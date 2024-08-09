@@ -1,9 +1,14 @@
-'use client';
 import classNames from 'classnames';
-import { getCookie } from 'cookies-next';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
-export default function GlobalError() {
-  const theme = getCookie('theme')  || 'light';
+export default function Error() {
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    const cookieTheme = Cookies.get('theme') || 'light';
+    setTheme(cookieTheme);
+  }, []);
 
   const containerClasses = classNames('error-content-container', theme);
 

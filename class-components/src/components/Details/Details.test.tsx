@@ -1,32 +1,14 @@
 import '@testing-library/jest-dom';
 import { act, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { getCharacters } from '../../api/api';
+import Details from '../../../app/routes/details.$id';
 import { store } from '../../store/store';
-import { Details } from './Details';
 
 vi.mock('../../api/api', () => ({
   getCharacters: vi.fn(),
 }));
-
-vi.mock('next/navigation', async () => {
-  const actual = await vi.importActual('next/navigation');
-
-  return {
-    ...actual,
-    useRouter: vi.fn(() => ({
-      push: vi.fn(),
-      replace: vi.fn(),
-    })),
-    useSearchParams: vi.fn(() => ({
-      get: vi.fn(),
-    })),
-    usePathname: vi.fn(),
-    useParams: vi.fn(() => ({ id: '1' })),
-  };
-});
 
 const mockCharacter = {
   id: 1,
@@ -49,14 +31,23 @@ const mockCharacter = {
   url: 'https://rickandmortyapi.com/api/character/1',
 };
 
+vi.mock('@remix-run/react', async () => {
+  const actual = await vi.importActual('@remix-run/react');
+
+  return {
+    ...actual,
+    useLoaderData: () => ({ character: mockCharacter, isError: false }),
+    useLocation: () => ({ search: '' }),
+    useNavigate: () => vi.fn(),
+  };
+});
+
 describe('Details', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   test('the detailed card component correctly displays the detailed card data', async () => {
-    (getCharacters as Mock).mockResolvedValueOnce(mockCharacter);
-
     render(
       <Provider store={store}>
         <Details />

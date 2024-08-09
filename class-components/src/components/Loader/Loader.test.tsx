@@ -1,24 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { Loader } from './Loader';
+import { vi } from 'vitest';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
-import { vi } from 'vitest';
+import { Loader } from './Loader';
 
-vi.mock('next/navigation', async () => {
-  const actual = await vi.importActual('next/navigation');
+vi.mock('@remix-run/react', async () => {
+  const actual = await vi.importActual('@remix-run/react');
 
   return {
     ...actual,
-    useRouter: vi.fn(() => ({
-      push: vi.fn(),
-      replace: vi.fn(),
-    })),
-    useSearchParams: vi.fn(() => ({
-      get: vi.fn(),
-    })),
-    usePathname: vi.fn(),
-    useParams: vi.fn(() => ({ id: '1' })),
+    useLocation: () => ({ search: '' }),
+    useNavigate: () => vi.fn(),
+    useParams: () => ({ id: '1' }),
+    useSearchParams: () => [{ get: () => '1' }],
   };
 });
 

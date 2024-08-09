@@ -1,19 +1,21 @@
-'use client';
+import { useNavigate, useParams, useSearchParams } from '@remix-run/react';
 import classNames from 'classnames';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
-import { Details } from '../Details/Details';
+import { RootState } from '../../store/store';
 import { ResultsSection } from '../ResultSection/ResultsSection';
 import { SearchSection } from '../SearchSection/SearchSection';
-import { RootState } from '../../store/store';
-import { useSelector } from 'react-redux';
 
-const Main = () => {
+interface MainProps {
+  children?: ReactNode;
+}
+
+const Main = ({ children }: MainProps) => {
   const { theme, toggleTheme } = useTheme();
   const { id } = useParams<{ id: string }>();
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || '1';
   const [isError, setIsError] = useState<boolean>(false);
   const ifReturnToRickNMorty = useSelector(
@@ -24,7 +26,7 @@ const Main = () => {
     setIsError(true);
   };
 
-  const handleToggleTheme = (event: React.MouseEvent) => {
+  const handleToggleTheme = async (event: React.MouseEvent) => {
     event.stopPropagation();
     toggleTheme();
   };
@@ -34,7 +36,7 @@ const Main = () => {
   }
 
   const closeDetails = () => {
-    router.push(`/?page=${page}`);
+    navigate(`/?page=${page}`);
   };
 
   const onClick = (e: React.MouseEvent) => {
@@ -75,7 +77,7 @@ const Main = () => {
       <div className="main__results-container">
         <ResultsSection />
         <div onClick={onClick} className={outletClasses}>
-          {id && <Details />}
+          {id && children}
         </div>
       </div>
     </div>

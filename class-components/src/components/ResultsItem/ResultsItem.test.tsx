@@ -1,29 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { vi } from 'vitest';
+import Details from '../../../app/routes/details.$id';
 import { store } from '../../store/store';
-import { Details } from '../Details/Details';
 import { ResultsItem } from './ResultsItem';
 
-const pushMock = vi.fn();
-
-vi.mock('next/navigation', async () => {
-  const actual = await vi.importActual('next/navigation');
-
-  return {
-    ...actual,
-    useRouter: vi.fn(() => ({
-      push: pushMock,
-      replace: vi.fn(),
-    })),
-    useSearchParams: vi.fn(() => ({
-      get: vi.fn(),
-    })),
-    usePathname: vi.fn(),
-    useParams: vi.fn(() => ({ id: '1' })),
-  };
-});
-
+const navigateMock = vi.fn();
 const mockCharacter = {
   id: 1,
   name: 'Rick Sanchez',
@@ -44,6 +26,18 @@ const mockCharacter = {
   url: '',
   created: '',
 };
+vi.mock('@remix-run/react', async () => {
+  const actual = await vi.importActual('@remix-run/react');
+
+  return {
+    ...actual,
+    useLoaderData: () => ({ character: mockCharacter, isError: false }),
+    useLocation: () => ({ search: '' }),
+    useNavigate: () => navigateMock,
+    useParams: () => ({ id: '1' }),
+    useSearchParams: () => [{ get: () => '1' }],
+  };
+});
 
 describe('ResultsItem', () => {
   afterEach(() => {
@@ -59,9 +53,8 @@ describe('ResultsItem', () => {
 
     fireEvent.click(screen.getByTestId('results-item'));
 
-    expect(pushMock).toHaveBeenCalledWith(
-      `/details/${mockCharacter.id}/?page=1`,
-      { scroll: false }
+    expect(navigateMock).toHaveBeenCalledWith(
+      `/details/${mockCharacter.id}/?page=1`
     );
   });
 
@@ -92,9 +85,8 @@ describe('ResultsItem', () => {
 
     fireEvent.click(screen.getByTestId('results-item'));
 
-    expect(pushMock).toHaveBeenCalledWith(
-      `/details/${mockCharacter.id}/?page=1`,
-      { scroll: false }
+    expect(navigateMock).toHaveBeenCalledWith(
+      `/details/${mockCharacter.id}/?page=1`
     );
 
     render(

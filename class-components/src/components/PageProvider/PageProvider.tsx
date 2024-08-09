@@ -1,15 +1,24 @@
-'use client';
+import { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
+import { ErrorBoundaryWrapper } from '../ErrorBoundary/ErrorBoundaryWrapper';
 import Main from '../Main/Main';
 
-export default function PageProvider() {
+interface PageProps {
+  children?: ReactNode;
+}
+
+const PageProvider = ({ children }: PageProps) => {
   return (
     <ThemeProvider>
-      <Provider store={store}>
-        <Main />
-      </Provider>
+      <ErrorBoundaryWrapper>
+        <Provider store={store}>
+          <Main>{children}</Main>
+        </Provider>
+      </ErrorBoundaryWrapper>
     </ThemeProvider>
   );
-}
+};
+
+export default PageProvider;

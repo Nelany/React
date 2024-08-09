@@ -6,27 +6,22 @@ import { store } from '../../store/store';
 import { ThemeProvider } from '../../ThemeContext/ThemeContext';
 import Main from './Main';
 
-vi.mock('next/navigation', async () => {
-  const actual = await vi.importActual('next/navigation');
+vi.mock('@remix-run/react', async () => {
+  const actual = await vi.importActual('@remix-run/react');
 
   return {
     ...actual,
-    useRouter: vi.fn(() => ({
-      push: vi.fn(),
-      replace: vi.fn(),
-    })),
-    useSearchParams: vi.fn(() => ({
-      get: vi.fn(),
-    })),
-    usePathname: vi.fn(),
-    useParams: vi.fn(() => ({ id: '1' })),
+    useLocation: () => ({ search: '' }),
+    useNavigate: () => vi.fn(),
+    useParams: () => ({ id: '1' }),
+    useSearchParams: () => [{ get: () => '1' }],
   };
 });
 
-vi.mock('../../components/SearchSection/SearchSection', () => ({
+vi.mock('../SearchSection/SearchSection', () => ({
   SearchSection: vi.fn(() => <div>Mocked SearchSection</div>),
 }));
-vi.mock('../../components/ResultSection/ResultsSection', () => ({
+vi.mock('../ResultSection/ResultsSection', () => ({
   ResultsSection: vi.fn(() => <div>Mocked ResultsSection</div>),
 }));
 

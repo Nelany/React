@@ -1,6 +1,4 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import { useNavigate } from '@remix-run/react';
 import { toggleIfReturnToRickNMorty } from '../../store/ifReturnToRickNMortySlice';
 import { useDispatch } from 'react-redux';
 
@@ -9,13 +7,13 @@ interface GoToMainButtonProps {
 }
 
 export const GoToMainButton = ({ needRefresh }: GoToMainButtonProps) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const navigateToMain = (e: React.MouseEvent) => {
     e.stopPropagation();
     localStorage.setItem('searchQuery', '');
-    router.push('/');
+    navigate('/');
 
     if (needRefresh) {
       dispatch(toggleIfReturnToRickNMorty());

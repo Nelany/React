@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import GlobalError from '../../../app/error';
+import Error from './Error';
 
 describe('GlobalError component', () => {
   test('renders GlobalError component with light theme', () => {
@@ -8,7 +8,7 @@ describe('GlobalError component', () => {
       value: 'theme=light',
       writable: true,
     });
-    render(<GlobalError />);
+    render(<Error />);
 
     expect(screen.getByText('Something went wrong!')).toBeInTheDocument();
     expect(screen.getByAltText('Cat')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('GlobalError component', () => {
       writable: true,
     });
 
-    render(<GlobalError />);
+    render(<Error />);
 
     expect(screen.getByText('Something went wrong!')).toBeInTheDocument();
     expect(screen.getByAltText('Cat')).toBeInTheDocument();
