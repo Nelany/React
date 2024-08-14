@@ -16,7 +16,7 @@ export const validationSchema = Yup.object().shape({
     .required('Email is required'),
   password: Yup.string()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
       'Password must be strong'
     )
     .required('Password is required'),
@@ -25,17 +25,17 @@ export const validationSchema = Yup.object().shape({
     .required('Confirm Password is required'),
   gender: Yup.string().required('Gender is required'),
   terms: Yup.bool().oneOf([true], 'You must accept the terms and conditions'),
-  picture: Yup.mixed()
-    .test(
-      'fileSize',
-      'File too large',
-      (value) => value && (value as File).size <= 1024 * 1024
-    )
-    .test(
-      'fileType',
-      'Unsupported file format',
-      (value) =>
-        value && ['image/jpeg', 'image/png'].includes((value as File).type)
-    ),
+  // picture: Yup.mixed()
+  //   .test(
+  //     'fileSize',
+  //     'File too large',
+  //     (value) => value && (value as File).size <= 1024 * 1024
+  //   )
+  //   .test(
+  //     'fileType',
+  //     'Unsupported file format',
+  //     (value) =>
+  //       value && ['image/jpeg', 'image/png'].includes((value as File).type)
+  //   ),
   country: Yup.string().required('Country is required'),
 });

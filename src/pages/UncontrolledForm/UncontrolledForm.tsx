@@ -1,10 +1,14 @@
 import { FormEvent, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 import { Errors } from '../../types/ErrorsTypes';
 import { validationSchema } from '../../utils/validationSchema';
 import './Form.scss';
+import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
 
 export const UncontrolledForm = () => {
-  const countries = ['Switzerland', 'China', 'USA', 'UK', 'UAE'];
+  const dispatch = useDispatch();
+  const countries = useSelector((state: RootState) => state.countries);
   const [errors, setErrors] = useState<Errors>({});
 
   const nameRef = useRef<HTMLInputElement>(null);
@@ -19,6 +23,7 @@ export const UncontrolledForm = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setErrors({});
 
     const formData = {
       name: nameRef.current?.value || '',
@@ -28,23 +33,25 @@ export const UncontrolledForm = () => {
       confirmPassword: confirmPasswordRef.current?.value || '',
       gender: genderRef.current?.value || '',
       terms: termsRef.current?.checked || false,
-      picture: pictureRef.current?.files?.[0] || null,
+      // picture: pictureRef.current?.files?.[0] || null,
+      picture: '',
       country: countryRef.current?.value || '',
     };
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
-      setErrors({});
 
-      const reader = new FileReader();
+      // const reader = new FileReader();
 
-      if (formData.picture) {
-        reader.onloadend = () => {
-          console.log(reader.result);
-        };
+      // if (formData.picture) {
+      //   reader.onloadend = () => {
+      //     console.log(reader.result);
+      //   };
 
-        reader.readAsDataURL(formData.picture);
-      }
+      //   reader.readAsDataURL(formData.picture);
+      // }
+
+      dispatch(setUncontrolledFormData(formData));
 
       console.log('Form submitted:', formData);
     } catch (validationErrors) {
@@ -175,11 +182,7 @@ export const UncontrolledForm = () => {
             <label className="form__checkbox" htmlFor="terms"></label>
             <div className="form__error">{errors.terms && errors.terms}</div>
           </div>
-          <button
-            className="form__button-submit"
-            type="submit"
-            disabled={Object.keys(errors).length > 0}
-          >
+          <button className="form__button-submit" type="submit">
             Submit
           </button>
         </div>
