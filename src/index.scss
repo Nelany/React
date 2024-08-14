@@ -81,7 +81,7 @@ h4 {
 
 button {
   border-radius: $radius;
-  border: 1px solid $shadow;
+  border: 1px solid $borderTransparent;
   padding: 0.2em 1.2em 0.4em 1.2em;
   font-size: 1em;
   font-weight: 500;
@@ -89,7 +89,7 @@ button {
   background-color: $orangeTransparent;
   color: $light;
   text-shadow: 2px 2px 4px $darkBrown;
-  box-shadow: 0px 2px 5px $shadow;
+  box-shadow: 0px 2px 5px $darkBrown;
   cursor: pointer;
   outline: none;
   transition: all 0.4s;
@@ -97,4 +97,19 @@ button {
 
 button:hover {
   transform: scale(1.05);
+}
+
+input,
+select {
+  border-radius: $radius;
+  border: 1px solid $shadow;
+  padding: 4px;
+  color: $brown;
+  box-shadow: 0px 2px 5px $shadow;
+  outline: none;
+  background-color: $white;
+}
+
+select {
+  cursor: pointer;
 }
