@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const validationSchema = Yup.object().shape({
+export const validationFormSchema = Yup.object().shape({
   name: Yup.string()
     .matches(/^[A-Z]/, 'Name must start with an uppercase letter')
     .required('Name is required'),

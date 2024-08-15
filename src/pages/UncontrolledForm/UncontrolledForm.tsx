@@ -3,11 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
 import { Errors } from '../../types/ErrorsTypes';
-import { validationSchema } from '../../utils/validationSchema';
+import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
+import { validationFormSchema } from '../../utils/validationFormSchema';
+import { validationImgSchema } from '../../utils/validationImgSchema';
 import './Form.scss';
+import { setUncontrolledImg } from '../../store/UncontrolledImgSlice';
 
 export const UncontrolledForm = () => {
   const dispatch = useDispatch();
+  const img = useSelector(
+    (state: RootState) => state.uncontrolledImg.uncontrolledImg
+  );
   const countries = useSelector((state: RootState) => state.countries);
   const [errors, setErrors] = useState<Errors>({});
 
@@ -34,29 +40,11 @@ export const UncontrolledForm = () => {
       gender: genderRef.current?.value || '',
       terms: termsRef.current?.checked || false,
       picture: pictureRef.current?.files?.[0] || null,
-      // picture: '',
       country: countryRef.current?.value || '',
     };
 
     try {
-      await validationSchema.validate(formData, { abortEarly: false });
-
-      const readFileAsDataURL = (file: File): Promise<string | null> => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-
-          reader.onloadend = () => {
-            if (typeof reader.result === 'string') {
-              resolve(reader.result);
-            } else {
-              reject(new Error('Failed to read file as DataURL'));
-            }
-          };
-
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      };
+      await validationFormSchema.validate(formData, { abortEarly: false });
 
       if (formData.picture) {
         const pictureDataURL = await readFileAsDataURL(formData.picture);
@@ -87,6 +75,23 @@ export const UncontrolledForm = () => {
 
   const handleFileClick = () => {
     pictureRef.current?.click();
+  };
+
+  const handleFileChange = async () => {
+    pictureRef.current?.click();
+
+    const file = pictureRef.current?.files?.[0];
+
+    if (file) {
+      try {
+        await validationImgSchema.validate(file);
+
+        const base64 = await readFileAsDataURL(file);
+        dispatch(setUncontrolledImg(base64));
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -170,6 +175,7 @@ export const UncontrolledForm = () => {
                   type="file"
                   id="picture"
                   ref={pictureRef}
+                  onChange={handleFileChange}
                 />
                 <button
                   className="form__file-button"
@@ -187,6 +193,12 @@ export const UncontrolledForm = () => {
         </div>
 
         <div className="form__bottom-container">
+          {img && (
+            <div className="form__preview">
+              <img src={img} alt="Preview" />
+            </div>
+          )}
+
           <div className="form__field form__field--centered">
             <label htmlFor="terms">Accept Terms and Conditions:</label>
             <input
