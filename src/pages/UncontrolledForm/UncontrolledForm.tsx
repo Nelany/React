@@ -1,10 +1,10 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
 import { Errors } from '../../types/ErrorsTypes';
 import { validationSchema } from '../../utils/validationSchema';
 import './Form.scss';
-import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
 
 export const UncontrolledForm = () => {
   const dispatch = useDispatch();
@@ -33,27 +33,43 @@ export const UncontrolledForm = () => {
       confirmPassword: confirmPasswordRef.current?.value || '',
       gender: genderRef.current?.value || '',
       terms: termsRef.current?.checked || false,
-      // picture: pictureRef.current?.files?.[0] || null,
-      picture: '',
+      picture: pictureRef.current?.files?.[0] || null,
+      // picture: '',
       country: countryRef.current?.value || '',
     };
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
 
-      // const reader = new FileReader();
+      const readFileAsDataURL = (file: File): Promise<string | null> => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
 
-      // if (formData.picture) {
-      //   reader.onloadend = () => {
-      //     console.log(reader.result);
-      //   };
+          reader.onloadend = () => {
+            if (typeof reader.result === 'string') {
+              resolve(reader.result);
+            } else {
+              reject(new Error('Failed to read file as DataURL'));
+            }
+          };
 
-      //   reader.readAsDataURL(formData.picture);
-      // }
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      };
 
-      dispatch(setUncontrolledFormData(formData));
+      if (formData.picture) {
+        const pictureDataURL = await readFileAsDataURL(formData.picture);
+        const updatedFormData = {
+          ...formData,
+          picture: pictureDataURL,
+        };
 
-      console.log('Form submitted:', formData);
+        console.log(pictureDataURL);
+
+        dispatch(setUncontrolledFormData(updatedFormData));
+        console.log('Form submitted:', updatedFormData);
+      }
     } catch (validationErrors) {
       const formattedErrors = (
         validationErrors as { inner: { path: string; message: string }[] }

@@ -14,7 +14,7 @@ export const Main = () => {
 
   return (
     <div data-testid="main-page" className="main">
-      <h1 className="main__tittle">MAIN</h1>
+      <h1 className="main__tittle">FORMS</h1>
       <div className="main__buttons-container">
         <button className="go-form-button" onClick={openUncontrolledForm}>
           Uncontrolled Form!
