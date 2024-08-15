@@ -28,9 +28,15 @@
   .form__bottom-container {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 30px;
+  }
 
+  .form__submit-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .form__sections-container {
@@ -114,9 +120,28 @@
     transform: none;
   }
 
+  .form__preview {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $radius;
+    overflow: hidden;
+  }
+
+  .form__img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .form__img-error {
+    color: $orange;
+    font-weight: 800;
+  }
+
   .form__button-submit {
-    width: 100%;
-    max-width: 410px;
+    width: 300px;
     padding: 10px 20px;
     border-radius: $radius;
     border: 1px solid $shadow;

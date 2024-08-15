@@ -2,12 +2,12 @@ import { FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
+import { setUncontrolledImg } from '../../store/UncontrolledImgSlice';
 import { Errors } from '../../types/ErrorsTypes';
 import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
 import { validationFormSchema } from '../../utils/validationFormSchema';
 import { validationImgSchema } from '../../utils/validationImgSchema';
 import './Form.scss';
-import { setUncontrolledImg } from '../../store/UncontrolledImgSlice';
 
 export const UncontrolledForm = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ export const UncontrolledForm = () => {
   );
   const countries = useSelector((state: RootState) => state.countries);
   const [errors, setErrors] = useState<Errors>({});
+  const [imgError, setImgError] = useState('');
 
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -78,8 +79,6 @@ export const UncontrolledForm = () => {
   };
 
   const handleFileChange = async () => {
-    pictureRef.current?.click();
-
     const file = pictureRef.current?.files?.[0];
 
     if (file) {
@@ -88,8 +87,13 @@ export const UncontrolledForm = () => {
 
         const base64 = await readFileAsDataURL(file);
         dispatch(setUncontrolledImg(base64));
+        setImgError('');
       } catch (error) {
-        console.error(error);
+        if (error instanceof Error) {
+          setImgError(error.message);
+        } else {
+          setImgError('An unknown error occurred');
+        }
       }
     }
   };
@@ -193,26 +197,33 @@ export const UncontrolledForm = () => {
         </div>
 
         <div className="form__bottom-container">
-          {img && (
-            <div className="form__preview">
-              <img src={img} alt="Preview" />
-            </div>
-          )}
-
-          <div className="form__field form__field--centered">
-            <label htmlFor="terms">Accept Terms and Conditions:</label>
-            <input
-              className="form__checkbox-real"
-              type="checkbox"
-              id="terms"
-              ref={termsRef}
-            />
-            <label className="form__checkbox" htmlFor="terms"></label>
-            <div className="form__error">{errors.terms && errors.terms}</div>
+          <div className="form__preview">
+            {imgError && <div className="form__img-error">{imgError}!</div>}
+            {!imgError && (
+              <img
+                className="form__img"
+                src={img ? img : '/img.png'}
+                alt="Preview"
+              />
+            )}
           </div>
-          <button className="form__button-submit" type="submit">
-            Submit
-          </button>
+
+          <div className="form__submit-container">
+            <div className="form__field form__field--centered">
+              <label htmlFor="terms">Accept Terms and Conditions:</label>
+              <input
+                className="form__checkbox-real"
+                type="checkbox"
+                id="terms"
+                ref={termsRef}
+              />
+              <label className="form__checkbox" htmlFor="terms"></label>
+              <div className="form__error">{errors.terms && errors.terms}</div>
+            </div>
+            <button className="form__button-submit" type="submit">
+              Submit
+            </button>
+          </div>
         </div>
       </form>
     </div>
