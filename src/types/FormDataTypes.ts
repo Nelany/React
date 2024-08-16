@@ -9,3 +9,15 @@ export interface FormData {
   picture: string | null;
   country: string;
 }
+
+export interface ReactHookFormData {
+  name: string;
+  age: number;
+  country: string;
+  gender: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  picture?: FileList;
+  terms: boolean;
+}

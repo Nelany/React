@@ -13,9 +13,7 @@ import './Form.scss';
 export const UncontrolledForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const img = useSelector(
-    (state: RootState) => state.uncontrolledImg.uncontrolledImg
-  );
+  const [imgState, setImgState] = useState<string | null>(null);
   const countries = useSelector((state: RootState) => state.countries);
   const [errors, setErrors] = useState<Errors>({});
   const [imgError, setImgError] = useState('');
@@ -42,7 +40,7 @@ export const UncontrolledForm = () => {
       confirmPassword: confirmPasswordRef.current?.value || '',
       gender: genderRef.current?.value || '',
       terms: termsRef.current?.checked || false,
-      picture: pictureRef.current?.files?.[0] || null,
+      picture: pictureRef.current?.files || null,
       country: countryRef.current?.value || '',
     };
 
@@ -50,7 +48,7 @@ export const UncontrolledForm = () => {
       await validationFormSchema.validate(formData, { abortEarly: false });
 
       if (formData.picture) {
-        const pictureDataURL = await readFileAsDataURL(formData.picture);
+        const pictureDataURL = await readFileAsDataURL(formData.picture[0]);
         const updatedFormData = {
           ...formData,
           picture: pictureDataURL,
@@ -87,6 +85,7 @@ export const UncontrolledForm = () => {
 
         const base64 = await readFileAsDataURL(file);
         dispatch(setUncontrolledImg(base64));
+        setImgState(base64);
         setImgError('');
       } catch (error) {
         if (error instanceof Error) {
@@ -202,7 +201,7 @@ export const UncontrolledForm = () => {
             {!imgError && (
               <img
                 className="form__img"
-                src={img ? img : '/img.png'}
+                src={imgState ? imgState : '/img.png'}
                 alt="Preview"
               />
             )}

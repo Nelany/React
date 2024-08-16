@@ -12,6 +12,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@reduxjs/toolkit": "^2.2.6",
     "classnames": "^2.5.1",
     "react": "^18.2.0",
@@ -39,7 +40,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^24.1.0",
     "prettier": "3.2.5",
-    "react-hook-form": "^7.51.4",
+    "react-hook-form": "^7.52.2",
     "sass": "^1.77.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.2.2",

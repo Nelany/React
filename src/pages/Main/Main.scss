@@ -28,14 +28,14 @@
     .go-form-button {
       width: 100%;
       padding: 0.1em 1.2em 0.3em 1.2em;
-      background-color: $yellowTransparent;
+      background-color: $yellow;
       color: $darkBrown;
       font-weight: 700;
       text-shadow: none;
     }
 
     .go-form-button:hover {
-      background-color: $orangeTransparent;
+      background-color: $orange;
       transform: scale(1);
     }
   }

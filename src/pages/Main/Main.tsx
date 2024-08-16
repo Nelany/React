@@ -9,6 +9,9 @@ export const Main = () => {
   const uncontrolledFormData = useSelector(
     (state: RootState) => state.uncontrolledFormData.uncontrolledFormData
   );
+  const reactHookFormData = useSelector(
+    (state: RootState) => state.reactHookFormData.reactHookFormData
+  );
 
   const openUncontrolledForm = () => {
     navigate(`/UncontrolledForm`);
@@ -35,7 +38,7 @@ export const Main = () => {
           <FormResult formData={uncontrolledFormData} />
         </div>
         <div className="main__result">
-          <FormResult formData={null} />
+          <FormResult formData={reactHookFormData} />
         </div>
       </div>
     </div>
