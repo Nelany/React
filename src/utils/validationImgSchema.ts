@@ -4,7 +4,7 @@ export const validationImgSchema = Yup.mixed()
   .test(
     'fileSize',
     'File too large',
-    (value) => value && (value as File).size <= 1024 * 1024
+    (value) => value && (value as File).size <= 10 * 1024 * 1024
   )
   .test(
     'fileType',

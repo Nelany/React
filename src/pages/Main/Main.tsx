@@ -1,8 +1,14 @@
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { FormResult } from '../../components/FormResult/FormResult';
+import { RootState } from '../../store/store';
 import './Main.scss';
 
 export const Main = () => {
   const navigate = useNavigate();
+  const uncontrolledFormData = useSelector(
+    (state: RootState) => state.uncontrolledFormData.uncontrolledFormData
+  );
 
   const openUncontrolledForm = () => {
     navigate(`/UncontrolledForm`);
@@ -22,6 +28,15 @@ export const Main = () => {
         <button className="go-form-button" onClick={openReactHookForm}>
           React Hook Form!
         </button>
+      </div>
+
+      <div className="main__results-container">
+        <div className="main__result">
+          <FormResult formData={uncontrolledFormData} />
+        </div>
+        <div className="main__result">
+          <FormResult formData={null} />
+        </div>
       </div>
     </div>
   );

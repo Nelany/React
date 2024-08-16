@@ -29,7 +29,7 @@ export const validationFormSchema = Yup.object().shape({
     .test(
       'fileSize',
       'File too large',
-      (value) => value && (value as File).size <= 1024 * 1024
+      (value) => value && (value as File).size <= 10 * 1024 * 1024
     )
     .test(
       'fileType',

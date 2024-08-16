@@ -30,7 +30,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    column-gap: 30px;
+    column-gap: 90px;
   }
 
   .form__submit-container {
@@ -59,6 +59,11 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .form__field--main {
+    margin-top: 5px;
+    gap: 3px;
   }
 
   .form__field--centered {
@@ -130,6 +135,10 @@
     overflow: hidden;
   }
 
+  .form__preview--main {
+    width: 100%;
+  }
+
   .form__img {
     height: 100%;
     object-fit: cover;
@@ -150,4 +159,22 @@
     box-shadow: 0px 2px 5px $shadow;
   }
 
+  .form__data-item {
+    height: 35px;
+    border-radius: $radius;
+    border: 1px solid $shadow;
+    padding: 4px;
+    color: $brown;
+    box-shadow: 0px 2px 5px $shadow;
+    background-color: $white;
+    box-sizing: border-box;
+    cursor: default;
+  }
+
+}
+
+.form--main {
+  min-height: 720px;
+  padding: 10px 10px 30px 10px;
+  margin: 5px 0;
 }

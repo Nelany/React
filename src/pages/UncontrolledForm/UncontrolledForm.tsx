@@ -1,5 +1,6 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../store/store';
 import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
 import { setUncontrolledImg } from '../../store/UncontrolledImgSlice';
@@ -10,6 +11,7 @@ import { validationImgSchema } from '../../utils/validationImgSchema';
 import './Form.scss';
 
 export const UncontrolledForm = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const img = useSelector(
     (state: RootState) => state.uncontrolledImg.uncontrolledImg
@@ -54,10 +56,8 @@ export const UncontrolledForm = () => {
           picture: pictureDataURL,
         };
 
-        console.log(pictureDataURL);
-
         dispatch(setUncontrolledFormData(updatedFormData));
-        console.log('Form submitted:', updatedFormData);
+        navigate(`/`);
       }
     } catch (validationErrors) {
       const formattedErrors = (
