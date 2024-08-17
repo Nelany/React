@@ -5,14 +5,14 @@ import { setFormType } from '../../store/FormTypeSlice';
 import { RootState } from '../../store/store';
 import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
 import { Errors } from '../../types/ErrorsTypes';
-import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
-import { validationFormSchema } from '../../utils/validationFormSchema';
-import { validationImgSchema } from '../../utils/validationImgSchema';
-import './Form.scss';
 import {
   getPasswordStrengthColor,
   handlePasswordChange,
 } from '../../utils/passwordHalpers';
+import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
+import { validationFormSchema } from '../../utils/validationFormSchema';
+import { validationImgSchema } from '../../utils/validationImgSchema';
+import './Form.scss';
 
 export const UncontrolledForm = () => {
   const navigate = useNavigate();
@@ -36,6 +36,10 @@ export const UncontrolledForm = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrors({});
+
+    if (passwordCriteria === -1) {
+      setPasswordCriteria(0);
+    }
 
     const formData = {
       name: nameRef.current?.value || '',
