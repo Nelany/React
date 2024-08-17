@@ -1,14 +1,18 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setFormType } from '../../store/FormTypeSlice';
 import { RootState } from '../../store/store';
 import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
 import { Errors } from '../../types/ErrorsTypes';
 import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
 import { validationFormSchema } from '../../utils/validationFormSchema';
 import { validationImgSchema } from '../../utils/validationImgSchema';
-import { setFormType } from '../../store/FormTypeSlice';
 import './Form.scss';
+import {
+  getPasswordStrengthColor,
+  handlePasswordChange,
+} from '../../utils/passwordHalpers';
 
 export const UncontrolledForm = () => {
   const navigate = useNavigate();
@@ -17,6 +21,7 @@ export const UncontrolledForm = () => {
   const countries = useSelector((state: RootState) => state.countries);
   const [errors, setErrors] = useState<Errors>({});
   const [imgError, setImgError] = useState('');
+  const [passwordCriteria, setPasswordCriteria] = useState(-1);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -97,6 +102,10 @@ export const UncontrolledForm = () => {
     }
   };
 
+  const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handlePasswordChange(event, setPasswordCriteria);
+  };
+
   return (
     <div className="main">
       <form className="form" onSubmit={handleSubmit}>
@@ -154,9 +163,18 @@ export const UncontrolledForm = () => {
               </div>
               <div className="form__field">
                 <label htmlFor="password">Password:</label>
-                <input type="password" id="password" ref={passwordRef} />
-                <div className="form__error">
-                  {errors.password && errors.password}
+                <input
+                  type="password"
+                  id="password"
+                  ref={passwordRef}
+                  onChange={onPasswordChange}
+                />
+                <div
+                  className={`form__error form__password--${getPasswordStrengthColor(passwordCriteria)}`}
+                >
+                  {passwordCriteria === 4
+                    ? 'Strong Password'
+                    : `Weak Password (${passwordCriteria}/4 criteria met)`}
                 </div>
               </div>
               <div className="form__field">

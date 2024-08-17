@@ -78,6 +78,30 @@
     color: $orange;
   }
 
+  .form__password--red{
+    color: $red;
+  }
+
+  .form__password--orange{
+    color: $orange;
+  }
+
+  .form__password--yellow-orange{
+    color: $yellowOrange;
+  }
+
+  .form__password--dark-yellow{
+    color: $darkYellow;
+  }
+
+  .form__password--green{
+    color: $green;
+  }
+
+  .form__password--transparent{
+    color: $transparent;
+  }
+
   .form__checkbox-real {
     display: none;
   }
@@ -160,6 +184,11 @@
     box-shadow: 0px 2px 5px $shadow;
   }
 
+  .form__button-submit:disabled{
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
   .form__data-item {
     height: 35px;
     border-radius: $radius;
@@ -182,8 +211,8 @@
 }
 
 .latest-added {
-  animation: shake 0.5s, change-bg 2s; /* Применение шейк-анимации и анимации изменения фона */
-  animation-iteration-count: 5, 1; /* Количество повторений анимаций */
+  animation: shake 0.5s, change-bg 2s;
+  animation-iteration-count: 5, 1;
 }
 
 @keyframes shake {

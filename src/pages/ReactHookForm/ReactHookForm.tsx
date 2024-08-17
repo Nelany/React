@@ -10,6 +10,10 @@ import { validationFormSchema } from '../../utils/validationFormSchema';
 import { validationImgSchema } from '../../utils/validationImgSchema';
 import { setReactHookFormData } from '../../store/ReactHookFormSlice';
 import { setFormType } from '../../store/FormTypeSlice';
+import {
+  getPasswordStrengthColor,
+  handlePasswordChange,
+} from '../../utils/passwordHalpers';
 
 export const ReactHookForm = () => {
   const navigate = useNavigate();
@@ -17,6 +21,7 @@ export const ReactHookForm = () => {
   const countries = useSelector((state: RootState) => state.countries);
   const [imgState, setImgState] = useState<string | null>(null);
   const [imgError, setImgError] = useState('');
+  const [passwordCriteria, setPasswordCriteria] = useState(-1);
 
   const {
     register,
@@ -68,6 +73,10 @@ export const ReactHookForm = () => {
         }
       }
     }
+  };
+
+  const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handlePasswordChange(event, setPasswordCriteria);
   };
 
   return (
@@ -131,8 +140,15 @@ export const ReactHookForm = () => {
                   type="password"
                   id="password"
                   {...register('password')}
+                  onChange={onPasswordChange}
                 />
-                <div className="form__error">{errors.password?.message}</div>
+                <div
+                  className={`form__error form__password--${getPasswordStrengthColor(passwordCriteria)}`}
+                >
+                  {passwordCriteria === 4
+                    ? 'Strong Password'
+                    : `Weak Password (${passwordCriteria}/4 criteria met)`}
+                </div>
               </div>
               <div className="form__field">
                 <label htmlFor="confirmPassword">Confirm Password:</label>
