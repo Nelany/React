@@ -4,12 +4,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../store/store';
-import { setReactHookImg } from '../../store/ReactHookImgSlice';
 import { ReactHookFormData, FormData } from '../../types/FormDataTypes';
 import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
 import { validationFormSchema } from '../../utils/validationFormSchema';
 import { validationImgSchema } from '../../utils/validationImgSchema';
 import { setReactHookFormData } from '../../store/ReactHookFormSlice';
+import { setFormType } from '../../store/FormTypeSlice';
 
 export const ReactHookForm = () => {
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ export const ReactHookForm = () => {
         };
 
         dispatch(setReactHookFormData(updatedFormData));
+        dispatch(setFormType('React Hook Form'));
         navigate(`/`);
       }
     } catch (error) {
@@ -57,7 +58,6 @@ export const ReactHookForm = () => {
       try {
         await validationImgSchema.validate(file);
         const base64 = await readFileAsDataURL(file);
-        dispatch(setReactHookImg(base64));
         setImgState(base64);
         setImgError('');
       } catch (error) {

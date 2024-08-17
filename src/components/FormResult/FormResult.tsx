@@ -1,13 +1,15 @@
 import { FormData } from '../../types/FormDataTypes';
 interface FormResultProps {
   formData: FormData | null;
+  name: string;
+  className: string;
 }
 
-export const FormResult = ({ formData }: FormResultProps) => {
+export const FormResult = ({ formData, name, className }: FormResultProps) => {
   return (
-    <div className="form form--main">
+    <div className={`form form--main ${className}`}>
       <div className="form__top-container">
-        <h2>Uncontrolled Form</h2>
+        <h2>{name}</h2>
         <div className="form__sections-container">
           <div className="form__section">
             <div className="form__field form__field--main">

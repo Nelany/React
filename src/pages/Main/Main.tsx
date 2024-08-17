@@ -12,6 +12,7 @@ export const Main = () => {
   const reactHookFormData = useSelector(
     (state: RootState) => state.reactHookFormData.reactHookFormData
   );
+  const formType = useSelector((state: RootState) => state.formType.formType);
 
   const openUncontrolledForm = () => {
     navigate(`/UncontrolledForm`);
@@ -35,10 +36,50 @@ export const Main = () => {
 
       <div className="main__results-container">
         <div className="main__result">
-          <FormResult formData={uncontrolledFormData} />
+          {uncontrolledFormData.length > 0 ? (
+            uncontrolledFormData
+              .slice()
+              .reverse()
+              .map((data, index) => (
+                <FormResult
+                  key={index}
+                  formData={data}
+                  name="Uncontrolled Form"
+                  className={
+                    index === 0 && formType === 'Uncontrolled Form'
+                      ? 'latest-added'
+                      : ''
+                  }
+                />
+              ))
+          ) : (
+            <FormResult
+              formData={null}
+              name="Uncontrolled Form"
+              className={''}
+            />
+          )}
         </div>
         <div className="main__result">
-          <FormResult formData={reactHookFormData} />
+          {reactHookFormData.length > 0 ? (
+            reactHookFormData
+              .slice()
+              .reverse()
+              .map((data, index) => (
+                <FormResult
+                  key={index}
+                  formData={data}
+                  name="React Hook Form"
+                  className={
+                    index === 0 && formType === 'React Hook Form'
+                      ? 'latest-added'
+                      : ''
+                  }
+                />
+              ))
+          ) : (
+            <FormResult formData={null} name="React Hook Form" className={''} />
+          )}
         </div>
       </div>
     </div>

@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FormData } from '../types/FormDataTypes';
 
 interface FormState {
-  reactHookFormData: FormData | null;
+  reactHookFormData: FormData[];
 }
 
 const initialState: FormState = {
-  reactHookFormData: null,
+  reactHookFormData: [],
 };
 
 const reactHookFormSlice = createSlice({
@@ -15,9 +15,9 @@ const reactHookFormSlice = createSlice({
   reducers: {
     setReactHookFormData: (
       state,
-      action: PayloadAction<FormData | null>
+      action: PayloadAction<FormData>
     ) => {
-      state.reactHookFormData = action.payload;
+      state.reactHookFormData.push(action.payload);
     },
   },
 });

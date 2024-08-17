@@ -3,17 +3,15 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import countries from './CountriesSlice';
 import uncontrolledFormData from './UncontrolledFormSlice';
 import reactHookFormData from './ReactHookFormSlice';
-import uncontrolledImg from './UncontrolledImgSlice';
-import reactHookImg from './ReactHookImgSlice';
+import formType from './FormTypeSlice';
 
 
 export const store = configureStore({
   reducer: {
     uncontrolledFormData,
     countries,
-    uncontrolledImg,
-    reactHookImg,
     reactHookFormData,
+    formType,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   devTools: true,

@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../store/store';
 import { setUncontrolledFormData } from '../../store/UncontrolledFormSlice';
-import { setUncontrolledImg } from '../../store/UncontrolledImgSlice';
 import { Errors } from '../../types/ErrorsTypes';
 import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
 import { validationFormSchema } from '../../utils/validationFormSchema';
 import { validationImgSchema } from '../../utils/validationImgSchema';
+import { setFormType } from '../../store/FormTypeSlice';
 import './Form.scss';
 
 export const UncontrolledForm = () => {
@@ -55,6 +55,7 @@ export const UncontrolledForm = () => {
         };
 
         dispatch(setUncontrolledFormData(updatedFormData));
+        dispatch(setFormType('Uncontrolled Form'));
         navigate(`/`);
       }
     } catch (validationErrors) {
@@ -84,7 +85,6 @@ export const UncontrolledForm = () => {
         await validationImgSchema.validate(file);
 
         const base64 = await readFileAsDataURL(file);
-        dispatch(setUncontrolledImg(base64));
         setImgState(base64);
         setImgError('');
       } catch (error) {
