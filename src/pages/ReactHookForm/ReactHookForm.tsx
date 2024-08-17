@@ -3,17 +3,17 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../store/store';
-import { ReactHookFormData, FormData } from '../../types/FormDataTypes';
-import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
-import { validationFormSchema } from '../../utils/validationFormSchema';
-import { validationImgSchema } from '../../utils/validationImgSchema';
-import { setReactHookFormData } from '../../store/ReactHookFormSlice';
 import { setFormType } from '../../store/FormTypeSlice';
+import { setReactHookFormData } from '../../store/ReactHookFormSlice';
+import { RootState } from '../../store/store';
+import { FormData, ReactHookFormData } from '../../types/FormDataTypes';
 import {
   getPasswordStrengthColor,
   handlePasswordChange,
 } from '../../utils/passwordHalpers';
+import { readFileAsDataURL } from '../../utils/readFileAsDataURL';
+import { validationFormSchema } from '../../utils/validationFormSchema';
+import { validationImgSchema } from '../../utils/validationImgSchema';
 
 export const ReactHookForm = () => {
   const navigate = useNavigate();
@@ -79,10 +79,18 @@ export const ReactHookForm = () => {
     handlePasswordChange(event, setPasswordCriteria);
   };
 
+  const handleClose = () => {
+    navigate(`/`);
+    dispatch(setFormType(''));
+  };
+
   return (
     <div className="main">
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form__top-container">
+          <button onClick={handleClose} className="form__close">
+            X
+          </button>
           <h2>React Hook Form</h2>
           <div className="form__sections-container">
             <div className="form__section">

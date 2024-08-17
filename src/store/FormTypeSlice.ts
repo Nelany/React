@@ -12,7 +12,7 @@ const formTypeSlice = createSlice({
   name: 'formType',
   initialState,
   reducers: {
-    setFormType: (state, action: PayloadAction<'Uncontrolled Form' | 'React Hook Form'>) => {
+    setFormType: (state, action: PayloadAction<'Uncontrolled Form' | 'React Hook Form' | ''>) => {
       state.formType = action.payload;
     },
   },

@@ -110,10 +110,18 @@ export const UncontrolledForm = () => {
     handlePasswordChange(event, setPasswordCriteria);
   };
 
+  const handleClose = () => {
+    navigate(`/`);
+    dispatch(setFormType(''));
+  };
+
   return (
     <div className="main">
       <form className="form" onSubmit={handleSubmit}>
         <div className="form__top-container">
+          <button onClick={handleClose} className="form__close">
+            X
+          </button>
           <h2>Uncontrolled Form</h2>
           <div className="form__sections-container">
             <div className="form__section">
