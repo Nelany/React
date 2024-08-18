@@ -1,0 +1,3 @@
+npm run lint
+tsc --noEmit
+npm run format:fix && git add -A

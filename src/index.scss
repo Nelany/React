@@ -1,0 +1,115 @@
+@import '/src/utils/variables.scss';
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  background-color: $dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: $lightTransparent;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: $lightTransparent;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: $light
+}
+
+h1 {
+  background-image: linear-gradient(25deg, $orange, $orange, $yellow, $yellow, $orange, $orange);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 50px;
+  line-height: 1.1;
+}
+
+h2 {
+  display: inline-block;
+  margin: 10px 0;
+  background-image: linear-gradient(25deg, $darkBrown, $darkBrown, $darkBrown, $darkBrown, $orange, $yellow, $orange, $darkBrown, $darkBrown, $darkBrown, $darkBrown);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h2.dark {
+  background-image: linear-gradient(25deg, $orange, $orange, $yellow, $orange, $orange);
+}
+
+h3 {
+  color: $orange;
+  margin: 0;
+  font-weight: 400;
+}
+
+h4 {
+  margin: 0;
+}
+
+button {
+  border-radius: $radius;
+  border: 1px solid $borderTransparent;
+  padding: 0.2em 1.2em 0.4em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: $orangeTransparent;
+  color: $light;
+  text-shadow: 2px 2px 4px $darkBrown;
+  box-shadow: 0px 2px 5px $darkBrown;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.4s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+input,
+select {
+  border-radius: $radius;
+  border: 1px solid $shadow;
+  padding: 4px;
+  color: $brown;
+  box-shadow: 0px 2px 5px $shadow;
+  outline: none;
+  background-color: $white;
+}
+
+select {
+  cursor: pointer;
+}
