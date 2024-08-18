@@ -13,10 +13,7 @@ const uncontrolledFormSlice = createSlice({
   name: 'uncontrolledFormData',
   initialState,
   reducers: {
-    setUncontrolledFormData: (
-      state,
-      action: PayloadAction<FormData>
-    ) => {
+    setUncontrolledFormData: (state, action: PayloadAction<FormData>) => {
       state.uncontrolledFormData.push(action.payload);
     },
   },

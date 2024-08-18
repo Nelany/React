@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "format:fix": "prettier --write src/**/*.tsx",
+    "format:fix": "prettier --write src/**/*.{ts,tsx}",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src/ --fix",

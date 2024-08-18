@@ -13,10 +13,7 @@ const reactHookFormSlice = createSlice({
   name: 'reactHookFormData',
   initialState,
   reducers: {
-    setReactHookFormData: (
-      state,
-      action: PayloadAction<FormData>
-    ) => {
+    setReactHookFormData: (state, action: PayloadAction<FormData>) => {
       state.reactHookFormData.push(action.payload);
     },
   },

@@ -5,7 +5,6 @@ import uncontrolledFormData from './UncontrolledFormSlice';
 import reactHookFormData from './ReactHookFormSlice';
 import formType from './FormTypeSlice';
 
-
 export const store = configureStore({
   reducer: {
     uncontrolledFormData,
